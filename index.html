@@ -26,20 +26,20 @@ audio{width:100%;margin:8px 0}
 </head>
 <body>
 <div class="topo">🏦 BANCO GRATIDÃO - FINAL COM IA + MÚSICAS</div>
-<div class="faixa">⚠️ SIMULADOR PARA ESTUDOS - NÃO É BANCO REAL</div>
+<div class="faixa">⚠️ SIMULADOR PARA ESTUDOS -  BANCO REAL</div>
 
 <div class="container">
 <div id="tela-cadastro" class="card">
 <h2>🤖 Ativar Banco com IA</h2>
 <input id="nome" placeholder="Seu nome Ex: José Marcos">
-<button class="btn amarelo" onclick="abrirConta()">CRIAR CONTA PREMIUM R$ 1.000</button>
+<button class="btn dourado" onclick="abrirConta()">CRIAR CONTA PREMIUM R$</button>
 </div>
 
 <div id="tela-banco" class="hidden">
 
 <div class="card" style="text-align:center">
 <p style="color:#8a95ad;font-size:11px">Saldo fictício de gratidão</p>
-<div class="saldo">R$ 1.000,00</div>
+<div class="saldo">R$</div>
 <p id="nomeTxt" style="color:#8a95ad;font-size:12px"></p>
 </div>
 
@@ -100,7 +100,7 @@ audio{width:100%;margin:8px 0}
 <div class="modal-box">
 <h2 style="color:#FFD700">Bem-vindo ao Banco Gratidão, José!</h2>
 <p style="margin:15px 0;color:#ccc;font-size:14px">Sua conta premium foi criada!<br><br>Saldo inicial de gratidão:<br><span style="color:#FFD700;font-size:22px;font-weight:900">R$ 1.000,00</span><br><br>Em breve seu cartão dourado chegará!</p>
-<button class="btn amarelo" onclick="fecharModal()">Entrar no meu banco agora</button>
+   <button onclick="this.parentElement.parentElement.style.display='none'" style="background: #ffcc00; color: black; padding: 15px; border-radius: 10px; font-weight: bold; width: 100%; border: none;">Entrar no meu banco agora</button>
 </div>
 </div>
 
@@ -111,7 +111,7 @@ const musicas=[{nome:"🍽️ Gratidão pela Refeição",url:"https://cdn.pixaba
 
 function abrirConta(){let n=document.getElementById('nome').value.trim();if(n.length<2){alert('Digite seu nome');return}localStorage.setItem('bg_nome',n);localStorage.setItem('bg_link','gratidao.bank/convite/'+n.toUpperCase().replace(/ /g,'').substring(0,10));document.getElementById('modalBemVindo').classList.remove('hidden');document.getElementById('modalBemVindo').querySelector('h2').innerText=`Bem-vindo ao Banco Gratidão, ${n}!`;}
 function fecharModal(){document.getElementById('modalBemVindo').classList.add('hidden');mostrarBanco();}
-function mostrarBanco(){document.getElementById('tela-cadastro').classList.add('hidden');document.getElementById('tela-banco').classList.remove('hidden');let nome=localStorage.getItem('bg_nome');document.getElementById('nomeTxt').innerText=`Olá, ${nome} - IA Ativa ✅`;document.getElementById('respostaIA').innerHTML=`Olá <b>${nome}</b>! 🙏 Saldo fictício R$ 1.000 ativado!`;setTimeout(()=>tocarMusica(0),800);}
+function mostrarBanco(){document.getElementById('tela-cadastro').classList.add('hidden');document.getElementById('tela-banco').classList.remove('hidden');let nome=localStorage.getItem('bg_nome');document.getElementById('nomeTxt').innerText=`Olá, ${nome} - IA Ativa ✅`;document.getElementById('respostaIA').innerHTML=`Olá <b>${nome}</b>! 🙏 Saldo fictício R$ ativado!`;setTimeout(()=>tocarMusica(0),800);}
 function perguntarIA(){let p=document.getElementById('perguntaIA').value.toLowerCase();let r=document.getElementById('respostaIA');if(p.includes('economizar'))r.innerHTML='💡 IA: Corte 3 gastos sem gratidão e guarde R$ 100!';else r.innerHTML='🤖 IA: Siga em frente, mesmo que seja devagar! Gratidão gera prosperidade 🙏';}
 function copiarMsg(num){let txt=mensagens[num];document.getElementById('previewMsg').innerText=txt;navigator.clipboard.writeText(txt).then(()=>alert('Mensagem '+num+' copiada!')); }
 function falarMsg(num){speechSynthesis.cancel();let m=new SpeechSynthesisUtterance(textosAudio[num]);m.lang='pt-BR';m.rate=1;speechSynthesis.speak(m);}
