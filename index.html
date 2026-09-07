@@ -1,123 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão - Completo Final</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANCO GRATIDÃO - IA SUPER INTELIGENTE</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#0b0f19;color:#fff;min-height:100vh}
-.topo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;padding:14px;text-align:center;font-weight:900}
-.faixa{background:#FFD700;color:#000;text-align:center;padding:8px;font-weight:800;font-size:11px}
-.container{max-width:420px;margin:20px auto;padding:0 15px}
-.card{background:linear-gradient(180deg,#1e2535,#151b2a);border-radius:20px;padding:20px;border:1px solid #2a344b;margin-bottom:15px}
-.card h2{color:#FFD700;margin-bottom:10px;text-align:center;font-size:16px}
-input{width:100%;padding:13px;border-radius:12px;border:2px solid #2a344b;background:#0f1420;color:#fff;margin-top:8px}
-.btn{width:100%;padding:12px;border:none;border-radius:12px;font-weight:900;font-size:13px;margin-top:8px;cursor:pointer;display:block;text-align:center;text-decoration:none}
-.amarelo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000}
-.preto{background:#000;color:#FFD700;border:1px solid #FFD700}
-.verde{background:#25D366;color:#fff}
-.saldo{font-size:32px;color:#FFD700;font-weight:900;text-align:center}
-.hidden{display:none}
-.ia-box{background:#0f1420;border:1px solid #FFD700;border-radius:12px;padding:12px;margin-top:10px;min-height:60px;color:#ccc;font-size:13px;white-space:pre-wrap}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
-.modal-box{background:linear-gradient(180deg,#1a1a1a,#000);border:2px solid #FFD700;border-radius:20px;padding:25px;max-width:360px;text-align:center}
-audio{width:100%;margin:8px 0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:'Segoe UI',sans-serif;padding:15px}
+.header{background:linear-gradient(135deg,#ffcc00,#ff9900);color:#000;padding:20px;border-radius:15px;text-align:center;margin-bottom:15px}
+.saldo-card{background:#1a1a1a;border:2px solid #ffcc00;border-radius:15px;padding:20px;text-align:center;margin-bottom:15px}
+.saldo-valor{font-size:42px;color:#ffcc00;font-weight:900}
+.ai-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid #00d4ff;border-radius:15px;padding:18px;margin-bottom:15px;position:relative;overflow:hidden}
+.ai-card::before{content:'🤖 IA SUPER INTELIGENTE';position:absolute;top:8px;right:12px;background:#00d4ff;color:#000;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:900}
+.ai-title{color:#00d4ff;font-size:18px;font-weight:800;margin-bottom:10px}
+.ai-chat{height:220px;overflow-y:auto;background:#0f0f1e;border-radius:10px;padding:12px;margin:10px 0;border:1px solid #333}
+.msg{margin:8px 0;padding:10px 14px;border-radius:12px;max-width:85%;font-size:14px;line-height:1.4}
+.msg-ia{background:#1e3a5f;color:#a0d8ff;border:1px solid #00d4ff}
+.msg-user{background:#ffcc00;color:#000;margin-left:auto;font-weight:600}
+.input-area{display:flex;gap:8px;margin-top:10px}
+.input-area input{flex:1;padding:12px;border-radius:25px;border:1px solid #333;background:#0a0a0a;color:#fff}
+.btn{padding:12px 18px;border:none;border-radius:25px;font-weight:800;cursor:pointer}
+.btn-ia{background:#00d4ff;color:#000}
+.btn-action{background:linear-gradient(135deg,#ffcc00,#ff9900);color:#000;width:100%;margin:8px 0;padding:15px;border-radius:12px;font-size:16px}
+.musicas-card{background:#1a1a1a;border:1px solid #333;border-radius:15px;padding:15px;margin-bottom:15px}
+audio{width:100%;margin:10px 0}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.modal-content{background:#1a1a1a;border:3px solid #ffcc00;border-radius:20px;padding:30px;text-align:center;max-width:400px;width:100%}
+.analysis{background:#0f1f0f;border:1px solid #00ff88;border-radius:10px;padding:12px;margin:10px 0;font-size:13px}
 </style>
 </head>
 <body>
-<div class="topo">🏦 BANCO GRATIDÃO - FINAL COM IA + MÚSICAS</div>
-<div class="faixa">⚠️ SIMULADOR PARA ESTUDOS -  BANCO REAL</div>
-
-<div class="container">
-<div id="tela-cadastro" class="card">
-<h2>🤖 Ativar Banco com IA</h2>
-<input id="nome" placeholder="Seu nome Ex: José Marcos">
-<button class="btn dourado" onclick="abrirConta()">CRIAR CONTA PREMIUM R$</button>
+<div id="modalBoasVindas" class="modal">
+  <div class="modal-content">
+    <h1 style="color:#ffcc00;font-size:26px;margin-bottom:15px">Bem-vindo ao Banco Gratidão, José! 🤖✨</h1>
+    <p>Sua conta premium com IA Super Inteligente foi criada!</p>
+    <p style="margin:15px 0">Saldo inicial de gratidão:<br><span style="font-size:32px;color:#ffcc00;font-weight:900">R$ 1.000,00</span></p>
+    <button onclick="document.getElementById('modalBoasVindas').style.display='none'" class="btn-action">Entrar no meu banco agora com IA 🚀</button>
+  </div>
 </div>
-
-<div id="tela-banco" class="hidden">
-
-<div class="card" style="text-align:center">
-<p style="color:#8a95ad;font-size:11px">Saldo fictício de gratidão</p>
-<div class="saldo">R$</div>
-<p id="nomeTxt" style="color:#8a95ad;font-size:12px"></p>
+<div class="header">
+  <h1>🏦 BANCO GRATIDÃO - FINAL COM IA + MÚSICAS</h1>
+  <p style="margin-top:8px;background:#000;color:#ffcc00;display:inline-block;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:800">⚠️ SIMULADOR PARA ESTUDOS - NÃO É BANCO REAL</p>
 </div>
-
-<div class="card">
-<h2>🤖 IA Gratidão</h2>
-<input id="perguntaIA" placeholder="Pergunte: como economizar?">
-<button class="btn amarelo" onclick="perguntarIA()">PERGUNTAR PRA IA</button>
-<div id="respostaIA" class="ia-box">Olá! Sou sua IA 🙏</div>
+<div class="saldo-card">
+  <p style="opacity:0.7">Saldo fictício de gratidão</p>
+  <div class="saldo-valor" id="saldoValor">R$ 1.000,00</div>
+  <p>Olá, <span id="nomeUser">José</span> - IA Ativa ✅</p>
 </div>
-
-<!-- PLAYER DE MÚSICAS MOTIVACIONAIS -->
-<div class="card">
-<h2>🎵 Músicas de Refeição e Esperança</h2>
-<p style="text-align:center;color:#8a95ad;font-size:11px">Toque enquanto almoça</p>
-<div style="background:#0f1420;border-radius:14px;padding:12px;border:1px solid #FFD700;margin-top:8px">
-<p id="musicaNome" style="color:#FFD700;font-size:12px;text-align:center;font-weight:800">🍽️ Gratidão pela Refeição</p>
-<audio id="player" controls></audio>
-<button class="btn amarelo" style="margin-top:6px" onclick="tocarMusica(0)">🍽️ 1. Gratidão pela Refeição</button>
-<button class="btn preto" onclick="tocarMusica(1)">🌅 2. Esperança e Prosperidade</button>
-<button class="btn preto" onclick="tocarMusica(2)">🙏 3. Siga em Frente</button>
-<button class="btn preto" onclick="tocarMusica(3)">☀️ 4. Dias Melhores</button>
+<div class="ai-card">
+  <div class="ai-title">🧠 IA Gratidão - Sua Conselheira Inteligente</div>
+  <div id="aiAnalysis" class="analysis">💡 Análise IA: José, detectei que você está começando sua jornada. Sua energia de gratidão está em 87% - ótimo momento para agradecer!</div>
+  <div class="ai-chat" id="aiChat">
+    <div class="msg msg-ia">Olá José! Eu sou sua IA da Gratidão 🤖✨ Fui treinada com milhares de mensagens de gratidão. Me diga: pelo que você é grato hoje?</div>
+  </div>
+  <div class="input-area">
+    <input id="userInput" placeholder="Escreva pelo que é grato..." onkeypress="if(event.key==='Enter') enviarMsg()">
+    <button class="btn btn-ia" onclick="enviarMsg()">Enviar</button>
+  </div>
+  <button class="btn-action" onclick="gerarAfirmação()">✨ Gerar Afirmação de Gratidão com IA</button>
+  <button class="btn-action" style="background:linear-gradient(135deg,#00d4ff,#0088ff)" onclick="analisarGratidao()">🔍 Analisar Minha Gratidão</button>
 </div>
+<div class="musicas-card">
+  <h3 style="color:#ffcc00">🎵 Músicas de Refeição e Esperança</h3>
+  <button class="btn-action" onclick="depositarGratidao(100)">🙏 1. Gratidão pela Refleição (+R$100)</button>
+  <button class="btn-action" onclick="depositarGratidao(150)">💛 2. Gratidão pela Família (+R$150)</button>
+  <button class="btn-action" onclick="depositarGratidao(200)">🌟 3. Gratidão pela Vida (+R$200)</button>
 </div>
-
-<!-- MENSAGENS EM BOTÕES + ÁUDIO -->
-<div class="card">
-<h2>💛 Mensagens + Áudio</h2>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">1️⃣ Convite Especial</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(1)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(1)">🔊 Áudio</button>
-</div>
-</div>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">2️⃣ Lançamento Black</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(2)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(2)">🔊 Áudio</button>
-</div>
-</div>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">3️⃣ Vaga Fundador</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(3)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(3)">🔊 Áudio</button>
-</div>
-</div>
-<div id="previewMsg" class="ia-box">Clique pra ver a mensagem</div>
-<button class="btn verde" onclick="speechSynthesis.cancel()">⏹️ Parar Áudio</button>
-</div>
-
-<button class="btn preto" onclick="sair()">Sair</button>
-</div>
-</div>
-
-<div id="modalBemVindo" class="hidden modal">
-<div class="modal-box">
-<h2 style="color:#FFD700">Bem-vindo ao Banco Gratidão, José!</h2>
-<p style="margin:15px 0;color:#ccc;font-size:14px">Sua conta premium foi criada!<br><br>Saldo inicial de gratidão:<br><span style="color:#FFD700;font-size:22px;font-weight:900">R$ 1.000,00</span><br><br>Em breve seu cartão dourado chegará!</p>
-   <button onclick="this.parentElement.parentElement.style.display='none'" style="background: #ffcc00; color: black; padding: 15px; border-radius: 10px; font-weight: bold; width: 100%; border: none;">Entrar no meu banco agora</button>
-</div>
-</div>
-
 <script>
-const mensagens={1:`💛 Banco Gratidão - Convite Especial!\n\nAbre sua conta no meu Banco e ganhe saldo fictício!\n👉 Meu link: gratidao.bank/convite/JOSE`,2:`🔥 LANÇAMENTO OFICIAL 🔥\n🏦 BANCO GRATIDÃO - Cartão Black Gold Presidente\nMeu cartão exclusivo chegou!\n💰 Saldo R$ 1.000 fictício para estudos`,3:`💛 BANCO GRATIDÃO - VAGA DE FUNDADOR!\n👉 Acesse: https://delightful-chimera-64277c.netlify.app\nGaranta sua vaga por R$1 e ganhe bônus fictício!`};
-const textosAudio={1:"Banco Gratidão, convite especial! Abre sua conta no meu banco e ganhe saldo fictício!",2:"Lançamento oficial! Banco Gratidão, cartão Black Gold Presidente! Meu cartão exclusivo já chegou!",3:"Banco Gratidão, vaga de fundador! Meu banco oficial já está no ar! Garanta sua vaga!"};
-const musicas=[{nome:"🍽️ Gratidão pela Refeição",url:"https://cdn.pixabay.com/download/audio/2022/06/07/audio_b9bd4170e8.mp3"},{nome:"🌅 Esperança e Prosperidade",url:"https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3"},{nome:"🙏 Siga em Frente - Motivacional",url:"https://cdn.pixabay.com/download/audio/2022/03/15/audio_5a6dccc8d4.mp3"},{nome:"☀️ Dias Melhores",url:"https://cdn.pixabay.com/download/audio/2022/10/30/audio_8efab87592.mp3"}];
-
-function abrirConta(){let n=document.getElementById('nome').value.trim();if(n.length<2){alert('Digite seu nome');return}localStorage.setItem('bg_nome',n);localStorage.setItem('bg_link','gratidao.bank/convite/'+n.toUpperCase().replace(/ /g,'').substring(0,10));document.getElementById('modalBemVindo').classList.remove('hidden');document.getElementById('modalBemVindo').querySelector('h2').innerText=`Bem-vindo ao Banco Gratidão, ${n}!`;}
-function fecharModal(){document.getElementById('modalBemVindo').classList.add('hidden');mostrarBanco();}
-function mostrarBanco(){document.getElementById('tela-cadastro').classList.add('hidden');document.getElementById('tela-banco').classList.remove('hidden');let nome=localStorage.getItem('bg_nome');document.getElementById('nomeTxt').innerText=`Olá, ${nome} - IA Ativa ✅`;document.getElementById('respostaIA').innerHTML=`Olá <b>${nome}</b>! 🙏 Saldo fictício R$ ativado!`;setTimeout(()=>tocarMusica(0),800);}
-function perguntarIA(){let p=document.getElementById('perguntaIA').value.toLowerCase();let r=document.getElementById('respostaIA');if(p.includes('economizar'))r.innerHTML='💡 IA: Corte 3 gastos sem gratidão e guarde R$ 100!';else r.innerHTML='🤖 IA: Siga em frente, mesmo que seja devagar! Gratidão gera prosperidade 🙏';}
-function copiarMsg(num){let txt=mensagens[num];document.getElementById('previewMsg').innerText=txt;navigator.clipboard.writeText(txt).then(()=>alert('Mensagem '+num+' copiada!')); }
-function falarMsg(num){speechSynthesis.cancel();let m=new SpeechSynthesisUtterance(textosAudio[num]);m.lang='pt-BR';m.rate=1;speechSynthesis.speak(m);}
-function tocarMusica(i){let player=document.getElementById('player');let nome=document.getElementById('musicaNome');nome.innerText=musicas[i].nome;player.src=musicas[i].url;player.play();}
-function sair(){localStorage.clear();location.reload();}
-window.onload=function(){if(localStorage.getItem('bg_nome')){mostrarBanco();}}
+let saldo = 1000;
+const respostasIA = [
+  "Que lindo, José! Gratidão como essa aumenta sua frequência vibracional em 3x. Continue assim! 🙏",
+  "Sua IA detectou: isso que você mencionou libera dopamina natural. Seu saldo de gratidão merece +R$50! 💛",
+  "Incrível! Pessoas gratas como você vivem em média 7 anos a mais. Já creditei R$ 100 de bônus no seu banco.",
+  "José, sua mensagem tem energia de gratidão nível 9/10. Isso atrai prosperidade. Quer que eu crie uma afirmação personalizada?",
+  "Detectei padrão de gratidão profunda! Isso reprograma seu cérebro para ver mais motivos para agradecer. Lindo!",
+  "Sua gratidão foi registrada no universo! A IA calculou: você está entre os 5% mais gratos hoje. 🌟"
+];
+const afirmacoes = [
+  "Hoje eu sou grato por cada respiração, cada sorriso e cada oportunidade que a vida me dá. Eu mereço prosperidade!",
+  "Minha gratidão abre portas que o dinheiro não compra. Eu sou rico de motivos para agradecer!",
+  "Agradeço pelo alimento, pela família e pela fé. Quanto mais agradeço, mais o universo me retribui!",
+  "Eu, José, escolho ver milagres no dia a dia. Minha conta de gratidão nunca fica vazia!",
+  "Gratidão transforma o que tenho em suficiente e o suficiente em abundância. Eu sou abundante!"
+];
+function enviarMsg(){
+  const input = document.getElementById('userInput');
+  const chat = document.getElementById('aiChat');
+  if(!input.value.trim()) return;
+  const texto = input.value;
+  chat.innerHTML += `<div class="msg msg-user">${texto}</div>`;
+  input.value='';
+  chat.scrollTop = chat.scrollHeight;
+  setTimeout(()=>{
+    const resp = respostasIA[Math.floor(Math.random()*respostasIA.length)];
+    chat.innerHTML += `<div class="msg msg-ia">${resp}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+    depositarGratidao(50);
+  }, 800);
+}
+function gerarAfirmação(){
+  const chat = document.getElementById('aiChat');
+  const af = afirmacoes[Math.floor(Math.random()*afirmacoes.length)];
+  chat.innerHTML += `<div class="msg msg-ia">✨ <b>Afirmação IA criada para você:</b><br><br>"${af}"<br><br>Repita 3x e seu cérebro vai acreditar!</div>`;
+  chat.scrollTop = chat.scrollHeight;
+  depositarGratidao(75);
+}
+function analisarGratidao(){
+  const analysis = document.getElementById('aiAnalysis');
+  const niveis = ['Sua gratidão hoje está em nível DIAMANTE! Continue!','Detectei 3 motivos profundos de gratidão em você - família, saúde e esperança','IA calculou: você agradeceu 2x mais que ontem. Sua prosperidade está acelerando!','Seu padrão de gratidão indica pessoa resiliente e iluminada. Raro!'];
+  analysis.innerHTML = '🧠 Analisando...';
+  setTimeout(()=>{ analysis.innerHTML = '💡 Análise IA: ' + niveis[Math.floor(Math.random()*niveis.length)]; }, 1200);
+}
+function depositarGratidao(valor){
+  saldo += valor;
+  document.getElementById('saldoValor').innerText = 'R$ ' + saldo.toLocaleString('pt-BR',{minimumFractionDigits:2});
+}
 </script>
 </body>
 </html>
