@@ -1,123 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão - Completo Final</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco Gratidao Real 2.0</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#0b0f19;color:#fff;min-height:100vh}
-.topo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;padding:14px;text-align:center;font-weight:900}
-.faixa{background:#FFD700;color:#000;text-align:center;padding:8px;font-weight:800;font-size:11px}
-.container{max-width:420px;margin:20px auto;padding:0 15px}
-.card{background:linear-gradient(180deg,#1e2535,#151b2a);border-radius:20px;padding:20px;border:1px solid #2a344b;margin-bottom:15px}
-.card h2{color:#FFD700;margin-bottom:10px;text-align:center;font-size:16px}
-input{width:100%;padding:13px;border-radius:12px;border:2px solid #2a344b;background:#0f1420;color:#fff;margin-top:8px}
-.btn{width:100%;padding:12px;border:none;border-radius:12px;font-weight:900;font-size:13px;margin-top:8px;cursor:pointer;display:block;text-align:center;text-decoration:none}
-.amarelo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000}
-.preto{background:#000;color:#FFD700;border:1px solid #FFD700}
-.verde{background:#25D366;color:#fff}
-.saldo{font-size:32px;color:#FFD700;font-weight:900;text-align:center}
-.hidden{display:none}
-.ia-box{background:#0f1420;border:1px solid #FFD700;border-radius:12px;padding:12px;margin-top:10px;min-height:60px;color:#ccc;font-size:13px;white-space:pre-wrap}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
-.modal-box{background:linear-gradient(180deg,#1a1a1a,#000);border:2px solid #FFD700;border-radius:20px;padding:25px;max-width:360px;text-align:center}
-audio{width:100%;margin:8px 0}
+body{font-family:Arial;text-align:center;background:#FFFBE6;padding:30px}
+.logo{width:90px;height:90px;background:#FFD700;border-radius:20px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:50px}
+h1{color:#8B8608}
+.btn{width:90%;max-width:300px;padding:14px;margin:10px auto;background:#FFD700;border:none;border-radius:12px;font-weight:bold;display:block}
 </style>
 </head>
 <body>
-<div class="topo">🏦 BANCO GRATIDÃO - FINAL COM IA + MÚSICAS</div>
-<div class="faixa">⚠️ SIMULADOR PARA ESTUDOS - NÃO É BANCO REAL</div>
-
-<div class="container">
-<div id="tela-cadastro" class="card">
-<h2>🤖 Ativar Banco com IA</h2>
-<input id="nome" placeholder="Seu nome Ex: José Marcos">
-<button class="btn amarelo" onclick="abrirConta()">CRIAR CONTA PREMIUM R$ 1.000</button>
-</div>
-
-<div id="tela-banco" class="hidden">
-
-<div class="card" style="text-align:center">
-<p style="color:#8a95ad;font-size:11px">Saldo fictício de gratidão</p>
-<div class="saldo">R$ 1.000,00</div>
-<p id="nomeTxt" style="color:#8a95ad;font-size:12px"></p>
-</div>
-
-<div class="card">
-<h2>🤖 IA Gratidão</h2>
-<input id="perguntaIA" placeholder="Pergunte: como economizar?">
-<button class="btn amarelo" onclick="perguntarIA()">PERGUNTAR PRA IA</button>
-<div id="respostaIA" class="ia-box">Olá! Sou sua IA 🙏</div>
-</div>
-
-<!-- PLAYER DE MÚSICAS MOTIVACIONAIS -->
-<div class="card">
-<h2>🎵 Músicas de Refeição e Esperança</h2>
-<p style="text-align:center;color:#8a95ad;font-size:11px">Toque enquanto almoça</p>
-<div style="background:#0f1420;border-radius:14px;padding:12px;border:1px solid #FFD700;margin-top:8px">
-<p id="musicaNome" style="color:#FFD700;font-size:12px;text-align:center;font-weight:800">🍽️ Gratidão pela Refeição</p>
-<audio id="player" controls></audio>
-<button class="btn amarelo" style="margin-top:6px" onclick="tocarMusica(0)">🍽️ 1. Gratidão pela Refeição</button>
-<button class="btn preto" onclick="tocarMusica(1)">🌅 2. Esperança e Prosperidade</button>
-<button class="btn preto" onclick="tocarMusica(2)">🙏 3. Siga em Frente</button>
-<button class="btn preto" onclick="tocarMusica(3)">☀️ 4. Dias Melhores</button>
-</div>
-</div>
-
-<!-- MENSAGENS EM BOTÕES + ÁUDIO -->
-<div class="card">
-<h2>💛 Mensagens + Áudio</h2>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">1️⃣ Convite Especial</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(1)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(1)">🔊 Áudio</button>
-</div>
-</div>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">2️⃣ Lançamento Black</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(2)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(2)">🔊 Áudio</button>
-</div>
-</div>
-<div style="background:#0f1420;padding:10px;border-radius:12px;margin-top:8px;border:1px solid #2a344b">
-<p style="font-size:12px;color:#FFD700">3️⃣ Vaga Fundador</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button class="btn amarelo" style="margin:0" onclick="copiarMsg(3)">📋 Copiar</button>
-<button class="btn preto" style="margin:0" onclick="falarMsg(3)">🔊 Áudio</button>
-</div>
-</div>
-<div id="previewMsg" class="ia-box">Clique pra ver a mensagem</div>
-<button class="btn verde" onclick="speechSynthesis.cancel()">⏹️ Parar Áudio</button>
-</div>
-
-<button class="btn preto" onclick="sair()">Sair</button>
-</div>
-</div>
-
-<div id="modalBemVindo" class="hidden modal">
-<div class="modal-box">
-<h2 style="color:#FFD700">Bem-vindo ao Banco Gratidão, José!</h2>
-<p style="margin:15px 0;color:#ccc;font-size:14px">Sua conta premium foi criada!<br><br>Saldo inicial de gratidão:<br><span style="color:#FFD700;font-size:22px;font-weight:900">R$ 1.000,00</span><br><br>Em breve seu cartão dourado chegará!</p>
-<button class="btn amarelo" onclick="fecharModal()">Entrar no meu banco agora</button>
-</div>
-</div>
-
+<div class="logo">R$</div>
+<h1>Banco Gratidao Real 2.0</h1>
+<p>SUPER INTELIGENTE - IA DENTRO</p>
+<button class="btn" onclick="entrar()">ENTRAR NA VERSAO 2.0</button>
+<button class="btn" style="background:#FFF3B0;border:1px solid gold" onclick="convidar()">CONVIDAR MEMBROS</button>
 <script>
-const mensagens={1:`💛 Banco Gratidão - Convite Especial!\n\nAbre sua conta no meu Banco e ganhe saldo fictício!\n👉 Meu link: gratidao.bank/convite/JOSE`,2:`🔥 LANÇAMENTO OFICIAL 🔥\n🏦 BANCO GRATIDÃO - Cartão Black Gold Presidente\nMeu cartão exclusivo chegou!\n💰 Saldo R$ 1.000 fictício para estudos`,3:`💛 BANCO GRATIDÃO - VAGA DE FUNDADOR!\n👉 Acesse: https://delightful-chimera-64277c.netlify.app\nGaranta sua vaga por R$1 e ganhe bônus fictício!`};
-const textosAudio={1:"Banco Gratidão, convite especial! Abre sua conta no meu banco e ganhe saldo fictício!",2:"Lançamento oficial! Banco Gratidão, cartão Black Gold Presidente! Meu cartão exclusivo já chegou!",3:"Banco Gratidão, vaga de fundador! Meu banco oficial já está no ar! Garanta sua vaga!"};
-const musicas=[{nome:"🍽️ Gratidão pela Refeição",url:"https://cdn.pixabay.com/download/audio/2022/06/07/audio_b9bd4170e8.mp3"},{nome:"🌅 Esperança e Prosperidade",url:"https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3"},{nome:"🙏 Siga em Frente - Motivacional",url:"https://cdn.pixabay.com/download/audio/2022/03/15/audio_5a6dccc8d4.mp3"},{nome:"☀️ Dias Melhores",url:"https://cdn.pixabay.com/download/audio/2022/10/30/audio_8efab87592.mp3"}];
-
-function abrirConta(){let n=document.getElementById('nome').value.trim();if(n.length<2){alert('Digite seu nome');return}localStorage.setItem('bg_nome',n);localStorage.setItem('bg_link','gratidao.bank/convite/'+n.toUpperCase().replace(/ /g,'').substring(0,10));document.getElementById('modalBemVindo').classList.remove('hidden');document.getElementById('modalBemVindo').querySelector('h2').innerText=`Bem-vindo ao Banco Gratidão, ${n}!`;}
-function fecharModal(){document.getElementById('modalBemVindo').classList.add('hidden');mostrarBanco();}
-function mostrarBanco(){document.getElementById('tela-cadastro').classList.add('hidden');document.getElementById('tela-banco').classList.remove('hidden');let nome=localStorage.getItem('bg_nome');document.getElementById('nomeTxt').innerText=`Olá, ${nome} - IA Ativa ✅`;document.getElementById('respostaIA').innerHTML=`Olá <b>${nome}</b>! 🙏 Saldo fictício R$ 1.000 ativado!`;setTimeout(()=>tocarMusica(0),800);}
-function perguntarIA(){let p=document.getElementById('perguntaIA').value.toLowerCase();let r=document.getElementById('respostaIA');if(p.includes('economizar'))r.innerHTML='💡 IA: Corte 3 gastos sem gratidão e guarde R$ 100!';else r.innerHTML='🤖 IA: Siga em frente, mesmo que seja devagar! Gratidão gera prosperidade 🙏';}
-function copiarMsg(num){let txt=mensagens[num];document.getElementById('previewMsg').innerText=txt;navigator.clipboard.writeText(txt).then(()=>alert('Mensagem '+num+' copiada!')); }
-function falarMsg(num){speechSynthesis.cancel();let m=new SpeechSynthesisUtterance(textosAudio[num]);m.lang='pt-BR';m.rate=1;speechSynthesis.speak(m);}
-function tocarMusica(i){let player=document.getElementById('player');let nome=document.getElementById('musicaNome');nome.innerText=musicas[i].nome;player.src=musicas[i].url;player.play();}
-function sair(){localStorage.clear();location.reload();}
-window.onload=function(){if(localStorage.getItem('bg_nome')){mostrarBanco();}}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+function entrar(){
+  alert("BEM-VINDO AO BANCO GRATIDAO REAL 2.0 \n\nSeu acesso foi liberado com sucesso!");
+}
+function convidar(){
+  if(navigator.share){
+    navigator.share({title:'Banco Gratidao Real 2.0', text:'Venha para o Banco Gratidao Real 2.0!', url: window.location.href});
+  } else {
+    alert("Link do seu Banco:\n" + window.location.href + "\n\nCopia e manda no WhatsApp!");
+  }
+}
 </script>
 </body>
 </html>
