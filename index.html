@@ -118,3 +118,60 @@ function depositarGratidao(valor){
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONORA - Banco Gratidão</title>
+<style>
+ body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
+ .header{text-align:center;padding:30px;background:linear-gradient(135deg,#1a1a1a,#000);border-radius:24px;border:1px solid #333;margin-bottom:20px}
+ .player{background:#000;border:1px solid #333;border-radius:24px;overflow:hidden;margin-bottom:20px}
+ iframe{width:100%;height:380px;border:0}
+ .lista{display:grid;gap:10px}
+ .faixa{padding:16px;border-radius:16px;background:#171717;border:1px solid #2a2a2a;text-align:left;color:#ccc;cursor:pointer}
+ .faixa.ativa{background:#fff;color:#000;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SONORA - BANCO GRATIDÃO</h1>
+  <p>8 faixas oficiais • Projeto Sonoro 2026</p>
+</div>
+
+<div class="player">
+  <iframe id="player" src="https://suno.com/embed/TNFFQ7yqd9yxmBEt" allow="autoplay"></iframe>
+</div>
+
+<div class="lista" id="lista"></div>
+
+<script>
+const tracks=[
+ {id:"TNFFQ7yqd9yxmBEt",title:"01 - Abertura Institucional"},
+ {id:"OKe2y8UCbEdn44op",title:"02 - Inovação e Futuro"},
+ {id:"2rJisod4sUDcmJUl",title:"03 - Conexão Cliente"},
+ {id:"QhfjHoakSFi5KHmg",title:"04 - Segurança Digital"},
+ {id:"Mil1FO9DcAcyBw4E",title:"05 - Performance"},
+ {id:"NPuFOjFpbBdkmKjQ",title:"06 - Colaboração"},
+ {id:"woCVIB7bGjw2ZgPl",title:"07 - Resultados"},
+ {id:"GMxTAuj0InWNaUnA",title:"08 - Encerramento"},
+];
+const lista=document.getElementById('lista');
+const player=document.getElementById('player');
+tracks.forEach((t,i)=>{
+  const b=document.createElement('button');
+  b.className='faixa'+(i===0?' ativa':'');
+  b.innerText=t.title;
+  b.onclick=()=>{
+    player.src=`https://suno.com/embed/${t.id}?autoplay=true`;
+    document.querySelectorAll('.faixa').forEach(f=>f.classList.remove('ativa'));
+    b.classList.add('ativa');
+  };
+  lista.appendChild(b);
+});
+</script>
+
+</body>
+</html>
