@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco Gratidão 3.0 - IA Humana - 500</title>
+<style>
+body{background:#000;color:#fff;font-family:Arial;padding:12px;margin:0}
+.menu{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.btn{border:none;padding:10px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
+.btn-branco{background:#fff;color:#000}
+.btn-amarelo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000}
+.btn-azul{background:#00aaff;color:#000}
+.btn-verde{background:#00ff88;color:#000}
+.card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
+.card-fin{background:#111;border:1px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
+.balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:8px 0;text-align:left;font-size:14px}
+.balao-voz{background:#003300;border-color:#00ff88;color:#aaffaa}
+input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:90%}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #333;padding:8px;font-size:13px}
+th{background:#FFD700;color:#000}
+.total{background:#003300;color:#00ff88;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="menu">
+<button class="btn btn-amarelo" onclick="location.href='https://bancogratidaooficial-ops.github.io/Gratidao-Sonora/'">🎵 Sonora</button>
+<button class="btn btn-branco" onclick="location.href='https://bancogratidaooficial-ops.github.io/Bem-vindo-/'">👋 Bem-vindo</button>
+<button class="btn btn-azul">🏦 Banco 3.0</button>
+</div>
+
+<div class="card">
+<h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
+<div id="chat">
+<div class="balao">Olá José! Sou sua IA com voz humana clonada. Já deixei R$500 em cada gasto pra você. Como posso te ajudar?</div>
+</div>
+<div style="display:flex;gap:6px;margin-top:8px">
+<input id="inputIA" placeholder="Fale com a IA...">
+<button class="btn btn-azul" onclick="falarIA()">Enviar</button>
+<button class="btn btn-verde" onclick="ouvir()">🎤</button>
+<button class="btn btn-amarelo" onclick="iaVozHumana()">🗣️</button>
+</div>
+<div style="margin-top:8px">
+<select id="tipoIA"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
+<button class="btn btn-branco" onclick="document.getElementById('fileBanco').click()">+ 🎵 Add Música</button>
+<input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
+</div>
+<div id="listaBancoMusica"></div>
+</div>
+
+<div class="card-fin">
+<h3 style="color:#FFD700;margin:0">📊 Controle Automático - R$500 em cada</h3>
+<table>
+<tr><th>Categoria</th><th>Valor R$</th></tr>
+<tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td></tr>
+<tr><td>🛒 Mercado</td><td><input type="number" id="merc" value="500" oninput="calc()"></td></tr>
+<tr><td>💧 Água</td><td><input type="number" id="agua" value="500" oninput="calc()"></td></tr>
+<tr><td>💡 Luz</td><td><input type="number" id="luz" value="500" oninput="calc()"></td></tr>
+<tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td></tr>
+<tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td></tr>
+<tr class="total"><td>TOTAL GASTO</td><td id="total">R$ 3000,00</td></tr>
+<tr class="total"><td>SALÁRIO - TOTAL = SOBRA</td><td><input type="number" id="sal" value="5000" oninput="calc()" placeholder="Salário"><span id="sobra"> | Sobra: R$ 2000,00</span></td></tr>
+</table>
+<button class="btn btn-amarelo" style="width:100%;margin-top:10px" onclick="salvarPlanilha()">💾 Salvar Planilha</button>
+</div>
+
+<script>
+let vozHumana=null;
+function carregarVoz(){let vozes=speechSynthesis.getVoices();vozHumana=vozes.find(v=>v.lang.includes('pt-BR'))||vozes[0];}
+speechSynthesis.onvoiceschanged=carregarVoz;carregarVoz();
+function iaVozHumana(){let texto=document.getElementById('chat').lastElementChild.innerText;let fala=new SpeechSynthesisUtterance(texto);fala.voice=vozHumana;fala.lang='pt-BR';fala.rate=0.95;speechSynthesis.speak(fala);}
+function falarIA(){
+ let input=document.getElementById('inputIA');let tipo=document.getElementById('tipoIA').value;
+ if(!input.value) return;
+ let chat=document.getElementById('chat');
+ chat.innerHTML+=`<div class="balao" style="background:#333;text-align:right">Você: ${input.value}</div>`;
+ let resposta=tipo=="gratidao"?`Gratidão por "${input.value}" registrada! Com R$500 em cada gasto, seu total é R$3000.`:tipo=="financeira"?`Financeira: Com R$500 em cada (R$3000 total), sobra R$${(parseFloat(document.getElementById('sal').value)||0)-3000}. Ajuste o mercado pra economizar.`:`Motivação: Você já organizou R$3000 em gratidão!`;
+ chat.innerHTML+=`<div class="balao balao-voz"><b>IA ${tipo}:</b> ${resposta}</div>`;
+ let f=new SpeechSynthesisUtterance(resposta);f.voice=vozHumana;f.lang='pt-BR';speechSynthesis.speak(f);
+ input.value="";
+}
+function ouvir(){let rec=new webkitSpeechRecognition();rec.lang='pt-BR';rec.start();rec.onresult=(e)=>{document.getElementById('inputIA').value=e.results[0][0].transcript;falarIA();}}
+function calc(){
+ let c=parseFloat(document.getElementById('comb').value)||0;
+ let m=parseFloat(document.getElementById('merc').value)||0;
+ let a=parseFloat(document.getElementById('agua').value)||0;
+ let l=parseFloat(document.getElementById('luz').value)||0;
+ let g=parseFloat(document.getElementById('gas').value)||0;
+ let n=parseFloat(document.getElementById('net').value)||0;
+ let sal=parseFloat(document.getElementById('sal').value)||0;
+ let total=c+m+a+l+g+n;
+ document.getElementById('total').innerText='R$ '+total.toFixed(2);
+ document.getElementById('sobra').innerText=' | Sobra: R$ '+(sal-total).toFixed(2);
+}
+function salvarPlanilha(){calc();alert('Planilha com R$500 em cada salva! ✅');}
+window.onload=calc;
+document.getElementById('fileBanco').addEventListener('change',function(){for(let f of this.files){let u=URL.createObjectURL(f);let div=document.createElement('div');div.className='balao balao-voz';div.innerHTML=`🎵 ${f.name}<br><audio controls src="${u}" style="width:100%"></audio>`;document.getElementById('listaBancoMusica').appendChild(div);}});
+</script>
+</body>
+</html>
