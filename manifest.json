@@ -1,0 +1,15 @@
+{
+  "name": "Banco Gratidão - App",
+  "short_name": "Gratidão",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/138/138292.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
