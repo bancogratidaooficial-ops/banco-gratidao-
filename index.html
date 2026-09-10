@@ -2,18 +2,19 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BANCO GRATIDÃO 7.0 FINAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BANCO GRATIDAO 7.2 FINAL - SALVAR MEMORIA</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 body{background:#000;color:#fff;padding:10px;padding-bottom:90px}
 .top-tabs{display:flex;gap:8px;justify-content:center;margin:10px 0;position:sticky;top:0;z-index:100;background:#000;padding:10px 0}
-.tab{padding:12px 20px;border-radius:25px;border:none;font-weight:bold;cursor:pointer}
-.tab.ativo{background:#FFD700;color:#000}.tab.inativo{background:#fff;color:#000}
-.card{border:2px solid #FFD700;border-radius:18px;padding:15px;margin:12px 0;background:#1a1a1a}
+.tab{padding:12px 20px;border-radius:25px;border:none;font-weight:bold;cursor:pointer;font-size:14px}
+.tab.ativo{background:#FFD700;color:#000;transform:scale(1.05)} .tab.inativo{background:#fff;color:#000}
+.card{border:2px solid #FFD700;border-radius:18px;padding:15px;margin:12px 0;background:linear-gradient(180deg,#1a1a1a,#0a0a0a)}
 .card-yellow{background:#FFD700;color:#000;border:none;text-align:center;border-radius:14px;padding:12px;font-weight:bold}
-.btn-gold{background:#FFD700;color:#000;border:none;padding:13px;border-radius:12px;font-weight:bold;width:100%;margin:6px 0;cursor:pointer}
-.btn-white{background:#fff;color:#000;border:none;padding:9px 14px;border-radius:20px;font-weight:bold;cursor:pointer;margin:4px}
+.btn-gold{background:#FFD700;color:#000;border:none;padding:13px 18px;border-radius:12px;font-weight:bold;width:100%;margin:6px 0;cursor:pointer;font-size:15px}
+.btn-save{background:linear-gradient(90deg,#FFD700,#ffaa00);color:#000;border:3px solid #fff;padding:16px;border-radius:14px;font-weight:bold;width:100%;margin-top:14px;cursor:pointer;font-size:17px;box-shadow:0 0 15px rgba(255,215,0,0.5)}
+.btn-white{background:#fff;color:#000;border:none;padding:9px 14px;border-radius:20px;font-weight:bold;cursor:pointer;margin:4px;font-size:13px}
 input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;background:#222;color:#fff}
 .grid-gastos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .caixa-gasto{background:#111;border:1px solid #333;border-radius:12px;padding:10px;text-align:center}
@@ -21,18 +22,24 @@ input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none
 </style>
 </head>
 <body>
+
 <div id="telaLogin" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
 <div style="background:#111;border:2px solid gold;border-radius:20px;padding:25px;width:100%;max-width:400px;text-align:center;">
 <h1 style="color:gold;">BANCO<br>GRATIDÃO</h1>
-<p style="color:gold;font-size:11px;">SUA GRATIDÃO VALE OURO</p>
+<p style="color:gold;font-size:11px;letter-spacing:2px;">SUA GRATIDÃO VALE OURO 💛</p>
+<p style="color:white;margin:15px 0;font-weight:bold;">Crie sua conta de Guerreiro</p>
 <div id="formCadastro">
-<input id="nome" placeholder="Nome completo"><input id="nasc" type="date"><input id="tel" placeholder="Telefone WhatsApp"><input id="senha" type="password" placeholder="Crie uma senha">
-<button class="btn-gold" onclick="cadastrar()">CRIAR CONTA - 3 DIAS GRÁTIS</button>
+<input id="nome" placeholder="Nome completo">
+<input id="nasc" type="date">
+<input id="tel" placeholder="Telefone WhatsApp">
+<input id="senha" type="password" placeholder="Crie uma senha">
+<button class="btn-gold" onclick="cadastrar()">✅ CRIAR CONTA - 3 DIAS GRÁTIS</button>
 <p style="color:#aaa;margin-top:10px;font-size:13px;">Já tem conta? <span onclick="mostrarLogin()" style="color:gold;cursor:pointer;text-decoration:underline;">Fazer Login</span></p>
 </div>
 <div id="formLogin" class="hidden">
-<input id="telLogin" placeholder="Seu telefone"><input id="senhaLogin" type="password" placeholder="Sua senha">
-<button class="btn-gold" onclick="logar()">ENTRAR NO APP</button>
+<input id="telLogin" placeholder="Seu telefone">
+<input id="senhaLogin" type="password" placeholder="Sua senha">
+<button class="btn-gold" onclick="logar()">🔓 ENTRAR NO APP</button>
 <p style="color:#aaa;margin-top:10px;font-size:13px;">Não tem conta? <span onclick="mostrarCadastro()" style="color:gold;cursor:pointer;text-decoration:underline;">Criar conta</span></p>
 </div>
 </div>
@@ -44,42 +51,55 @@ input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none
 <button class="tab inativo" onclick="abrirAba('bemvindo',this)">👋 Bem-vindo</button>
 </div>
 
-<div class="card-yellow"><div>⏳ <b id="diasTexto">3 dias grátis | VERSÃO FREE</b></div><div style="background:#000;color:gold;border-radius:20px;padding:8px 12px;margin-top:8px;display:inline-block;">🔒 Liberar tudo por R$3,00 via PIX 41 99893-6718</div><div id="vipStatus" style="margin-top:8px;"></div></div>
+<div class="card-yellow">
+<div>⏳ <b id="diasTexto">3 dias grátis | VERSÃO FREE</b></div>
+<div style="background:#000;color:gold;border-radius:20px;padding:8px 12px;margin-top:8px;display:inline-block;font-size:14px;">🔒 Liberar tudo por R$3,00 via PIX 41 99893-6718</div>
+<div id="vipStatus" style="margin-top:8px;"></div>
+</div>
 
 <div id="aba-sonora">
 <div class="card" style="border-color:#00d4ff;">
 <h3 style="color:#00ff88;">🤖 IA 2.0 - Voz Humana Clonada</h3>
-<div id="chatBox" style="background:#0f1f2f;padding:12px;border-radius:12px;margin:10px 0;border:1px solid #00d4ff;">Olá <span id="nomeIA">José</span>! App 7.0 instalado! Aleatório ligado.</div>
-<div style="display:flex;gap:6px;"><input id="chatIA" placeholder="Fale com a IA..." style="flex:1;"><button class="btn-white" style="background:#00d4ff;" onclick="falarIA()">Enviar</button><button class="btn-white" style="background:#00ff88;" onclick="ouvirIA()">🎤</button><button class="btn-white" style="background:gold;" onclick="vozIA()">🗣️</button></div>
-<select style="margin-top:8px;"><option>IA Gratidão</option></select>
+<div id="chatBox" style="background:#0f1f2f;padding:12px;border-radius:12px;margin:10px 0;min-height:50px;border:1px solid #00d4ff;">Olá <span id="nomeIA">José</span>! App 7.2 instalado! Aleatório ligado. PIX R$3,00 no 41 99893-6718</div>
+<div style="display:flex;gap:6px;">
+<input id="chatIA" placeholder="Fale com a IA..." style="flex:1;">
+<button class="btn-white" style="background:#00d4ff;" onclick="falarIA()">Enviar</button>
+<button class="btn-white" style="background:#00ff88;" onclick="ouvirIA()">🎤</button>
+<button class="btn-white" style="background:gold;" onclick="vozIA()">🗣️</button>
+</div>
+<select style="margin-top:8px;"><option>IA Gratidão</option><option>IA Motivacional</option></select>
 <p style="font-size:11px;color:#888;margin-top:4px;">Usos hoje: <span id="usosIA">1</span>/3 free</p>
 </div>
+
 <div class="card">
 <h3 style="color:gold;">🎧 Player - Minhas Músicas (Aleatório Auto)</h3>
 <p style="color:#aaa;font-size:13px;">Tocando: <span id="musicaAtual">Gratidao.m4a</span> 🔀</p>
 <audio id="audio" controls style="width:100%;margin:10px 0;"></audio>
 <button class="btn-gold" onclick="togglePlay()">▶️ PLAY / ⏸️ PAUSE</button>
 <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
-<button class="btn-white" onclick="prevMusica()">⏮ Voltar</button><button class="btn-white" onclick="nextMusica()">⏭ Próxima</button><button class="btn-white" id="btnAleatorio" style="background:gold;" onclick="toggleAleatorio()">🔀 Aleatório: ON</button>
+<button class="btn-white" onclick="prevMusica()">⏮ Voltar</button>
+<button class="btn-white" onclick="nextMusica()">⏭ Próxima</button>
+<button class="btn-white" id="btnAleatorio" style="background:gold;" onclick="toggleAleatorio()">🔀 Aleatório: ON</button>
 </div>
 <div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">
 <button class="btn-white" id="btnLoop" onclick="toggleLoop()">🔁 Loop: OFF</button>
 <label class="btn-white" style="background:gold;cursor:pointer;">+ 🎵 Add Música<input type="file" id="addMusica" accept="audio/*" multiple style="display:none;"></label>
 </div>
+<div id="listaMusicas" style="margin-top:10px;font-size:12px;color:#aaa;"></div>
 </div>
 </div>
 
-<div id="aba-banco" class="hidden"><div id="aba-banco" class="hidden">
+<div id="aba-banco" class="hidden">
 <div class="card">
 <h3 style="color:gold;">💰 Controle - Seu Dinheiro</h3>
-<p style="color:#ccc;font-size:13px;">Controle total do dinheiro, tenha controle total sobre seus gastos</p>
+<p style="color:#ccc;margin:8px 0;font-size:13px;">Controle total do dinheiro, tenha controle total sobre seus gastos, sua gratidão virando recompensa</p>
 
 <div style="background:gold;color:#000;padding:12px;border-radius:12px;margin:10px 0;">
-<label style="font-weight:bold;">💵 SALÁRIO RECEBIDO / ENTRADA</label>
-<input id="salario" type="number" placeholder="Ex: 1000" style="background:#fff;color:#000;font-weight:bold;font-size:18px;text-align:center;" oninput="calcular()">
+<label style="font-weight:bold;font-size:13px;">💵 SALÁRIO RECEBIDO / ENTRADA</label>
+<input id="salario" type="number" placeholder="Ex: 1000" style="background:#fff;color:#000;font-weight:bold;font-size:20px;text-align:center;" oninput="calcular()">
 </div>
 
-<h4 style="color:gold;margin:12px 0;">🛒 GASTOS MENSAIS</h4>
+<h4 style="color:gold;margin:12px 0;">🛒 GASTOS MENSAIS FIXOS</h4>
 <div class="grid-gastos">
 <div class="caixa-gasto"><label>🛒 Mercado</label><input id="g_mercado" type="number" placeholder="R$ 0" oninput="calcular()"></div>
 <div class="caixa-gasto"><label>⛽ Combustível</label><input id="g_comb" type="number" placeholder="R$ 0" oninput="calcular()"></div>
@@ -90,108 +110,86 @@ input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none
 </div>
 
 <h4 style="color:gold;margin:14px 0 8px;">➕ OUTROS GASTOS</h4>
-<div style="display:flex;gap:6px;"><input id="outroDesc" placeholder="Ex: Aluguel" style="flex:1;"><input id="outroValor" type="number" placeholder="R$" style="width:90px;"></div>
+<div style="display:flex;gap:6px;">
+<input id="outroDesc" placeholder="Ex: Aluguel" style="flex:1;">
+<input id="outroValor" type="number" placeholder="R$" style="width:90px;">
+</div>
 <button class="btn-gold" onclick="addOutro()">+ Adicionar Outro Gasto</button>
 <div id="listaOutros" style="margin-top:10px;"></div>
 
 <div style="background:#111;border:2px solid gold;border-radius:12px;padding:12px;margin-top:14px;text-align:center;">
-<div style="display:flex;justify-content:space-between;"><span>Salário:</span><span id="resSalario" style="color:#00ff88;font-weight:bold;">R$ 0,00</span></div>
-<div style="display:flex;justify-content:space-between;"><span>Total Gastos:</span><span id="resGastos" style="color:#ff4444;font-weight:bold;">R$ 0,00</span></div>
+<div style="display:flex;justify-content:space-between;margin:4px 0;"><span>Salário:</span><span id="resSalario" style="color:#00ff88;font-weight:bold;">R$ 0,00</span></div>
+<div style="display:flex;justify-content:space-between;margin:4px 0;"><span>Total Gastos:</span><span id="resGastos" style="color:#ff4444;font-weight:bold;">R$ 0,00</span></div>
 <hr style="margin:8px 0;border-color:#333;">
-<div style="display:flex;justify-content:space-between;font-size:18px;"><b>SALDO:</b><span id="resSaldo" style="font-weight:bold;">R$ 0,00</span></div>
+<div style="display:flex;justify-content:space-between;font-size:20px;"><b>SALDO:</b><span id="resSaldo" style="font-weight:bold;">R$ 0,00</span></div>
 <div id="msgSaldo" style="margin-top:6px;font-size:13px;"></div>
 </div>
 
-<!-- BOTÃO SALVAR NOVO -->
-<button class="btn-gold" style="background:linear-gradient(90deg,gold,#ffaa00);font-size:16px;padding:16px;margin-top:12px;" onclick="salvarControle()">💾 SALVAR MEU CONTROLE</button>
-<p id="statusSalvo" style="text-align:center;font-size:12px;color:#00ff88;margin-top:6px;"></p>
-
+<button class="btn-save" onclick="salvarControle()">💾 SALVAR MEU CONTROLE NA MEMÓRIA</button>
+<p id="statusSalvo" style="text-align:center;font-size:12px;color:#00ff88;margin-top:8px;min-height:18px;"></p>
+<p style="text-align:center;font-size:11px;color:#888;margin-top:4px;">Fica salvo até você adicionar o próximo gasto</p>
 </div>
 </div>
-<div class="card">
-<h3 style="color:gold;">💰 Controle - Seu Dinheiro</h3>
-<p style="color:#ccc;font-size:13px;">Controle total do dinheiro, tenha controle total sobre seus gastos</p>
-<div style="background:gold;color:#000;padding:12px;border-radius:12px;margin:10px 0;">
-<label style="font-weight:bold;">💵 SALÁRIO RECEBIDO</label>
-<input id="salario" type="number" placeholder="Ex: 3000" style="background:#fff;color:#000;font-weight:bold;font-size:18px;text-align:center;" oninput="calcular()">
-</div>
-<h4 style="color:gold;margin:12px 0;">🛒 GASTOS MENSAIS</h4>
-<div class="grid-gastos">
-<div class="caixa-gasto"><label>🛒 Mercado</label><input id="g_mercado" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-<div class="caixa-gasto"><label>⛽ Combustível</label><input id="g_comb" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-<div class="caixa-gasto"><label>💊 Farmácia</label><input id="g_farm" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-<div class="caixa-gasto"><label>💡 Luz</label><input id="g_luz" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-<div class="caixa-gasto"><label>💧 Água</label><input id="g_agua" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-<div class="caixa-gasto"><label>🌐 Internet</label><input id="g_net" type="number" placeholder="R$ 0" oninput="calcular()"></div>
-</div>
-<h4 style="color:gold;margin:14px 0 8px;">➕ OUTROS GASTOS</h4>
-<div style="display:flex;gap:6px;"><input id="outroDesc" placeholder="Ex: Aluguel" style="flex:1;"><input id="outroValor" type="number" placeholder="R$" style="width:90px;"></div>
-<button class="btn-gold" onclick="addOutro()">+ Adicionar Outro Gasto</button>
-<div id="listaOutros"></div>
-<div style="background:#111;border:2px solid gold;border-radius:12px;padding:12px;margin-top:14px;text-align:center;">
-<div style="display:flex;justify-content:space-between;"><span>Salário:</span><span id="resSalario" style="color:#00ff88;font-weight:bold;">R$ 0,00</span></div>
-<div style="display:flex;justify-content:space-between;"><span>Total Gastos:</span><span id="resGastos" style="color:#ff4444;font-weight:bold;">R$ 0,00</span></div><hr style="margin:8px 0;">
-<div style="display:flex;justify-content:space-between;font-size:18px;"><b>SALDO:</b><span id="resSaldo">R$ 0,00</span></div>
-<div id="msgSaldo" style="margin-top:6px;font-size:13px;"></div>
-</div>
-</div>
-</div>
-
 <div id="aba-bemvindo" class="hidden">
 <div class="card" style="text-align:center;">
 <h2 style="color:gold;">Bem-vindo, <span id="nomeBemvindo">Guerreiro</span>! 🙏</h2>
 <p style="margin:12px 0;color:#ccc;font-size:14px;">Quem agradece o pouco que tem, Deus confia o muito que ainda vem.</p>
 <div style="background:#111;padding:12px;border-radius:12px;margin:12px 0;text-align:left;font-size:13px;">
-<p>👤 Nome: <b id="b_nome"></b></p><p>📅 Nascimento: <b id="b_nasc"></b></p><p>📱 Telefone: <b id="b_tel"></b></p><p>📆 Cadastro: <b id="b_data"></b></p>
+<p>👤 Nome: <b id="b_nome"></b></p>
+<p>📅 Nascimento: <b id="b_nasc"></b></p>
+<p>📱 Telefone: <b id="b_tel"></b></p>
+<p>📆 Cadastro: <b id="b_data"></b></p>
+</div>
+<div style="background:gold;color:#000;padding:12px;border-radius:12px;margin:12px 0;">
+<h4>AGRADEÇA 💛</h4>
+<p style="font-size:13px;">Se acordou cedo pra trabalhar, AGRADEÇA. Você tem um emprego.</p>
 </div>
 <div style="background:#111;border:1px solid gold;border-radius:12px;padding:12px;margin:12px 0;">
 <h4 style="color:gold;">👑 SEJA MEMBRO VIP - CONVIDE 3 AMIGOS</h4>
-<div style="height:12px;background:#333;border-radius:10px;margin:8px 0;"><div id="progressVIP" style="height:100%;background:gold;width:0%;border-radius:10px;"></div></div>
-<p><span id="convidadosCount">0</span>/3 amigos</p>
+<p style="font-size:12px;color:#aaa;">Convide 3 guerreiros e libere o app para sempre sem pagar R$3,00!</p>
+<div style="height:12px;background:#333;border-radius:10px;margin:8px 0;"><div id="progressVIP" style="height:100%;background:gold;width:0%;border-radius:10px;transition:0.5s;"></div></div>
+<p><span id="convidadosCount">0</span>/3 amigos convidados</p>
 <p style="word-break:break-all;font-size:11px;margin:8px 0;border:1px dashed gold;padding:8px;border-radius:8px;" id="meuLink">Seu link VIP...</p>
 <button class="btn-gold" onclick="compartilharZap()">📲 CONVIDAR NO WHATSAPP</button>
-<div style="display:flex;gap:6px;margin-top:8px;"><input id="telAmigo" placeholder="Telefone do amigo"><button class="btn-white" style="background:gold;" onclick="confirmarAmigo()">✅</button></div>
-<div id="listaAmigos" style="margin-top:8px;"></div>
+<div style="display:flex;gap:6px;margin-top:8px;">
+<input id="telAmigo" placeholder="Telefone do amigo que instalou">
+<button class="btn-white" style="background:gold;" onclick="confirmarAmigo()">✅</button>
+</div>
+<div id="listaAmigos" style="margin-top:8px;font-size:13px;"></div>
+<div id="mensagemVIP" style="margin-top:8px;font-weight:bold;color:gold;"></div>
 </div>
 <button class="btn-gold" style="background:#ff4444;color:#fff;" onclick="sair()">🚪 Sair da Conta</button>
 </div>
 </div>
 
 <script>
-let musicas=["Gratidao.m4a"],idx=0,aleatorio=true,loop=false,outros=[];
+let musicas=["Gratidao.m4a"]; let idx=0; let aleatorio=true; let loop=false; let outros=[];
 function abrirAba(id,el){document.querySelectorAll('[id^=aba-]').forEach(d=>d.classList.add('hidden'));document.getElementById('aba-'+id).classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.className='tab inativo');el.className='tab ativo';}
 function mostrarLogin(){document.getElementById('formCadastro').classList.add('hidden');document.getElementById('formLogin').classList.remove('hidden');}
 function mostrarCadastro(){document.getElementById('formLogin').classList.add('hidden');document.getElementById('formCadastro').classList.remove('hidden');}
-function cadastrar(){let user={nome:document.getElementById('nome').value,nasc:document.getElementById('nasc').value,tel:document.getElementById('tel').value.replace(/\D/g,''),senha:document.getElementById('senha').value,dataCadastro:new Date().toISOString()};if(!user.nome||!user.tel||!user.senha){alert('Preencha tudo!');return;}localStorage.setItem('banco_gratidao_user',JSON.stringify(user));localStorage.setItem('banco_gratidao_logado','true');if(!localStorage.getItem('convidados_'+user.tel))localStorage.setItem('convidados_'+user.tel,JSON.stringify([]));finalizarLogin(user);}
-function logar(){let tel=document.getElementById('telLogin').value.replace(/\D/g,'');let senha=document.getElementById('senhaLogin').value;let salvo=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');if(tel===salvo.tel&&senha===salvo.senha){localStorage.setItem('banco_gratidao_logado','true');finalizarLogin(salvo);}else alert('Telefone ou senha errados!');}
+function cadastrar(){let user={nome:document.getElementById('nome').value,nasc:document.getElementById('nasc').value,tel:document.getElementById('tel').value.replace(/\D/g,''),senha:document.getElementById('senha').value,dataCadastro:new Date().toISOString()};if(!user.nome||!user.tel||!user.senha){alert('Preencha Nome, Telefone e Senha!');return;}localStorage.setItem('banco_gratidao_user',JSON.stringify(user));localStorage.setItem('banco_gratidao_logado','true');if(!localStorage.getItem('convidados_'+user.tel)) localStorage.setItem('convidados_'+user.tel,JSON.stringify([]));finalizarLogin(user);}
+function logar(){let tel=document.getElementById('telLogin').value.replace(/\D/g,'');let senha=document.getElementById('senhaLogin').value;let salvo=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');if(tel===salvo.tel && senha===salvo.senha){localStorage.setItem('banco_gratidao_logado','true');finalizarLogin(salvo);} else alert('Telefone ou senha errados!');}
 function finalizarLogin(user){document.getElementById('telaLogin').style.display='none';document.getElementById('nomeIA').innerText=user.nome.split(' ')[0];document.getElementById('nomeBemvindo').innerText=user.nome.split(' ')[0];document.getElementById('b_nome').innerText=user.nome;document.getElementById('b_nasc').innerText=user.nasc||'---';document.getElementById('b_tel').innerText=user.tel;document.getElementById('b_data').innerText=new Date(user.dataCadastro).toLocaleDateString('pt-BR');document.getElementById('meuLink').innerText='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref='+user.tel;carregarVIP();carregarGastos();}
 function sair(){localStorage.setItem('banco_gratidao_logado','false');location.reload();}
-function falarIA(){let t=document.getElementById('chatIA').value;if(!t)return;document.getElementById('chatBox').innerHTML+='<div>👤 '+t+'</div>';document.getElementById('chatIA').value='';let r='Guerreiro, '+t+', sua gratidão vale ouro!';document.getElementById('chatBox').innerHTML+='<div style=color:#00ff88>🤖 '+r+'</div>';vozIA(r);}
-function vozIA(txt){let u=new SpeechSynthesisUtterance(txt||'Sua gratidão vale ouro');u.lang='pt-BR';speechSynthesis.speak(u);}
+function falarIA(){let t=document.getElementById('chatIA').value;if(!t)return;document.getElementById('chatBox').innerHTML+='<div style=margin-top:6px>👤 '+t+'</div>';document.getElementById('chatIA').value='';let r='Guerreiro, '+t+', sua gratidão vale ouro! Continue firme!';document.getElementById('chatBox').innerHTML+='<div style=color:#00ff88;margin-top:4px>🤖 '+r+'</div>';vozIA(r);}
+function vozIA(txt){let u=new SpeechSynthesisUtterance(txt||'Sua gratidão vale ouro');u.lang='pt-BR';u.rate=0.9;speechSynthesis.speak(u);}
 function ouvirIA(){let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='pt-BR';rec.onresult=e=>{document.getElementById('chatIA').value=e.results[0][0].transcript;falarIA();};rec.start();}
 function togglePlay(){let a=document.getElementById('audio');a.paused?a.play():a.pause();}
 function nextMusica(){idx=aleatorio?Math.floor(Math.random()*musicas.length):(idx+1)%musicas.length;document.getElementById('musicaAtual').innerText=musicas[idx];}
 function prevMusica(){idx=(idx-1+musicas.length)%musicas.length;document.getElementById('musicaAtual').innerText=musicas[idx];}
-function toggleAleatorio(){aleatorio=!aleatorio;document.getElementById('btnAleatorio').innerText=aleatorio?'🔀 Aleatório: ON':'🔀 Aleatório: OFF';}
-function toggleLoop(){loop=!loop;document.getElementById('btnLoop').innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF';}
-document.getElementById('addMusica').addEventListener('change',e=>{for(let f of e.target.files){musicas.push(f.name);let url=URL.createObjectURL(f);if(musicas.length==1)document.getElementById('audio').src=url;}document.getElementById('listaMusicas').innerHTML=musicas.map(m=>'🎵 '+m).join('<br>');});
-function calcular(){let salario=parseFloat(document.getElementById('salario').value)||0,mercado=parseFloat(document.getElementById('g_mercado').value)||0,comb=parseFloat(document.getElementById('g_comb').value)||0,farm=parseFloat(document.getElementById('g_farm').value)||0,luz=parseFloat(document.getElementById('g_luz').value)||0,agua=parseFloat(document.getElementById('g_agua').value)||0,net=parseFloat(document.getElementById('g_net').value)||0,totalOutros=outros.reduce((s,o)=>s+o.valor,0),total=mercado+comb+farm+luz+agua+net+totalOutros,saldo=salario-total;document.getElementById('resSalario').innerText='R$ '+salario.toFixed(2);document.getElementById('resGastos').innerText='R$ '+total.toFixed(2);document.getElementById('resSaldo').innerText='R$ '+saldo.toFixed(2);document.getElementById('resSaldo').style.color=saldo>=0?'#00ff88':'#ff4444';document.getElementById('msgSaldo').innerText=saldo>=0?'🙏 Sobrando! Gratidão gera abundância!':'⚠️ Gastos maiores que entrada!';localStorage.setItem('banco_gastos',JSON.stringify({salario,mercado,comb,farm,luz,agua,net,outros}));}
-function addOutro(){let desc=document.getElementById('outroDesc').value,val=parseFloat(document.getElementById('outroValor').value);if(!desc||!val){alert('Digite tudo!');return;}outros.push({desc,valor:val});document.getElementById('outroDesc').value='';document.getElementById('outroValor').value='';renderOutros();calcular();}
-function renderOutros(){document.getElementById('listaOutros').innerHTML=outros.map((o,i)=>'<div style=display:flex;justify-content:space-between;background:#222;padding:6px;border-radius:8px;margin:4px 0;><span>'+o.desc+'</span><span>R$ '+o.valor+' <span onclick=remOutro('+i+') style=color:red;cursor:pointer;>❌</span></span></div>').join('');}
+function toggleAleatorio(){aleatorio=!aleatorio;document.getElementById('btnAleatorio').innerText=aleatorio?'🔀 Aleatório: ON':'🔀 Aleatório: OFF';document.getElementById('btnAleatorio').style.background=aleatorio?'gold':'#fff';}
+function toggleLoop(){loop=!loop;document.getElementById('btnLoop').innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF';document.getElementById('btnLoop').style.background=loop?'gold':'#fff';}
+document.getElementById('addMusica').addEventListener('change',e=>{for(let f of e.target.files){musicas.push(f.name);let url=URL.createObjectURL(f);if(musicas.length===1)document.getElementById('audio').src=url;}document.getElementById('listaMusicas').innerHTML=musicas.map(m=>'🎵 '+m).join('<br>');});
+function calcular(){let salario=parseFloat(document.getElementById('salario').value)||0;let mercado=parseFloat(document.getElementById('g_mercado').value)||0;let comb=parseFloat(document.getElementById('g_comb').value)||0;let farm=parseFloat(document.getElementById('g_farm').value)||0;let luz=parseFloat(document.getElementById('g_luz').value)||0;let agua=parseFloat(document.getElementById('g_agua').value)||0;let net=parseFloat(document.getElementById('g_net').value)||0;let totalOutros=outros.reduce((s,o)=>s+o.valor,0);let total=mercado+comb+farm+luz+agua+net+totalOutros;let saldo=salario-total;document.getElementById('resSalario').innerText='R$ '+salario.toFixed(2).replace('.',',');document.getElementById('resGastos').innerText='R$ '+total.toFixed(2).replace('.',',');document.getElementById('resSaldo').innerText='R$ '+saldo.toFixed(2).replace('.',',');document.getElementById('resSaldo').style.color=saldo>=0?'#00ff88':'#ff4444';document.getElementById('msgSaldo').innerText=saldo>=0?'🙏 Sobrando! Gratidão gera abundância!':'⚠️ Atenção! Gastos maiores que entrada!';}
+function addOutro(){let desc=document.getElementById('outroDesc').value;let val=parseFloat(document.getElementById('outroValor').value);if(!desc||!val){alert('Digite descrição e valor!');return;}outros.push({desc,valor:val});document.getElementById('outroDesc').value='';document.getElementById('outroValor').value='';renderOutros();calcular();}
+function renderOutros(){document.getElementById('listaOutros').innerHTML=outros.map((o,i)=>`<div style="display:flex;justify-content:space-between;background:#222;padding:8px;border-radius:8px;margin:4px 0;font-size:13px;"><span>${o.desc}</span><span>R$ ${o.valor.toFixed(2)} <span onclick="remOutro(${i})" style="color:red;cursor:pointer;">❌</span></span></div>`).join('');}
 function remOutro(i){outros.splice(i,1);renderOutros();calcular();}
-function carregarGastos(){let d=JSON.parse(localStorage.getItem('banco_gastos')||'null');if(!d)return;document.getElementById('salario').value=d.salario||'';document.getElementById('g_mercado').value=d.mercado||'';document.getElementById('g_comb').value=d.comb||'';document.getElementById('g_farm').value=d.farm||'';document.getElementById('g_luz').value=d.luz||'';document.getElementById('g_agua').value=d.agua||'';document.getElementById('g_net').value=d.net||'';outros=d.outros||[];renderOutros();calcular();}
-function carregarVIP(){let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');if(!user.tel)return;let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');document.getElementById('convidadosCount').innerText=lista.length;document.getElementById('progressVIP').style.width=(lista.length/3*100)+'%';document.getElementById('listaAmigos').innerHTML=lista.map(t=>'<div style=color:#0f0;>✅ '+t+'</div>').join('');if(lista.length>=3)document.getElementById('vipStatus').innerHTML='<span style=background:gold;color:#000;padding:5px 12px;border-radius:20px;font-weight:bold;>👑 VIP VITALÍCIO!</span>';}
-function compartilharZap(){let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let link='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref='+user.tel;let msg='🔥 BANCO GRATIDÃO 🔥 Sua gratidão vale ouro! App: '+link;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
-function confirmarAmigo(){let t=document.getElementById('telAmigo').value.replace(/\D/g,'');if(!t)return;let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');if(lista.includes(t)){alert('Já contou!');return;}lista.push(t);localStorage.setItem('convidados_'+user.tel,JSON.stringify(lista));document.getElementById('telAmigo').value='';carregarVIP();if(lista.length==3)alert('👑 VIP LIBERADO!');}
-window.onload=function(){let logado=localStorage.getItem('banco_gratidao_logado');let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'null');if(logado=='true'&&user){document.getElementById('telaLogin').style.display='none';finalizarLogin(user);}}
-</script>function salvarControle(){
-  calcular(); // garante que calcula antes de salvar
-  localStorage.setItem('banco_gastos_salvo','true');
-  localStorage.setItem('data_ultimo_save', new Date().toLocaleString('pt-BR'));
-  document.getElementById('statusSalvo').innerText = '✅ Salvo em ' + new Date().toLocaleString('pt-BR') + ' - Seu saldo de R$ ' + document.getElementById('resSaldo').innerText + ' ficou gravado!';
-  // vibra e alerta
-  if(navigator.vibrate) navigator.vibrate(100);
-  alert('✅ CONTROLE SALVO!\n\nSalário: ' + document.getElementById('resSalario').innerText + '\nGastos: ' + document.getElementById('resGastos').innerText + '\nSALDO: ' + document.getElementById('resSaldo').innerText + '\n\nVai ficar gravado até você mudar de novo!');
-}
+function salvarControle(){calcular();let dados={salario:document.getElementById('salario').value,mercado:document.getElementById('g_mercado').value,comb:document.getElementById('g_comb').value,farm:document.getElementById('g_farm').value,luz:document.getElementById('g_luz').value,agua:document.getElementById('g_agua').value,net:document.getElementById('g_net').value,outros:outros,resSalario:document.getElementById('resSalario').innerText,resGastos:document.getElementById('resGastos').innerText,resSaldo:document.getElementById('resSaldo').innerText,data:new Date().toLocaleString('pt-BR')};localStorage.setItem('banco_gastos',JSON.stringify(dados));localStorage.setItem('banco_gastos_salvo','true');document.getElementById('statusSalvo').innerText='✅ SALVO em '+dados.data+' - Saldo '+dados.resSaldo+' gravado na memória!';if(navigator.vibrate) navigator.vibrate([100,50,100]);alert('✅ CONTROLE SALVO NA MEMÓRIA!\n\nSalário: '+dados.resSalario+'\nTotal Gastos: '+dados.resGastos+'\nSALDO: '+dados.resSaldo+'\n\nFica gravado até você adicionar o próximo gasto!');}
+function carregarGastos(){let d=JSON.parse(localStorage.getItem('banco_gastos')||'null');if(!d) return;document.getElementById('salario').value=d.salario||'';document.getElementById('g_mercado').value=d.mercado||'';document.getElementById('g_comb').value=d.comb||'';document.getElementById('g_farm').value=d.farm||'';document.getElementById('g_luz').value=d.luz||'';document.getElementById('g_agua').value=d.agua||'';document.getElementById('g_net').value=d.net||'';outros=d.outros||[];renderOutros();calcular();if(localStorage.getItem('banco_gastos_salvo')==='true'){document.getElementById('statusSalvo').innerText='📂 Carregado da memória - Último save: '+(d.data||'');}}
+function carregarVIP(){let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');if(!user.tel) return;let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');document.getElementById('convidadosCount').innerText=lista.length;document.getElementById('progressVIP').style.width=(lista.length/3*100)+'%';document.getElementById('listaAmigos').innerHTML=lista.map(t=>`<div style="color:#0f0;">✅ ${t}</div>`).join('');if(lista.length>=3){document.getElementById('vipStatus').innerHTML='<span style="background:gold;color:#000;padding:6px 12px;border-radius:20px;font-weight:bold;">👑 VOCÊ É VIP VITALÍCIO!</span>';document.getElementById('mensagemVIP').innerText='Parabéns! Acesso vitalício liberado!';}}
+function compartilharZap(){let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let link='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref='+user.tel;let msg='🔥 CONVOCAÇÃO BANCO GRATIDÃO 🔥\nSua gratidão vale ouro! Baixa meu APP: '+link;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function confirmarAmigo(){let t=document.getElementById('telAmigo').value.replace(/\D/g,'');if(!t) return;let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');if(lista.includes(t)){alert('Já contou esse amigo!');return;}lista.push(t);localStorage.setItem('convidados_'+user.tel,JSON.stringify(lista));document.getElementById('telAmigo').value='';carregarVIP();if(lista.length===3) alert('👑 PARABÉNS! VOCÊ VIROU VIP VITALÍCIO!');}
+window.onload=function(){let logado=localStorage.getItem('banco_gratidao_logado');let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'null');if(logado==='true' && user){document.getElementById('telaLogin').style.display='none';finalizarLogin(user);}}
+</script>
 </body>
 </html>
