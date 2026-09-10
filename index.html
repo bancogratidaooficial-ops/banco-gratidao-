@@ -1,187 +1,300 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão 6.0 - App Oficial</title>
-
-<!-- PWA APP -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BANCO GRATIDÃO 7.0 - SUA GRATIDÃO VALE OURO</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Gratidão">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/138/138292.png">
-<script>
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-</script>
-
 <style>
-body{background:#000;color:#fff;font-family:Arial;padding:10px;margin:0}
-.card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
-.card-fin{background:#111;border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
-.card-player{background:linear-gradient(180deg,#1a1a00,#000);border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
-.balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:6px 0;text-align:left;font-size:13px;display:flex;justify-content:space-between;align-items:center}
-.balao-ativo{border:2px solid #FFD700;background:#332a00;color:#FFD700}
-input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:82%;border:1px solid #333}
-.btn{border:none;padding:9px 13px;border-radius:20px;font-weight:bold;cursor:pointer}
-.btn-play{background:#FFD700;color:#000;font-size:19px;padding:15px;width:100%;border-radius:30px}
-.btn-salvar{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;padding:14px;width:100%;font-size:16px;margin-top:10px;border-radius:20px}
-.btn-mini{background:#333;color:#fff;padding:6px 10px;font-size:11px;margin:2px;border-radius:15px}
-.btn-random-on{background:#FFD700;color:#000}
-.btn-random-off{background:#333;color:#aaa}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{border:1px solid #333;padding:7px;font-size:13px}
-th{background:#FFD700;color:#000}
-.total{background:#003300;color:#00ff88;font-weight:bold}
-.saldo-box{background:#002a00;border:2px solid #00ff88;border-radius:15px;padding:10px;margin:10px 0;text-align:center}
-.progress{width:100%;height:10px;background:#222;border-radius:10px;margin-top:6px;overflow:hidden}
-.progress-bar{height:100%;background:linear-gradient(90deg,#00ff88,#FFD700);transition:width 0.5s}
-#paywall{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9999;justify-content:center;align-items:center;padding:20px}
-.pay-box{background:#111;border:3px solid #FFD700;border-radius:20px;padding:20px;max-width:360px;text-align:center}
-#btnInstall{background:#00ff88;color:#000;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;display:none;margin:8px auto}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background:#000;color:#fff;padding:10px;padding-bottom:90px}
+.top-tabs{display:flex;gap:6px;justify-content:center;margin:10px 0;position:sticky;top:0;z-index:100;background:#000;padding:8px 0}
+.tab{padding:10px 14px;border-radius:25px;border:none;font-weight:bold;cursor:pointer;font-size:13px;transition:0.3s}
+.tab.ativo{background:gold;color:#000;transform:scale(1.05)} .tab.inativo{background:#222;color:#fff}
+.card{border:2px solid gold;border-radius:18px;padding:15px;margin:12px 0;background:linear-gradient(180deg,#1a1a1a,#0a0a0a);box-shadow:0 0 15px rgba(255,215,0,0.15)}
+.card-yellow{background:gold;color:#000;border:none;text-align:center}
+.card-blue{border-color:#00d4ff} .card-green{border-color:#00ff88}
+.btn-gold{background:gold;color:#000;border:none;padding:12px 18px;border-radius:12px;font-weight:bold;width:100%;margin:6px 0;cursor:pointer}
+.btn-white{background:#fff;color:#000;border:none;padding:9px 14px;border-radius:20px;font-weight:bold;cursor:pointer;margin:3px;font-size:13px}
+input,textarea,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;background:#222;color:#fff}
+.progress-bar{height:14px;background:#333;border-radius:10px;overflow:hidden;margin:10px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,gold,#ffaa00);width:0%;transition:0.6s}
+.hidden{display:none!important}
+.pontos{color:gold;font-weight:bold;font-size:18px}
 </style>
 </head>
 <body>
 
+<!-- LOGIN / CADASTRO -->
+<div id="telaLogin" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:#111;border:2px solid gold;border-radius:20px;padding:25px;width:100%;max-width:400px;text-align:center;">
+    <h1 style="color:gold;">BANCO<br>GRATIDÃO</h1>
+    <p style="color:gold;font-size:12px;letter-spacing:2px;">SUA GRATIDÃO VALE OURO 💛</p>
+    <p id="tituloForm" style="color:white;margin:18px 0;font-weight:bold;">Crie sua conta de Guerreiro</p>
+    <div id="formCadastro">
+      <input id="nome" placeholder="Nome completo">
+      <input id="nasc" type="date">
+      <input id="tel" placeholder="Telefone WhatsApp ex: 41998936718">
+      <input id="senha" type="password" placeholder="Crie uma senha (4 dígitos)">
+      <button class="btn-gold" onclick="cadastrar()">✅ CRIAR CONTA - 3 DIAS GRÁTIS</button>
+      <p style="color:#aaa;margin-top:12px;font-size:13px;">Já tem conta? <span onclick="mostrarLogin()" style="color:gold;cursor:pointer;text-decoration:underline;">Fazer Login</span></p>
+    </div>
+    <div id="formLogin" class="hidden">
+      <input id="telLogin" placeholder="Seu telefone">
+      <input id="senhaLogin" type="password" placeholder="Sua senha">
+      <button class="btn-gold" onclick="logar()">🔓 ENTRAR NO APP</button>
+      <p style="color:#aaa;margin-top:12px;font-size:13px;">Não tem conta? <span onclick="mostrarCadastro()" style="color:gold;cursor:pointer;text-decoration:underline;">Criar conta</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="top-tabs">
+  <button class="tab ativo" onclick="abrirAba('sonora',this)">🎵 Sonora</button>
+  <button class="tab inativo" onclick="abrirAba('banco',this)">🏦 Banco</button>
+  <button class="tab inativo" onclick="abrirAba('bemvindo',this)">👋 Bem-vindo</button>
+  <button class="tab inativo" onclick="abrirAba('vip',this)">👑 VIP</button>
+</div>
+
+<div id="statusBar" class="card-yellow">
+  <div>⏳ <b id="diasTexto">3 dias grátis | VERSÃO FREE</b></div>
+  <div id="vipStatus" style="margin-top:6px;"></div>
+  <div style="font-size:12px;margin-top:4px;">💛 Pontos de Gratidão: <span class="pontos" id="pontosTopo">0</span></div>
+</div>
+
+<!-- ABA SONORA -->
+<div id="aba-sonora">
+  <div class="card card-blue">
+    <h3 style="color:#00ff88;">🤖 IA 2.0 - Voz Humana Clonada</h3>
+    <div id="chatBox" style="background:#0f1f2f;padding:10px;border-radius:12px;margin:10px 0;min-height:60px;border:1px solid #00d4ff;">Olá <span id="nomeIA">Guerreiro</span>! App 7.0 instalado! Seu cadastro está salvo. Fale comigo!</div>
+    <div style="display:flex;gap:6px;">
+      <input id="chatIA" placeholder="Fale com a IA..." style="flex:1;">
+      <button class="btn-white" style="background:#00d4ff;" onclick="falarIA()">Enviar</button>
+      <button class="btn-white" style="background:#00ff88;" onclick="ouvirIA()">🎤</button>
+      <button class="btn-white" style="background:gold;" onclick="vozIA()">🗣️</button>
+    </div>
+    <p style="font-size:11px;color:#888;margin-top:5px;">Usos hoje: <span id="usosIA">0</span>/10 free</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:gold;">🎧 Player - Minhas Músicas (Aleatório Auto)</h3>
+    <p style="color:#aaa;font-size:12px;">Tocando: <span id="musicaAtual">Gratidao.m4a</span> 🔀</p>
+    <audio id="audio" controls style="width:100%;margin:10px 0;"></audio>
+    <button class="btn-gold" onclick="togglePlay()">▶️ PLAY / ⏸️ PAUSE</button>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;">
+      <button class="btn-white" onclick="prevMusica()">⏮ Voltar</button>
+      <button class="btn-white" onclick="nextMusica()">⏭ Próxima</button>
+      <button class="btn-white" id="btnAleatorio" style="background:gold;" onclick="toggleAleatorio()">🔀 Aleatório: ON</button>
+      <button class="btn-white" id="btnLoop" onclick="toggleLoop()">🔁 Loop: OFF</button>
+      <label class="btn-white" style="background:gold;cursor:pointer;">+ 🎵 Add Música<input type="file" id="addMusica" accept="audio/*" multiple style="display:none;"></label>
+    </div>
+    <div id="listaMusicas" style="margin-top:10px;font-size:12px;"></div>
+  </div>
+
+  <div class="card card-green">
+    <h3>💛 Diário da Gratidão (NOVO)</h3>
+    <p style="font-size:12px;color:#aaa;">Escreva 3 motivos de gratidão hoje e ganhe 10 pontos!</p>
+    <textarea id="gratidao1" placeholder="1. Sou grato por..."></textarea>
+    <textarea id="gratidao2" placeholder="2. Sou grato por..."></textarea>
+    <textarea id="gratidao3" placeholder="3. Sou grato por..."></textarea>
+    <button class="btn-gold" onclick="salvarGratidao()">💛 SALVAR MINHA GRATIDÃO +10 PONTOS</button>
+    <div id="historicoGratidao" style="margin-top:10px;font-size:12px;"></div>
+  </div>
+</div>
+
+<!-- ABA BANCO -->
+<div id="aba-banco" class="hidden">
+  <div class="card">
+    <h3 style="color:gold;">📊 Controle - Seu Dinheiro</h3>
+    <p style="color:#ccc;margin:6px 0;font-size:14px;">💰 <b>Controle total do dinheiro, tenha controle total sobre seus gastos</b>, sua gratidão virando recompensa</p>
+    <div style="display:flex;gap:6px;">
+      <input id="gastoDesc" placeholder="O que gastou?" style="flex:1;">
+      <input id="gastoValor" type="number" placeholder="R$" style="width:90px;">
+    </div>
+    <button class="btn-gold" onclick="addGasto()">+ Adicionar Gasto</button>
+    <div id="listaGastos" style="margin-top:10px;"></div>
+    <div style="margin-top:10px;font-weight:bold;color:gold;">Total gasto: R$ <span id="totalGastos">0,00</span> | Saldo gratidão: R$ <span id="saldoGratidao">0,00</span></div>
+  </div>
+
+  <div class="card">
+    <h3>🏆 Ranking Guerreiros (NOVO)</h3>
+    <div id="ranking">Carregando ranking...</div>
+  </div>
+</div>
+
+<!-- ABA BEM-VINDO -->
+<div id="aba-bemvindo" class="hidden">
+  <div class="card" style="text-align:center;">
+    <h2 style="color:gold;">Bem-vindo ao Banco Gratidão, <span id="nomeBemvindo">Guerreiro</span>!</h2>
+    <p style="margin:10px 0;">Sua conta foi criada em: <b id="dataCadastro"></b></p>
+    <p style="margin:10px 0;">Telefone: <b id="telBemvindo"></b></p>
+    <p style="margin:15px 0;color:gold;">📲 Seu app está salvo no seu celular. Sempre que voltar, faça login com telefone + senha.</p>
+    <button class="btn-gold" onclick="sair()">🚪 Sair da Conta</button>
+    <div style="margin-top:15px;padding:12px;background:#111;border-radius:10px;">
+      <p style="font-size:13px;">🔒 Para liberar tudo para sempre:</p>
+      <p style="font-weight:bold;color:gold;">PIX: 41 99893-6718 - R$3,00</p>
+      <p style="font-size:12px;">Ou convide 3 amigos e vire VIP grátis!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABA VIP -->
+<div id="aba-vip" class="hidden">
+  <div class="card" style="border:2px solid gold;background:linear-gradient(180deg,#2a2300,#000);">
+    <h3 style="color:gold;text-align:center;">👑 SEJA MEMBRO VIP - CONVIDE 3 AMIGOS</h3>
+    <p style="text-align:center;font-size:13px;color:#ccc;">Convide 3 guerreiros e libere o APP para sempre sem pagar!</p>
+    <div class="progress-bar"><div id="progressVIP" class="progress-fill"></div></div>
+    <p style="text-align:center;"><span id="convidadosCount">0</span>/3 amigos convidados</p>
+    <div style="background:#111;padding:10px;border-radius:10px;margin:10px 0;word-break:break-all;font-size:11px;border:1px dashed gold;">
+      Seu link VIP:<br><b id="meuLink" style="color:gold;">...</b>
+    </div>
+    <button class="btn-gold" onclick="compartilharZap()">📲 CONVIDAR NO WHATSAPP</button>
+    <div style="margin-top:10px;">
+      <p style="font-size:12px;">Digite o telefone do amigo que instalou:</p>
+      <div style="display:flex;gap:6px;">
+        <input id="telAmigo" placeholder="Telefone do amigo">
+        <button class="btn-white" style="background:gold;" onclick="confirmarAmigo()">✅ Confirmar</button>
+      </div>
+    </div>
+    <div id="listaAmigos" style="margin-top:10px;"></div>
+    <div id="mensagemVIP" style="margin-top:10px;text-align:center;font-weight:bold;"></div>
+  </div>
+</div>
+
 <script>
-const CONFIG_PIX = "41998936718";
-const CONFIG_ZAP = "5541998936718";
-const CONFIG_VALOR = "3,00";
-</script>
+// NAVEGAÇÃO ABAS
+function abrirAba(id,el){
+  document.querySelectorAll('[id^=aba-]').forEach(d=>d.classList.add('hidden'));
+  document.getElementById('aba-'+id).classList.remove('hidden');
+  document.querySelectorAll('.tab').forEach(t=>t.className='tab inativo');
+  el.className='tab ativo';
+}
 
-<div style="display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap">
-<button onclick="location.href='https://bancogratidaooficial-ops.github.io/Gratidao-Sonora/'" style="background:#FFD700;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🎵 Sonora</button>
-<button onclick="location.href='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🏦 Banco</button>
-<button onclick="location.href='https://bancogratidaooficial-ops.github.io/Bem-vindo-/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">👋 Bem-vindo</button>
-</div>
-
-<button id="btnInstall">📲 INSTALAR APP NO CELULAR</button>
-
-<div id="bannerPremium" style="background:linear-gradient(90deg,#FFD700,#ffaa00);color:#000;border-radius:15px;padding:12px;text-align:center;font-weight:bold;font-size:13px;margin-bottom:10px">
-⏳ <span id="diasRestantes">3</span> dias grátis | <span id="statusPremium">VERSÃO FREE</span><br>
-<button onclick="abrirPaywall()" style="background:#000;color:#FFD700;border:none;padding:8px 16px;border-radius:15px;margin-top:6px;font-weight:bold">🔓 Liberar tudo por R$3,00 via PIX 41 99893-6718</button>
-</div>
-
-<div class="card">
-<h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
-<div id="chat"><div class="balao" style="display:block">Olá José! App 6.0 instalado! Aleatório ligado. PIX R$3,00 no 41 99893-6718</div></div>
-<div style="display:flex;gap:6px;margin-top:8px">
-<input id="inputIA" placeholder="Fale com a IA...">
-<button class="btn" style="background:#00aaff;color:#000" onclick="falarIA()">Enviar</button>
-<button class="btn" style="background:#00ff88;color:#000" onclick="ouvir()">🎤</button>
-<button class="btn" style="background:#FFD700;color:#000" onclick="iaFalar()">🗣️</button>
-</div>
-<select id="tipoIA" style="margin-top:6px;width:95%"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
-<div style="font-size:11px;color:#aaa;margin-top:4px">Usos hoje: <span id="usosIA">0</span>/3 free</div>
-</div>
-
-<div class="card-player">
-<h3 style="color:#FFD700;margin:0">🎧 Player - Minhas Músicas (Aleatório Auto)</h3>
-<p id="musicaAtual" style="color:#aaa;font-size:12px">Tocando: Gratidao.m4a 🔀</p>
-<audio id="playerPrincipal" controls style="width:100%;margin:8px 0"></audio>
-<div class="progress"><div id="progressBar" class="progress-bar" style="width:0%"></div></div>
-<button class="btn btn-play" onclick="playPause()">▶️ PLAY / ⏸️ PAUSE</button>
-<div style="text-align:center;margin-top:8px;display:flex;justify-content:center;flex-wrap:wrap;gap:5px">
-<button class="btn btn-mini" onclick="musicaAnterior()">⏮️ Voltar</button>
-<button class="btn btn-mini" onclick="proximaMusica()">⏭️ Próxima</button>
-<button id="btnRandom" class="btn btn-mini btn-random-on" onclick="toggleRandom()">🔀 Aleatório: ON</button>
-<button id="btnLoop" class="btn btn-mini btn-random-off" onclick="toggleLoop()">🔁 Loop: OFF</button>
-<button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="addMusicaFree()">+ 🎵 Add Música</button>
-</div>
-<div id="listaMusicas" style="margin-top:10px"></div>
-<input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
-</div>
-
-<div class="card-fin">
-<h3 style="color:#FFD700;margin:0">📊 Controle - R$500 em cada</h3>
-<div class="saldo-box">
-<div style="font-size:11px;color:#aaa">SALDO SALVO NO BANCO</div>
-<div id="saldoSalvoDisplay" style="color:#00ff88;font-size:24px;font-weight:bold">R$ 0,00</div>
-<div id="dataSalvo" style="font-size:11px;color:#aaa">Clique em SALVAR</div>
-</div>
-<table id="tabelaGastos">
-<tr><th>Categoria</th><th>Valor R$</th><th></th></tr>
-<tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td><td></td></tr>
-<tr><td>🛒 Mercado</td><td><input type="number" id="merc" value="500" oninput="calc()"></td><td></td></tr>
-<tr><td>💧 Água</td><td><input type="number" id="agua" value="500" oninput="calc()"></td><td></td></tr>
-<tr><td>💡 Luz</td><td><input type="number" id="luz" value="500" oninput="calc()"></td><td></td></tr>
-<tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td><td></td></tr>
-<tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td><td></td></tr>
-<tr class="total"><td>TOTAL</td><td id="total">R$ 3000,00</td><td></td></tr>
-<tr class="total"><td>SALÁRIO</td><td><input type="number" id="sal" value="5000" oninput="calc()"><div id="sobra" style="margin-top:4px;font-size:12px">Sobra R$ 2000,00</div></td><td></td></tr>
-</table>
-<div style="display:flex;gap:6px;margin-top:8px">
-<input id="novaCategoria" placeholder="Nova categoria ex: Remédio" style="flex:1">
-<button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="addCategoria()">➕ Adicionar</button>
-</div>
-<button class="btn btn-salvar" onclick="salvarComPaywall()">💾 SALVAR - Guardar Saldo</button>
-</div>
-
-<div id="paywall">
-<div class="pay-box">
-<h2 style="color:#FFD700;margin:0">🔓 Desbloqueio R$3,00</h2>
-<p style="font-size:14px">Pague R$3 uma vez e libere o APP pra sempre!</p>
-<div style="background:#fff;color:#000;border-radius:12px;padding:12px;font-size:13px">
-<strong>PIX Celular:</strong><br><span style="font-size:20px;font-weight:bold">41 99893-6718</span><br>
-<button onclick="navigator.clipboard.writeText('41998936718');alert('PIX 41 99893-6718 copiado! Valor R$3,00')" style="background:#00ff88;color:#000;border:none;padding:10px;width:100%;border-radius:15px;margin-top:8px;font-weight:bold">📋 COPIAR PIX</button>
-</div>
-<p style="font-size:13px">Valor: <b style="color:#00ff88;font-size:18px">R$3,00</b> único</p>
-<button onclick="window.open('https://wa.me/5541998936718?text=Oi José! Paguei os R$3 do App Banco Gratidão - PIX 41 99893-6718','_blank')" style="background:#25D366;color:#fff;border:none;padding:14px;width:100%;border-radius:20px;font-weight:bold">📲 Enviar comprovante</button>
-<button onclick="localStorage.setItem('premium','true');alert('✅ Premium liberado!');location.reload()" style="background:#FFD700;color:#000;border:none;padding:10px;width:100%;border-radius:20px;margin-top:10px;font-weight:bold">✅ Já paguei - Liberar agora</button>
-<button onclick="paywall.style.display='none'" style="background:none;color:#aaa;border:none;margin-top:10px">Voltar</button>
-</div>
-</div>
-
-<script>
-let playlist=[]; let indice=0; let player=document.getElementById('playerPrincipal');
-let aleatorio=true, loop=false;
-let vozHumana=null;
-function carregarVoz(){let v=speechSynthesis.getVoices();vozHumana=v.find(x=>x.lang.includes('pt-BR'))||v[0];}
-speechSynthesis.onvoiceschanged=carregarVoz; carregarVoz();
-function iaFalar(){let t=document.getElementById('chat').lastElementChild.innerText; let f=new SpeechSynthesisUtterance(t); f.voice=vozHumana; f.lang='pt-BR'; speechSynthesis.speak(f);}
-let usosIAHoje=parseInt(localStorage.getItem('usosIA')||'0');
-let dataIA=localStorage.getItem('dataIA');
-if(dataIA!=new Date().toDateString()){usosIAHoje=0; localStorage.setItem('usosIA','0');}
-usosIA.innerText=usosIAHoje;
-function falarIA(){if(!isPremium() && usosIAHoje>=3){abrirPaywall(); return;} let i=inputIA; if(!i.value) return; chat.innerHTML+=`<div class="balao" style="display:block;background:#333;text-align:right">Você: ${i.value}</div><div class="balao" style="display:block;background:#003300"><b>${tipoIA.value}:</b> Gratidão!</div>`; usosIAHoje++; localStorage.setItem('usosIA',usosIAHoje); localStorage.setItem('dataIA',new Date().toDateString()); usosIA.innerText=usosIAHoje; i.value="";}
-function ouvir(){let rec=new (webkitSpeechRecognition||SpeechRecognition)(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{inputIA.value=e.results[0][0].transcript; falarIA();}}
-function calc(){let inputs=document.querySelectorAll('#tabelaGastos input[type=number]:not(#sal)'); let total=0; inputs.forEach(inp=>{total+=parseFloat(inp.value)||0}); let salV=parseFloat(sal.value)||0; let sobra=salV-total; document.getElementById('total').innerText='R$ '+total.toFixed(2); sobra.innerText='Sobra R$ '+sobra.toFixed(2); progressBar.style.width=Math.min(100,(total/salV*100)||0)+'%'; return {total,sobra};}
-function isPremium(){return localStorage.getItem('premium')=='true';}
-function checkTrial(){let install=localStorage.getItem('installDate'); if(!install){localStorage.setItem('installDate',Date.now()); install=Date.now();} let dias=Math.floor((Date.now()-parseInt(install))/86400000); let rest=Math.max(0,3-dias); diasRestantes.innerText=rest; if(isPremium()){statusPremium.innerText='✅ PREMIUM R$3 ATIVO'; bannerPremium.style.background='linear-gradient(90deg,#00ff88,#00cc66)';} return rest;}
-function abrirPaywall(){paywall.style.display='flex';}
-function salvarComPaywall(){if(!isPremium() && checkTrial()<=0){abrirPaywall(); return;} salvarSaldo();}
-function salvarSaldo(){let d=calc(); let agora=new Date().toLocaleString('pt-BR'); let dados={}; document.querySelectorAll('#tabelaGastos input').forEach(i=>{dados[i.id]=i.value}); dados.data=agora; localStorage.setItem('saldoGuardado', d.sobra); localStorage.setItem('gastosSalvos', JSON.stringify(dados)); saldoSalvoDisplay.innerText='R$ '+d.sobra.toFixed(2); dataSalvo.innerText='Salvo em: '+agora; alert('✅ Salvo!');}
-function addCategoria(){if(!isPremium()){let cats=document.querySelectorAll('#tabelaGastos tr').length; if(cats>8){abrirPaywall(); return;}} let nome=novaCategoria.value; if(!nome) return; let id='cat_'+Date.now(); let tr=document.createElement('tr'); tr.innerHTML=`<td>📌 ${nome}</td><td><input type="number" id="${id}" value="500" oninput="calc()"></td><td><button class="btn btn-mini" onclick="this.parentElement.parentElement.remove();calc()">🗑️</button></td>`; tabelaGastos.insertBefore(tr, tabelaGastos.rows[tabelaGastos.rows.length-2]); novaCategoria.value=''; calc();}
-function addMusicaFree(){if(!isPremium() && playlist.length>=2){abrirPaywall(); return;} fileBanco.click();}
-window.onload=()=>{let s=JSON.parse(localStorage.getItem('gastosSalvos')||'null'); if(s){for(let k in s){let el=document.getElementById(k); if(el) el.value=s[k];} if(s.data) dataSalvo.innerText='Salvo em: '+s.data; saldoSalvoDisplay.innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2);} calc(); checkTrial();}
-function atualizarLista(){let divLista=listaMusicas; divLista.innerHTML=''; playlist.forEach((m,i)=>{let div=document.createElement('div'); div.className='balao '+(i==indice?'balao-ativo':''); div.innerHTML=`<span>🎵 ${m.nome} ${i==indice?'🔊':''}</span><span><button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="tocar(${i})">▶️</button><button class="btn btn-mini" style="background:#ff4444" onclick="removerMusica(${i})">🗑️</button></span>`; divLista.appendChild(div);});}
-fileBanco.addEventListener('change',function(){for(let f of this.files){let url=URL.createObjectURL(f); playlist.push({nome:f.name,url:url});} atualizarLista(); if(playlist.length>0 &&!player.src) tocar(0);});
-function tocar(i){if(!playlist[i]) return; indice=i; player.src=playlist[i].url; player.play(); musicaAtual.innerText='Tocando: '+playlist[i].nome+(aleatorio?' 🔀':''); atualizarLista();}
-function removerMusica(i){playlist.splice(i,1); if(indice>=playlist.length) indice=0; atualizarLista();}
-function playPause(){if(player.paused) player.play(); else player.pause();}
-function getRandomIndex(){if(playlist.length<=1) return 0; let idx; do{idx=Math.floor(Math.random()*playlist.length);}while(idx===indice); return idx;}
-function proximaMusica(){if(!playlist.length) return; if(aleatorio) indice=getRandomIndex(); else indice=(indice+1)%playlist.length; tocar(indice);}
-function musicaAnterior(){if(!playlist.length) return; if(aleatorio) indice=getRandomIndex(); else indice=(indice-1+playlist.length)%playlist.length; tocar(indice);}
-function toggleRandom(){aleatorio=!aleatorio; btnRandom.innerText=aleatorio?'🔀 Aleatório: ON':'🔀 Aleatório: OFF'; btnRandom.className=aleatorio?'btn btn-mini btn-random-on':'btn btn-mini btn-random-off';}
-function toggleLoop(){loop=!loop; player.loop=loop; btnLoop.innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF'; btnLoop.className=loop?'btn btn-mini btn-random-on':'btn btn-mini btn-random-off';}
-player.addEventListener('ended',()=>{if(!loop) proximaMusica();});
-player.addEventListener('timeupdate',()=>{if(player.duration){progressBar.style.width=(player.currentTime/player.duration*100)+'%';}});
-
-// BOTAO INSTALAR APP
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('btnInstall').style.display='block';
-});
-document.getElementById('btnInstall').addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    document.getElementById('btnInstall').style.display='none';
+// CADASTRO E LOGIN
+let musicas=['Gratidao.m4a']; let idx=0; let aleatorio=true; let loop=false; let total=0; let pontos=parseInt(localStorage.getItem('pontos')||'0');
+function mostrarLogin(){document.getElementById('formCadastro').classList.add('hidden');document.getElementById('formLogin').classList.remove('hidden');document.getElementById('tituloForm').innerText='Bem-vindo de volta, Guerreiro!';}
+function mostrarCadastro(){document.getElementById('formLogin').classList.add('hidden');document.getElementById('formCadastro').classList.remove('hidden');document.getElementById('tituloForm').innerText='Crie sua conta de Guerreiro';}
+function cadastrar(){
+  let user={nome:document.getElementById('nome').value,nasc:document.getElementById('nasc').value,tel:document.getElementById('tel').value.replace(/\D/g,''),senha:document.getElementById('senha').value,dataCadastro:new Date().toISOString()};
+  if(!user.nome||!user.tel||!user.senha){alert('Preencha nome, telefone e senha!');return;}
+  localStorage.setItem('banco_gratidao_user',JSON.stringify(user));
+  localStorage.setItem('banco_gratidao_logado','true');
+  if(!localStorage.getItem('convidados_'+user.tel)) localStorage.setItem('convidados_'+user.tel,JSON.stringify([]));
+  let ref=new URLSearchParams(window.location.search).get('ref');
+  if(ref){localStorage.setItem('indicado_por_'+user.tel,ref);}
+  finalizarLogin(user);
+}
+function logar(){
+  let tel=document.getElementById('telLogin').value.replace(/\D/g,'');let senha=document.getElementById('senhaLogin').value;
+  let salvo=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');
+  if(tel===salvo.tel && senha===salvo.senha){localStorage.setItem('banco_gratidao_logado','true');finalizarLogin(salvo);} else alert('Telefone ou senha errados!');
+}
+function finalizarLogin(user){
+  document.getElementById('telaLogin').style.display='none';
+  document.getElementById('nomeIA').innerText=user.nome.split(' ')[0];
+  document.getElementById('nomeBemvindo').innerText=user.nome;
+  document.getElementById('telBemvindo').innerText=user.tel;
+  document.getElementById('dataCadastro').innerText=new Date(user.dataCadastro).toLocaleDateString('pt-BR');
+  document.getElementById('meuLink').innerText=`https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref=${user.tel}`;
+  document.getElementById('pontosTopo').innerText=pontos;
+  carregarVIP(); carregarGratidao(); calcularDias();
+}
+function sair(){localStorage.setItem('banco_gratidao_logado','false');location.reload();}
+function calcularDias(){
+  let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');
+  if(!user.dataCadastro) return;
+  let dias=(new Date()-new Date(user.dataCadastro))/(1000*60*60*24);
+  let restantes=3-dias;
+  if(restantes<=0 && localStorage.getItem('vip_'+user.tel)!=='true' && localStorage.getItem('pagou')!=='true'){
+    document.getElementById('diasTexto').innerText='⛔ Grátis acabou! Libere por R$3,00 ou 3 amigos VIP';
+  } else if(restantes>0){
+    document.getElementById('diasTexto').innerText=`⏳ ${restantes.toFixed(1)} dias grátis restantes | VERSÃO FREE`;
+  } else {
+    document.getElementById('diasTexto').innerText='👑 ACESSO VIP LIBERADO!';
   }
-});
+}
+// IA FALADA
+function falarIA(){
+  let txt=document.getElementById('chatIA').value; if(!txt) return;
+  document.getElementById('chatBox').innerHTML+=`<div style="margin:6px 0;color:#fff;">👤 Você: ${txt}</div>`;
+  let resp=`Guerreiro, ${txt}... Lembre-se, sua gratidão vale ouro! Continue firme!`;
+  document.getElementById('chatBox').innerHTML+=`<div style="margin:6px 0;color:#00ff88;">🤖 IA: ${resp}</div>`;
+  document.getElementById('chatIA').value='';
+  let usos=parseInt(localStorage.getItem('usosIA')||'0')+1; localStorage.setItem('usosIA',usos); document.getElementById('usosIA').innerText=usos;
+  vozIA(resp);
+}
+function vozIA(texto){
+  let msg=texto||document.getElementById('chatBox').innerText.slice(-200);
+  let utter=new SpeechSynthesisUtterance(msg); utter.lang='pt-BR'; utter.rate=0.9; speechSynthesis.speak(utter);
+}
+function ouvirIA(){
+  let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)(); rec.lang='pt-BR'; rec.onresult=e=>{document.getElementById('chatIA').value=e.results[0][0].transcript; falarIA();}; rec.start();
+}
+// PLAYER
+function togglePlay(){let a=document.getElementById('audio'); a.paused?a.play():a.pause();}
+function nextMusica(){idx=aleatorio?Math.floor(Math.random()*musicas.length):(idx+1)%musicas.length; document.getElementById('musicaAtual').innerText=musicas[idx];}
+function prevMusica(){idx=(idx-1+musicas.length)%musicas.length; document.getElementById('musicaAtual').innerText=musicas[idx];}
+function toggleAleatorio(){aleatorio=!aleatorio; document.getElementById('btnAleatorio').innerText=aleatorio?'🔀 Aleatório: ON':'🔀 Aleatório: OFF'; document.getElementById('btnAleatorio').style.background=aleatorio?'gold':'#fff';}
+function toggleLoop(){loop=!loop; document.getElementById('btnLoop').innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF'; document.getElementById('btnLoop').style.background=loop?'gold':'#fff';}
+document.getElementById('addMusica').addEventListener('change',e=>{for(let f of e.target.files){musicas.push(f.name); let url=URL.createObjectURL(f); if(idx===0) document.getElementById('audio').src=url;} document.getElementById('listaMusicas').innerHTML=musicas.map(m=>`🎵 ${m}`).join('<br>');});
+// GASTOS
+function addGasto(){
+  let d=document.getElementById('gastoDesc').value; let v=parseFloat(document.getElementById('gastoValor').value); if(!d||!v) return;
+  total+=v; document.getElementById('listaGastos').innerHTML+=`<div>• ${d} - R$${v.toFixed(2)}</div>`;
+  document.getElementById('totalGastos').innerText=total.toFixed(2).replace('.',',');
+  document.getElementById('saldoGratidao').innerText=(pontos*0.5).toFixed(2).replace('.',',');
+  document.getElementById('gastoDesc').value=''; document.getElementById('gastoValor').value='';
+  localStorage.setItem('gastos',document.getElementById('listaGastos').innerHTML);
+}
+// GRATIDÃO
+function salvarGratidao(){
+  let g1=document.getElementById('gratidao1').value; let g2=document.getElementById('gratidao2').value; let g3=document.getElementById('gratidao3').value;
+  if(!g1||!g2||!g3){alert('Escreva as 3 gratidões!');return;}
+  pontos+=10; localStorage.setItem('pontos',pontos); document.getElementById('pontosTopo').innerText=pontos;
+  let hoje=new Date().toLocaleDateString('pt-BR');
+  let hist=JSON.parse(localStorage.getItem('historicoGratidao')||'[]'); hist.unshift({data:hoje,g1,g2,g3}); localStorage.setItem('historicoGratidao',JSON.stringify(hist));
+  carregarGratidao(); document.getElementById('gratidao1').value='';document.getElementById('gratidao2').value='';document.getElementById('gratidao3').value=''; alert('💛 +10 pontos! Sua gratidão vale ouro!');
+}
+function carregarGratidao(){
+  let hist=JSON.parse(localStorage.getItem('historicoGratidao')||'[]');
+  document.getElementById('historicoGratidao').innerHTML=hist.slice(0,3).map(h=>`<div style="background:#111;padding:6px;border-radius:8px;margin:4px 0;">📅 ${h.data}<br>💛 ${h.g1}<br>💛 ${h.g2}<br>💛 ${h.g3}</div>`).join('');
+}
+// VIP 3 AMIGOS
+function carregarVIP(){
+  let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}'); if(!user.tel) return;
+  let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');
+  document.getElementById('convidadosCount').innerText=lista.length;
+  document.getElementById('progressVIP').style.width=(lista.length/3*100)+'%';
+  document.getElementById('listaAmigos').innerHTML=lista.map(t=>`<div style="color:#0f0;font-size:13px;">✅ Amigo VIP: ${t}</div>`).join('');
+  if(lista.length>=3){
+    document.getElementById('vipStatus').innerHTML='<span style="background:gold;color:#000;padding:5px 12px;border-radius:20px;font-weight:bold;">👑 VOCÊ É VIP VITALÍCIO - TUDO LIBERADO!</span>';
+    document.getElementById('mensagemVIP').innerHTML='<span style="color:gold;">Parabéns Guerreiro! Acesso vitalício liberado! Não precisa pagar R$3,00</span>';
+    localStorage.setItem('pagou','true'); localStorage.setItem('vip_'+user.tel,'true');
+  }
+  document.getElementById('ranking').innerHTML=`<div>🥇 1º ${user.nome} - ${pontos} pts ${lista.length>=3?'👑 VIP':''}</div><div>🥈 Guerreiros convidados: ${lista.length}</div>`;
+}
+function compartilharZap(){
+  let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');
+  let link=`https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref=${user.tel}`;
+  let msg=`🔥 *CONVOCAÇÃO OFICIAL - GUERREIROS DO BANCO GRATIDÃO* 🔥\n\nVocê foi selecionado para algo que vale OURO!\n\n💛 *BANCO GRATIDÃO - SUA GRATIDÃO VALE OURO* 💛\n\n🎵 MÚSICA 24h\n🧠 IA com minha voz te guiando\n💰 Controle total do dinheiro, tenha controle total sobre seus gastos\n\n✨ 3 DIAS GRÁTIS!\n\n👇 INSTALA AQUI (meu convite VIP):\n${link}\n\nMe avisa quando instalar que te coloco como VIP!`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function confirmarAmigo(){
+  let telAmigo=document.getElementById('telAmigo').value.replace(/\D/g,''); if(!telAmigo) return;
+  let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');
+  let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');
+  if(lista.includes(telAmigo)){alert('Já contou esse amigo!');return;}
+  if(lista.length>=3){alert('Você já é VIP!');return;}
+  lista.push(telAmigo); localStorage.setItem('convidados_'+user.tel,JSON.stringify(lista));
+  document.getElementById('telAmigo').value=''; carregarVIP();
+  if(lista.length===3) alert('🔥 PARABÉNS! 3 amigos! Você virou MEMBRO VIP VITALÍCIO!');
+}
+// LOAD
+window.onload=function(){
+  let logado=localStorage.getItem('banco_gratidao_logado'); let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'null');
+  if(logado==='true' && user){document.getElementById('telaLogin').style.display='none'; finalizarLogin(user);}
+  document.getElementById('pontosTopo').innerText=pontos;
+  if(localStorage.getItem('gastos')) document.getElementById('listaGastos').innerHTML=localStorage.getItem('gastos');
+}
 </script>
 </body>
 </html>
