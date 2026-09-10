@@ -24,7 +24,11 @@ input{width:100%;padding:13px;border-radius:12px;border:2px solid #2a344b;backgr
 audio{width:100%;margin:8px 0}
 </style>
 </head>
-<body>
+<body><div style="display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap">
+<button onclick="location.href='https://bancogratidaooficial-ops.github.io/Gratidao-Sonora/'" style="background:#FFD700;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🎵 Sonora</button>
+<button onclick="location.href='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🏦 Banco</button>
+<button onclick="location.href='https://bancogratidaooficial-ops.github.io/Bem-vindo-/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">👋 Bem-vindo</button>
+</div>
 <div class="topo">🏦 BANCO GRATIDÃO - FINAL COM IA + MÚSICAS</div>
 <div class="faixa">⚠️ SIMULADOR PARA ESTUDOS - NÃO É BANCO REAL</div>
 
