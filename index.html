@@ -3,155 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gratidão Sonora</title>
+<title>Banco Gratidão 3.0 - IA Humana - 500</title>
 <style>
-body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px}
-h1{color:#FFD700}
-.botoes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px 0}
-.btn{border:none;padding:12px 16px;border-radius:25px;font-weight:bold;cursor:pointer;font-size:13px}
-.btn-voltar{background:#333;color:#fff;border:1px solid #777}
-.card{background:#1a1a1a;border-radius:15px;padding:15px;margin:15px 0;border:1px solid #333}
-.card.tocando{border-color:#FFD700;box-shadow:0 0 15px rgba(255,215,0,0.4)}
-audio{width:100%;margin-top:10px}
-#fileInput{display:none}
-#boxGratidao{display:none;background:#111;border:1px solid #FFD700;border-radius:15px;padding:15px;margin:20px 0}
-textarea{width:95%;height:70px;border-radius:10px;padding:10px}
-.topo-voltar{display:none;justify-content:space-between;align-items:center;margin-bottom:10px}
+body{background:#000;color:#fff;font-family:Arial;padding:12px;margin:0}
+.menu{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.btn{border:none;padding:10px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
+.btn-branco{background:#fff;color:#000}
+.btn-amarelo{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000}
+.btn-azul{background:#00aaff;color:#000}
+.btn-verde{background:#00ff88;color:#000}
+.card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
+.card-fin{background:#111;border:1px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
+.balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:8px 0;text-align:left;font-size:14px}
+.balao-voz{background:#003300;border-color:#00ff88;color:#aaffaa}
+input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:90%}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #333;padding:8px;font-size:13px}
+th{background:#FFD700;color:#000}
+.total{background:#003300;color:#00ff88;font-weight:bold}
 </style>
 </head>
 <body>
-<h1>🙏 Gratidão Sonora</h1>
 
-<div class="botoes">
-<button class="btn" style="background:#fff;color:#000" onclick="abrirBanco()">🏦 Banco</button>
-<button class="btn" style="background:#1a1a1a;color:#FFD700;border:1px solid #FFD700" onclick="mostrarGratidao()">✨ Gratidão</button>
-<button class="btn" style="background:#222;color:#fff;border:1px solid #555" onclick="tocarAleatorio()">▶️ Tocar</button>
-<button class="btn" style="background:linear-gradient(90deg,#FFD700,#FFA500);color:#000" onclick="document.getElementById('fileInput').click()">+ 🎵 Add Música</button>
+<div class="menu">
+<button class="btn btn-amarelo" onclick="location.href='https://bancogratidaooficial-ops.github.io/Gratidao-Sonora/'">🎵 Sonora</button>
+<button class="btn btn-branco" onclick="location.href='https://bancogratidaooficial-ops.github.io/Bem-vindo-/'">👋 Bem-vindo</button>
+<button class="btn btn-azul">🏦 Banco 3.0</button>
 </div>
 
-<input type="file" id="fileInput" accept="audio/*" multiple>
-
-<div id="boxGratidao">
-<div class="topo-voltar" id="voltarGratidao" style="display:flex">
-<span style="color:#FFD700">Gratidão</span>
-<button class="btn btn-voltar" onclick="voltar()">⬅️ Voltar</button>
+<div class="card">
+<h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
+<div id="chat">
+<div class="balao">Olá José! Sou sua IA com voz humana clonada. Já deixei R$500 em cada gasto pra você. Como posso te ajudar?</div>
 </div>
-<h3 style="color:#FFD700">O que você agradece hoje?</h3>
-<textarea id="textoGratidao" placeholder="Escreva 3 motivos..."></textarea><br><br>
-<button class="btn" style="background:#FFD700;color:#000" onclick="salvarGratidao()">Salvar</button>
-<p id="listaGratidao"></p>
+<div style="display:flex;gap:6px;margin-top:8px">
+<input id="inputIA" placeholder="Fale com a IA...">
+<button class="btn btn-azul" onclick="falarIA()">Enviar</button>
+<button class="btn btn-verde" onclick="ouvir()">🎤</button>
+<button class="btn btn-amarelo" onclick="iaVozHumana()">🗣️</button>
 </div>
-
-<div id="boxTocando" style="display:none">
-<div class="topo-voltar" style="display:flex">
-<span style="color:#FFD700">🔀 Tocando Aleatório</span>
-<button class="btn btn-voltar" onclick="voltar()">⬅️ Voltar</button>
+<div style="margin-top:8px">
+<select id="tipoIA"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
+<button class="btn btn-branco" onclick="document.getElementById('fileBanco').click()">+ 🎵 Add Música</button>
+<input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
 </div>
-<p id="agoraTocando" style="color:#FFD700;font-weight:bold"></p>
-<button class="btn" style="background:#222;color:#fff;border:1px solid #555;margin-top:10px" onclick="tocarAleatorio()">⏭️ Próxima Aleatória</button>
+<div id="listaBancoMusica"></div>
 </div>
 
-<div id="listaMusica">
-<div class="card"><b>Musica 1</b><audio controls src="musica1.mp3"></audio></div>
-<div class="card"><b>Musica 2</b><audio controls src="musica2.mp3"></audio></div>
-<div class="card"><b>Musica 3</b><audio controls src="musica3.mp3"></audio></div>
-<div class="card"><b>Musica 4</b><audio controls src="musica4.mp3"></audio></div>
-<div class="card"><b>Musica 5</b><audio controls src="musica5.mp3"></audio></div>
-<div class="card"><b>Musica 6</b><audio controls src="musica6.mp3"></audio></div>
+<div class="card-fin">
+<h3 style="color:#FFD700;margin:0">📊 Controle Automático - R$500 em cada</h3>
+<table>
+<tr><th>Categoria</th><th>Valor R$</th></tr>
+<tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td></tr>
+<tr><td>🛒 Mercado</td><td><input type="number" id="merc" value="500" oninput="calc()"></td></tr>
+<tr><td>💧 Água</td><td><input type="number" id="agua" value="500" oninput="calc()"></td></tr>
+<tr><td>💡 Luz</td><td><input type="number" id="luz" value="500" oninput="calc()"></td></tr>
+<tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td></tr>
+<tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td></tr>
+<tr class="total"><td>TOTAL GASTO</td><td id="total">R$ 3000,00</td></tr>
+<tr class="total"><td>SALÁRIO - TOTAL = SOBRA</td><td><input type="number" id="sal" value="5000" oninput="calc()" placeholder="Salário"><span id="sobra"> | Sobra: R$ 2000,00</span></td></tr>
+</table>
+<button class="btn btn-amarelo" style="width:100%;margin-top:10px" onclick="salvarPlanilha()">💾 Salvar Planilha</button>
 </div>
 
 <script>
-let historico = ['lista']; // guarda onde estava
-let audioAtual = null;
-
-function salvarEstado(atual){
-  historico.push(atual);
+let vozHumana=null;
+function carregarVoz(){let vozes=speechSynthesis.getVoices();vozHumana=vozes.find(v=>v.lang.includes('pt-BR'))||vozes[0];}
+speechSynthesis.onvoiceschanged=carregarVoz;carregarVoz();
+function iaVozHumana(){let texto=document.getElementById('chat').lastElementChild.innerText;let fala=new SpeechSynthesisUtterance(texto);fala.voice=vozHumana;fala.lang='pt-BR';fala.rate=0.95;speechSynthesis.speak(fala);}
+function falarIA(){
+ let input=document.getElementById('inputIA');let tipo=document.getElementById('tipoIA').value;
+ if(!input.value) return;
+ let chat=document.getElementById('chat');
+ chat.innerHTML+=`<div class="balao" style="background:#333;text-align:right">Você: ${input.value}</div>`;
+ let resposta=tipo=="gratidao"?`Gratidão por "${input.value}" registrada! Com R$500 em cada gasto, seu total é R$3000.`:tipo=="financeira"?`Financeira: Com R$500 em cada (R$3000 total), sobra R$${(parseFloat(document.getElementById('sal').value)||0)-3000}. Ajuste o mercado pra economizar.`:`Motivação: Você já organizou R$3000 em gratidão!`;
+ chat.innerHTML+=`<div class="balao balao-voz"><b>IA ${tipo}:</b> ${resposta}</div>`;
+ let f=new SpeechSynthesisUtterance(resposta);f.voice=vozHumana;f.lang='pt-BR';speechSynthesis.speak(f);
+ input.value="";
 }
-
-function voltar(){
-  if(historico.length <= 1) {
-    document.getElementById('boxGratidao').style.display='none';
-    document.getElementById('boxTocando').style.display='none';
-    document.getElementById('listaMusica').style.display='block';
-    if(audioAtual){ audioAtual.pause(); }
-    return;
-  }
-  historico.pop();
-  let anterior = historico[historico.length-1];
-  document.getElementById('boxGratidao').style.display='none';
-  document.getElementById('boxTocando').style.display='none';
-  document.getElementById('listaMusica').style.display='block';
-  if(anterior === 'gratidao') mostrarGratidaoSemSalvar();
-  if(audioAtual && anterior!== 'tocando') audioAtual.pause();
+function ouvir(){let rec=new webkitSpeechRecognition();rec.lang='pt-BR';rec.start();rec.onresult=(e)=>{document.getElementById('inputIA').value=e.results[0][0].transcript;falarIA();}}
+function calc(){
+ let c=parseFloat(document.getElementById('comb').value)||0;
+ let m=parseFloat(document.getElementById('merc').value)||0;
+ let a=parseFloat(document.getElementById('agua').value)||0;
+ let l=parseFloat(document.getElementById('luz').value)||0;
+ let g=parseFloat(document.getElementById('gas').value)||0;
+ let n=parseFloat(document.getElementById('net').value)||0;
+ let sal=parseFloat(document.getElementById('sal').value)||0;
+ let total=c+m+a+l+g+n;
+ document.getElementById('total').innerText='R$ '+total.toFixed(2);
+ document.getElementById('sobra').innerText=' | Sobra: R$ '+(sal-total).toFixed(2);
 }
-
-function abrirBanco(){
-  salvarEstado('lista');
-  window.open('https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/','_blank');
-}
-
-function mostrarGratidao(){
-  salvarEstado('gratidao');
-  document.getElementById('boxGratidao').style.display='block';
-  document.getElementById('listaMusica').style.display='none';
-  document.getElementById('boxTocando').style.display='none';
-}
-function mostrarGratidaoSemSalvar(){
-  document.getElementById('boxGratidao').style.display='block';
-  document.getElementById('listaMusica').style.display='none';
-  document.getElementById('boxTocando').style.display='none';
-}
-
-function tocarAleatorio(){
-  salvarEstado('tocando');
-  document.getElementById('boxGratidao').style.display='none';
-  document.getElementById('boxTocando').style.display='block';
-  document.getElementById('listaMusica').style.display='block';
-
-  const audios = document.querySelectorAll('#listaMusica audio');
-  if(audios.length === 0) return;
-
-  // tira destaque antigo
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('tocando'));
-
-  // escolhe aleatório
-  let indice = Math.floor(Math.random() * audios.length);
-  let escolhido = audios[indice];
-  let nome = escolhido.parentElement.querySelector('b').innerText;
-
-  // para o anterior
-  if(audioAtual) audioAtual.pause();
-  audioAtual = escolhido;
-
-  escolhido.parentElement.classList.add('tocando');
-  document.getElementById('agoraTocando').innerText = '🎵 Tocando agora: ' + nome;
-  escolhido.play();
-
-  // quando acabar, toca outra aleatória automaticamente
-  escolhido.onended = () => tocarAleatorio();
-  escolhido.scrollIntoView({behavior:'smooth', block:'center'});
-}
-
-function salvarGratidao(){
-  let t=document.getElementById('textoGratidao').value;
-  if(!t)return;
-  let l=JSON.parse(localStorage.getItem('gratidoes')||'[]');
-  l.push(t);
-  localStorage.setItem('gratidoes',JSON.stringify(l));
-  document.getElementById('textoGratidao').value='';
-  document.getElementById('listaGratidao').innerHTML=l.map(g=>`• ${g}`).join('<br>');
-}
-
-const input=document.getElementById('fileInput');
-input.addEventListener('change', function(){
-  for(let file of this.files){
-    const url=URL.createObjectURL(file);
-    const div=document.createElement('div');
-    div.className='card';
-    div.innerHTML=`<b>🎵 ${file.name}</b><audio controls src="${url}"></audio>`;
-    document.getElementById('listaMusica').appendChild(div);
-  }
-});
+function salvarPlanilha(){calc();alert('Planilha com R$500 em cada salva! ✅');}
+window.onload=calc;
+document.getElementById('fileBanco').addEventListener('change',function(){for(let f of this.files){let u=URL.createObjectURL(f);let div=document.createElement('div');div.className='balao balao-voz';div.innerHTML=`🎵 ${f.name}<br><audio controls src="${u}" style="width:100%"></audio>`;document.getElementById('listaBancoMusica').appendChild(div);}});
 </script>
 </body>
 </html>
