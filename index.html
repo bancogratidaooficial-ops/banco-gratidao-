@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão 3.0 - Player</title>
+<title>Banco Gratidão 3.0 - Final Completo</title>
 <style>
 body{background:#000;color:#fff;font-family:Arial;padding:12px;margin:0}
 .card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
@@ -11,19 +11,20 @@ body{background:#000;color:#fff;font-family:Arial;padding:12px;margin:0}
 .card-player{background:linear-gradient(180deg,#111,#000);border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
 .balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:8px 0;text-align:left;font-size:14px}
 .balao-voz{background:#003300;border-color:#00ff88;color:#aaffaa}
-input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:85%}
+input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:85%;border:1px solid #333}
 .btn{border:none;padding:10px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
-.btn-play{background:#FFD700;color:#000;font-size:22px;padding:16px 30px;border-radius:50px;width:100%}
-.btn-mini{background:#333;color:#fff;padding:8px 12px;font-size:12px;margin:3px}
+.btn-play{background:#FFD700;color:#000;font-size:18px;padding:14px;width:100%;border-radius:30px}
+.btn-salvar{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;padding:14px;width:100%;font-size:16px;margin-top:10px;border-radius:20px}
+.btn-mini{background:#333;color:#fff;padding:6px 10px;font-size:11px;margin:3px;border-radius:15px}
 table{width:100%;border-collapse:collapse;margin-top:10px}
 th,td{border:1px solid #333;padding:8px;font-size:13px}
 th{background:#FFD700;color:#000}
 .total{background:#003300;color:#00ff88;font-weight:bold}
+.saldo-box{background:#002a00;border:2px solid #00ff88;border-radius:15px;padding:10px;margin:10px 0;text-align:center}
 </style>
 </head>
 <body>
 
-<!-- NAVEGAÇÃO -->
 <div style="display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap">
 <button onclick="location.href='https://bancogratidaooficial-ops.github.io/Gratidao-Sonora/'" style="background:#FFD700;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🎵 Sonora</button>
 <button onclick="location.href='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">🏦 Banco</button>
@@ -32,36 +33,39 @@ th{background:#FFD700;color:#000}
 
 <div class="card">
 <h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
-<div id="chat">
-<div class="balao">Olá José! Já deixei R$500 em cada gasto. Pode adicionar suas músicas que agora tem player!</div>
-</div>
+<div id="chat"><div class="balao">Olá José! Sou sua IA com voz humana clonada. Já deixei R$500 em cada gasto pra você. Como posso te ajudar?</div></div>
 <div style="display:flex;gap:6px;margin-top:8px">
 <input id="inputIA" placeholder="Fale com a IA...">
-<button class="btn" style="background:#00aaff" onclick="falarIA()">Enviar</button>
-<button class="btn" style="background:#00ff88" onclick="ouvir()">🎤</button>
+<button class="btn" style="background:#00aaff;color:#000" onclick="falarIA()">Enviar</button>
+<button class="btn" style="background:#00ff88;color:#000" onclick="ouvir()">🎤</button>
+<button class="btn" style="background:#FFD700;color:#000" onclick="iaFalar()">🗣️</button>
 </div>
 <div style="margin-top:8px">
-<select id="tipoIA"><option>IA Gratidão</option><option>IA Financeira</option><option>IA Motivacional</option></select>
+<select id="tipoIA"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
 </div>
 </div>
 
-<!-- NOVO PLAYER QUE FALTAVA -->
 <div class="card-player">
-<h3 style="color:#FFD700;margin:0">🎧 Player - Minhas Músicas Adicionadas</h3>
-<p style="color:#aaa;font-size:12px" id="musicaAtual">Nenhuma música ainda. Clique em Add Música</p>
-<audio id="playerPrincipal" controls style="width:100%;margin:10px 0"></audio>
+<h3 style="color:#FFD700;margin:0">🎧 Player - Minhas Músicas</h3>
+<p id="musicaAtual" style="color:#aaa;font-size:12px">Nenhuma música. Use + Add Música</p>
+<audio id="playerPrincipal" controls style="width:100%;margin:8px 0"></audio>
 <button class="btn btn-play" onclick="playPause()">▶️ PLAY / ⏸️ PAUSE</button>
-<div style="display:flex;justify-content:center;gap:8px;margin-top:10px">
+<div style="text-align:center;margin-top:8px">
 <button class="btn btn-mini" onclick="musicaAnterior()">⏮️ Voltar</button>
 <button class="btn btn-mini" onclick="proximaMusica()">⏭️ Próxima</button>
 <button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="document.getElementById('fileBanco').click()">+ 🎵 Add Música</button>
 </div>
-<div id="listaMusicas" style="margin-top:12px"></div>
+<div id="listaMusicas"></div>
 <input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
 </div>
 
 <div class="card-fin">
 <h3 style="color:#FFD700;margin:0">📊 Controle - R$500 em cada</h3>
+<div class="saldo-box">
+<div style="font-size:11px;color:#aaa">SALDO SALVO NO BANCO</div>
+<div id="saldoSalvoDisplay" style="color:#00ff88;font-size:22px;font-weight:bold">R$ 0,00</div>
+<div id="dataSalvo" style="font-size:11px;color:#aaa">Clique em SALVAR para guardar</div>
+</div>
 <table>
 <tr><th>Categoria</th><th>Valor R$</th></tr>
 <tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td></tr>
@@ -71,48 +75,58 @@ th{background:#FFD700;color:#000}
 <tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td></tr>
 <tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td></tr>
 <tr class="total"><td>TOTAL</td><td id="total">R$ 3000,00</td></tr>
-<tr class="total"><td>SALÁRIO</td><td><input type="number" id="sal" value="5000" oninput="calc()"><span id="sobra"> Sobra R$2000</span></td></tr>
+<tr class="total"><td>SALÁRIO</td><td><input type="number" id="sal" value="5000" oninput="calc()"><div id="sobra" style="margin-top:4px">Sobra R$ 2000,00</div></td></tr>
 </table>
+<button class="btn btn-salvar" onclick="salvarSaldo()">💾 SALVAR</button>
+<div id="historico" style="margin-top:8px;font-size:11px;color:#aaa"></div>
 </div>
 
 <script>
 let playlist=[]; let indice=0; let player=document.getElementById('playerPrincipal');
-let vozHumana=null;
-function carregarVoz(){let v=speechSynthesis.getVoices();vozHumana=v.find(x=>x.lang.includes('pt-BR'))||v[0];}
-speechSynthesis.onvoiceschanged=carregarVoz;carregarVoz();
-
+let vozHumana=null; function carregarVoz(){let v=speechSynthesis.getVoices();vozHumana=v.find(x=>x.lang.includes('pt-BR'))||v[0];}
+speechSynthesis.onvoiceschanged=carregarVoz; carregarVoz();
+function iaFalar(){let t=document.getElementById('chat').lastElementChild.innerText; let f=new SpeechSynthesisUtterance(t); f.voice=vozHumana; f.lang='pt-BR'; f.rate=0.95; speechSynthesis.speak(f);}
 function falarIA(){
- let i=document.getElementById('inputIA');if(!i.value) return;
- document.getElementById('chat').innerHTML+=`<div class="balao" style="background:#333;text-align:right">Você: ${i.value}</div><div class="balao balao-voz">IA: Gratidão por "${i.value}" registrada!</div>`;
- i.value="";
+ let i=document.getElementById('inputIA'); if(!i.value) return;
+ let tipo=document.getElementById('tipoIA').value;
+ document.getElementById('chat').innerHTML+=`<div class="balao" style="background:#333;text-align:right">Você: ${i.value}</div>`;
+ let r=tipo=="gratidao"?`Gratidão por "${i.value}" registrada! Com R$500 em cada, seu total é R$3000.`:`IA ${tipo}: Anotado "${i.value}". Sobra R$${(parseFloat(document.getElementById('sal').value)||0)-3000}.`;
+ document.getElementById('chat').innerHTML+=`<div class="balao balao-voz"><b>IA ${tipo}:</b> ${r}</div>`;
+ let f=new SpeechSynthesisUtterance(r); f.voice=vozHumana; f.lang='pt-BR'; speechSynthesis.speak(f); i.value="";
 }
-function ouvir(){let rec=new webkitSpeechRecognition();rec.lang='pt-BR';rec.start();rec.onresult=e=>{document.getElementById('inputIA').value=e.results[0][0].transcript;falarIA();}}
+function ouvir(){let rec=new webkitSpeechRecognition(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{document.getElementById('inputIA').value=e.results[0][0].transcript; falarIA();}}
 
 function calc(){
- let total=(parseFloat(comb.value)||0)+(parseFloat(merc.value)||0)+(parseFloat(agua.value)||0)+(parseFloat(luz.value)||0)+(parseFloat(gas.value)||0)+(parseFloat(net.value)||0);
+ let vals=['comb','merc','agua','luz','gas','net'].map(id=>parseFloat(document.getElementById(id).value)||0);
+ let total=vals.reduce((a,b)=>a+b,0);
+ let sal=parseFloat(document.getElementById('sal').value)||0;
+ let sobra=sal-total;
  document.getElementById('total').innerText='R$ '+total.toFixed(2);
- document.getElementById('sobra').innerText=' Sobra R$ '+((parseFloat(sal.value)||0)-total).toFixed(2);
+ document.getElementById('sobra').innerText='Sobra R$ '+sobra.toFixed(2);
+ let guardado=parseFloat(localStorage.getItem('saldoGuardado')||'0');
+ if(guardado>0){ document.getElementById('saldoSalvoDisplay').innerText='Guardado: R$ '+guardado.toFixed(2)+' → Agora: R$ '+sobra.toFixed(2); }
+ return {total,sobra};
 }
-window.onload=calc;
-
-// PLAYER NOVO
-document.getElementById('fileBanco').addEventListener('change',function(){
- for(let f of this.files){
-  let url=URL.createObjectURL(f);
-  playlist.push({nome:f.name,url:url});
-  let div=document.createElement('div');
-  div.className='balao';
-  div.innerHTML=`🎵 ${f.name} <button class="btn btn-mini" style="float:right;background:#FFD700;color:#000" onclick="tocar(${playlist.length-1})">▶️ Play</button>`;
-  document.getElementById('listaMusicas').appendChild(div);
- }
- if(playlist.length>0 &&!player.src){tocar(0);}
-});
-
-function tocar(i){indice=i;player.src=playlist[i].url;player.play();document.getElementById('musicaAtual').innerText='Tocando: '+playlist[i].nome;}
+function salvarSaldo(){
+ let d=calc();
+ localStorage.setItem('saldoGuardado', d.sobra);
+ let agora=new Date().toLocaleString('pt-BR');
+ localStorage.setItem('gastosSalvos', JSON.stringify({comb:comb.value,merc:merc.value,agua:agua.value,luz:luz.value,gas:gas.value,net:net.value,sal:sal.value,data:agora}));
+ document.getElementById('saldoSalvoDisplay').innerText='R$ '+d.sobra.toFixed(2);
+ document.getElementById('dataSalvo').innerText='Salvo em: '+agora;
+ document.getElementById('historico').innerText='✅ Saldo salvo! Quando adicionar novo gasto, ele desconta desse valor.';
+ alert('✅ Saldo R$ '+d.sobra.toFixed(2)+' SALVO com sucesso!');
+}
+window.onload=()=>{
+ let s=JSON.parse(localStorage.getItem('gastosSalvos')||'null');
+ if(s){ comb.value=s.comb; merc.value=s.merc; agua.value=s.agua; luz.value=s.luz; gas.value=s.gas; net.value=s.net; sal.value=s.sal; document.getElementById('dataSalvo').innerText='Salvo em: '+s.data; document.getElementById('saldoSalvoDisplay').innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2); }
+ calc();
+}
+document.getElementById('fileBanco').addEventListener('change',function(){for(let f of this.files){let url=URL.createObjectURL(f); playlist.push({nome:f.name,url:url}); let div=document.createElement('div'); div.className='balao'; div.innerHTML=`🎵 ${f.name} <button class="btn btn-mini" style="float:right;background:#FFD700;color:#000" onclick="tocar(${playlist.length-1})">▶️ Play</button>`; listaMusicas.appendChild(div);} if(playlist.length>0 &&!player.src) tocar(0);});
+function tocar(i){indice=i; player.src=playlist[i].url; player.play(); musicaAtual.innerText='Tocando: '+playlist[i].nome;}
 function playPause(){if(player.paused) player.play(); else player.pause();}
-function proximaMusica(){if(playlist.length==0) return; indice=(indice+1)%playlist.length; tocar(indice);}
-function musicaAnterior(){if(playlist.length==0) return; indice=(indice-1+playlist.length)%playlist.length; tocar(indice);}
-player.addEventListener('ended',proximaMusica);
+function proximaMusica(){if(!playlist.length) return; indice=(indice+1)%playlist.length; tocar(indice);}
+function musicaAnterior(){if(!playlist.length) return; indice=(indice-1+playlist.length)%playlist.length; tocar(indice);}
 </script>
 </body>
 </html>
