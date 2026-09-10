@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão 5.1 - PIX R$3</title>
+<title>Banco Gratidão 6.0 - App Oficial</title>
+
+<!-- PWA APP -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gratidão">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/138/138292.png">
+<script>
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+</script>
+
 <style>
 body{background:#000;color:#fff;font-family:Arial;padding:10px;margin:0}
 .card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
@@ -27,6 +38,7 @@ th{background:#FFD700;color:#000}
 .progress-bar{height:100%;background:linear-gradient(90deg,#00ff88,#FFD700);transition:width 0.5s}
 #paywall{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9999;justify-content:center;align-items:center;padding:20px}
 .pay-box{background:#111;border:3px solid #FFD700;border-radius:20px;padding:20px;max-width:360px;text-align:center}
+#btnInstall{background:#00ff88;color:#000;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;display:none;margin:8px auto}
 </style>
 </head>
 <body>
@@ -43,14 +55,16 @@ const CONFIG_VALOR = "3,00";
 <button onclick="location.href='https://bancogratidaooficial-ops.github.io/Bem-vindo-/'" style="background:#fff;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold">👋 Bem-vindo</button>
 </div>
 
+<button id="btnInstall">📲 INSTALAR APP NO CELULAR</button>
+
 <div id="bannerPremium" style="background:linear-gradient(90deg,#FFD700,#ffaa00);color:#000;border-radius:15px;padding:12px;text-align:center;font-weight:bold;font-size:13px;margin-bottom:10px">
 ⏳ <span id="diasRestantes">3</span> dias grátis | <span id="statusPremium">VERSÃO FREE</span><br>
-<button onclick="abrirPaywall()" style="background:#000;color:#FFD700;border:none;padding:8px 16px;border-radius:15px;margin-top:6px;font-weight:bold">🔓 Liberar tudo por R$3,00 via PIX</button>
+<button onclick="abrirPaywall()" style="background:#000;color:#FFD700;border:none;padding:8px 16px;border-radius:15px;margin-top:6px;font-weight:bold">🔓 Liberar tudo por R$3,00 via PIX 41 99893-6718</button>
 </div>
 
 <div class="card">
 <h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
-<div id="chat"><div class="balao" style="display:block">Olá José! Versão com seu PIX 41 99893-6718 - R$3,00 pra desbloquear tudo!</div></div>
+<div id="chat"><div class="balao" style="display:block">Olá José! App 6.0 instalado! Aleatório ligado. PIX R$3,00 no 41 99893-6718</div></div>
 <div style="display:flex;gap:6px;margin-top:8px">
 <input id="inputIA" placeholder="Fale com a IA...">
 <button class="btn" style="background:#00aaff;color:#000" onclick="falarIA()">Enviar</button>
@@ -76,7 +90,6 @@ const CONFIG_VALOR = "3,00";
 </div>
 <div id="listaMusicas" style="margin-top:10px"></div>
 <input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
-<div style="font-size:11px;color:#aaa">Free: 2 músicas | Premium R$3 libera tudo</div>
 </div>
 
 <div class="card-fin">
@@ -102,25 +115,20 @@ const CONFIG_VALOR = "3,00";
 <button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="addCategoria()">➕ Adicionar</button>
 </div>
 <button class="btn btn-salvar" onclick="salvarComPaywall()">💾 SALVAR - Guardar Saldo</button>
-<button class="btn" style="background:#fff;color:#000;width:100%;margin-top:8px" onclick="compartilharZap()">📤 Compartilhar no WhatsApp</button>
 </div>
 
 <div id="paywall">
 <div class="pay-box">
 <h2 style="color:#FFD700;margin:0">🔓 Desbloqueio R$3,00</h2>
-<p style="font-size:14px">Pague R$3 uma vez e libere tudo pra sempre!</p>
-<div style="background:#000;border:1px solid #FFD700;border-radius:12px;padding:10px;margin:10px 0;text-align:left;font-size:13px">
-✅ IA ilimitada com voz<br>✅ Músicas ilimitadas + aleatório auto<br>✅ Salvar saldo ilimitado<br>✅ Sem anúncios
-</div>
+<p style="font-size:14px">Pague R$3 uma vez e libere o APP pra sempre!</p>
 <div style="background:#fff;color:#000;border-radius:12px;padding:12px;font-size:13px">
-<strong>PIX Celular:</strong><br><span id="pixKey" style="font-size:18px;font-weight:bold;color:#000">41 99893-6718</span><br>
-<div style="font-size:11px;color:#555">Nome: José - Banco Gratidão</div>
-<button onclick="copiarPix()" style="background:#00ff88;color:#000;border:none;padding:10px;width:100%;border-radius:15px;margin-top:8px;font-weight:bold">📋 COPIAR CHAVE PIX</button>
+<strong>PIX Celular:</strong><br><span style="font-size:20px;font-weight:bold">41 99893-6718</span><br>
+<button onclick="navigator.clipboard.writeText('41998936718');alert('PIX 41 99893-6718 copiado! Valor R$3,00')" style="background:#00ff88;color:#000;border:none;padding:10px;width:100%;border-radius:15px;margin-top:8px;font-weight:bold">📋 COPIAR PIX</button>
 </div>
 <p style="font-size:13px">Valor: <b style="color:#00ff88;font-size:18px">R$3,00</b> único</p>
-<button onclick="window.open('https://wa.me/'+CONFIG_ZAP+'?text=Oi José! Paguei os R$3 do Banco Gratidão - PIX '+CONFIG_PIX+' - Meu comprovante:','_blank')" style="background:#25D366;color:#fff;border:none;padding:14px;width:100%;border-radius:20px;font-weight:bold;margin-top:8px">📲 Enviar comprovante no WhatsApp</button>
-<button onclick="ativarPremiumTeste()" style="background:#FFD700;color:#000;border:none;padding:10px;width:100%;border-radius:20px;margin-top:10px;font-weight:bold">✅ Já paguei - Liberar agora</button>
-<button onclick="fecharPaywall()" style="background:none;color:#aaa;border:none;margin-top:10px">Voltar</button>
+<button onclick="window.open('https://wa.me/5541998936718?text=Oi José! Paguei os R$3 do App Banco Gratidão - PIX 41 99893-6718','_blank')" style="background:#25D366;color:#fff;border:none;padding:14px;width:100%;border-radius:20px;font-weight:bold">📲 Enviar comprovante</button>
+<button onclick="localStorage.setItem('premium','true');alert('✅ Premium liberado!');location.reload()" style="background:#FFD700;color:#000;border:none;padding:10px;width:100%;border-radius:20px;margin-top:10px;font-weight:bold">✅ Já paguei - Liberar agora</button>
+<button onclick="paywall.style.display='none'" style="background:none;color:#aaa;border:none;margin-top:10px">Voltar</button>
 </div>
 </div>
 
@@ -134,66 +142,22 @@ function iaFalar(){let t=document.getElementById('chat').lastElementChild.innerT
 let usosIAHoje=parseInt(localStorage.getItem('usosIA')||'0');
 let dataIA=localStorage.getItem('dataIA');
 if(dataIA!=new Date().toDateString()){usosIAHoje=0; localStorage.setItem('usosIA','0');}
-document.getElementById('usosIA').innerText=usosIAHoje;
-function falarIA(){
- if(!isPremium() && usosIAHoje>=3){abrirPaywall(); return;}
- let i=document.getElementById('inputIA'); if(!i.value) return;
- document.getElementById('chat').innerHTML+=`<div class="balao" style="display:block;background:#333;text-align:right">Você: ${i.value}</div><div class="balao" style="display:block;background:#003300"><b>${tipoIA.value}:</b> Gratidão por "${i.value}"!</div>`;
- usosIAHoje++; localStorage.setItem('usosIA',usosIAHoje); localStorage.setItem('dataIA',new Date().toDateString()); document.getElementById('usosIA').innerText=usosIAHoje;
- i.value="";
-}
-function ouvir(){let rec=new (window.webkitSpeechRecognition||window.SpeechRecognition)(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{inputIA.value=e.results[0][0].transcript; falarIA();}}
-function calc(){
- let inputs=document.querySelectorAll('#tabelaGastos input[type=number]:not(#sal)');
- let total=0; inputs.forEach(inp=>{total+=parseFloat(inp.value)||0});
- let salV=parseFloat(sal.value)||0; let sobra=salV-total;
- document.getElementById('total').innerText='R$ '+total.toFixed(2); document.getElementById('sobra').innerText='Sobra R$ '+sobra.toFixed(2);
- let guardado=parseFloat(localStorage.getItem('saldoGuardado')||'0');
- if(guardado>0){ saldoSalvoDisplay.innerText='Guardado: R$ '+guardado.toFixed(2)+' → Agora: R$ '+sobra.toFixed(2); }
- progressBar.style.width=Math.min(100,(total/salV*100)||0)+'%';
- return {total,sobra};
-}
+usosIA.innerText=usosIAHoje;
+function falarIA(){if(!isPremium() && usosIAHoje>=3){abrirPaywall(); return;} let i=inputIA; if(!i.value) return; chat.innerHTML+=`<div class="balao" style="display:block;background:#333;text-align:right">Você: ${i.value}</div><div class="balao" style="display:block;background:#003300"><b>${tipoIA.value}:</b> Gratidão!</div>`; usosIAHoje++; localStorage.setItem('usosIA',usosIAHoje); localStorage.setItem('dataIA',new Date().toDateString()); usosIA.innerText=usosIAHoje; i.value="";}
+function ouvir(){let rec=new (webkitSpeechRecognition||SpeechRecognition)(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{inputIA.value=e.results[0][0].transcript; falarIA();}}
+function calc(){let inputs=document.querySelectorAll('#tabelaGastos input[type=number]:not(#sal)'); let total=0; inputs.forEach(inp=>{total+=parseFloat(inp.value)||0}); let salV=parseFloat(sal.value)||0; let sobra=salV-total; document.getElementById('total').innerText='R$ '+total.toFixed(2); sobra.innerText='Sobra R$ '+sobra.toFixed(2); progressBar.style.width=Math.min(100,(total/salV*100)||0)+'%'; return {total,sobra};}
 function isPremium(){return localStorage.getItem('premium')=='true';}
-function checkTrial(){
- let install=localStorage.getItem('installDate');
- if(!install){localStorage.setItem('installDate',Date.now()); install=Date.now();}
- let dias=Math.floor((Date.now()-parseInt(install))/86400000);
- let rest=Math.max(0,3-dias);
- diasRestantes.innerText=rest;
- if(isPremium()){statusPremium.innerText='✅ PREMIUM R$3 ATIVO'; bannerPremium.style.background='linear-gradient(90deg,#00ff88,#00cc66)';}
- else if(rest==0){statusPremium.innerText='🔒 TESTE ACABOU - R$3 pra liberar';}
- return rest;
-}
+function checkTrial(){let install=localStorage.getItem('installDate'); if(!install){localStorage.setItem('installDate',Date.now()); install=Date.now();} let dias=Math.floor((Date.now()-parseInt(install))/86400000); let rest=Math.max(0,3-dias); diasRestantes.innerText=rest; if(isPremium()){statusPremium.innerText='✅ PREMIUM R$3 ATIVO'; bannerPremium.style.background='linear-gradient(90deg,#00ff88,#00cc66)';} return rest;}
 function abrirPaywall(){paywall.style.display='flex';}
-function fecharPaywall(){paywall.style.display='none';}
-function copiarPix(){navigator.clipboard.writeText(CONFIG_PIX); alert('✅ PIX copiado: '+CONFIG_PIX+'\nValor: R$3,00\nDepois clica em enviar comprovante');}
-function ativarPremiumTeste(){let codigo=prompt('Digite LIBERAR ou cole o código que te enviei no WhatsApp:'); if(codigo && codigo.toLowerCase().includes('liberar') || codigo.length>=2){localStorage.setItem('premium','true'); alert('✅ Premium R$3,00 liberado pra sempre! Gratidão!'); location.reload();}}
 function salvarComPaywall(){if(!isPremium() && checkTrial()<=0){abrirPaywall(); return;} salvarSaldo();}
-function salvarSaldo(){
- let d=calc(); let agora=new Date().toLocaleString('pt-BR');
- let dados={}; document.querySelectorAll('#tabelaGastos input').forEach(i=>{dados[i.id]=i.value}); dados.data=agora;
- localStorage.setItem('saldoGuardado', d.sobra); localStorage.setItem('gastosSalvos', JSON.stringify(dados));
- saldoSalvoDisplay.innerText='R$ '+d.sobra.toFixed(2); dataSalvo.innerText='Salvo em: '+agora; alert('✅ Saldo R$ '+d.sobra.toFixed(2)+' SALVO!');
-}
-function compartilharZap(){let d=calc(); let txt=`*BANCO GRATIDÃO*%0ASaldo: R$${localStorage.getItem('saldoGuardado')||0}%0ATotal: R$${d.total.toFixed(2)}%0Ahttps://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/`; window.open('https://wa.me/?text='+txt,'_blank');}
+function salvarSaldo(){let d=calc(); let agora=new Date().toLocaleString('pt-BR'); let dados={}; document.querySelectorAll('#tabelaGastos input').forEach(i=>{dados[i.id]=i.value}); dados.data=agora; localStorage.setItem('saldoGuardado', d.sobra); localStorage.setItem('gastosSalvos', JSON.stringify(dados)); saldoSalvoDisplay.innerText='R$ '+d.sobra.toFixed(2); dataSalvo.innerText='Salvo em: '+agora; alert('✅ Salvo!');}
 function addCategoria(){if(!isPremium()){let cats=document.querySelectorAll('#tabelaGastos tr').length; if(cats>8){abrirPaywall(); return;}} let nome=novaCategoria.value; if(!nome) return; let id='cat_'+Date.now(); let tr=document.createElement('tr'); tr.innerHTML=`<td>📌 ${nome}</td><td><input type="number" id="${id}" value="500" oninput="calc()"></td><td><button class="btn btn-mini" onclick="this.parentElement.parentElement.remove();calc()">🗑️</button></td>`; tabelaGastos.insertBefore(tr, tabelaGastos.rows[tabelaGastos.rows.length-2]); novaCategoria.value=''; calc();}
 function addMusicaFree(){if(!isPremium() && playlist.length>=2){abrirPaywall(); return;} fileBanco.click();}
-window.onload=()=>{
- let s=JSON.parse(localStorage.getItem('gastosSalvos')||'null');
- if(s){for(let k in s){let el=document.getElementById(k); if(el) el.value=s[k];} if(s.data) dataSalvo.innerText='Salvo em: '+s.data; saldoSalvoDisplay.innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2);}
- calc(); checkTrial();
-}
-function atualizarLista(){
- let divLista=document.getElementById('listaMusicas'); divLista.innerHTML='';
- playlist.forEach((m,i)=>{
-  let div=document.createElement('div'); div.className='balao '+(i==indice?'balao-ativo':'');
-  div.innerHTML=`<span>🎵 ${m.nome} ${i==indice?'🔊':''}</span><span><button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="tocar(${i})">▶️</button><button class="btn btn-mini" style="background:#ff4444" onclick="removerMusica(${i})">🗑️</button></span>`;
-  divLista.appendChild(div);
- });
-}
+window.onload=()=>{let s=JSON.parse(localStorage.getItem('gastosSalvos')||'null'); if(s){for(let k in s){let el=document.getElementById(k); if(el) el.value=s[k];} if(s.data) dataSalvo.innerText='Salvo em: '+s.data; saldoSalvoDisplay.innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2);} calc(); checkTrial();}
+function atualizarLista(){let divLista=listaMusicas; divLista.innerHTML=''; playlist.forEach((m,i)=>{let div=document.createElement('div'); div.className='balao '+(i==indice?'balao-ativo':''); div.innerHTML=`<span>🎵 ${m.nome} ${i==indice?'🔊':''}</span><span><button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="tocar(${i})">▶️</button><button class="btn btn-mini" style="background:#ff4444" onclick="removerMusica(${i})">🗑️</button></span>`; divLista.appendChild(div);});}
 fileBanco.addEventListener('change',function(){for(let f of this.files){let url=URL.createObjectURL(f); playlist.push({nome:f.name,url:url});} atualizarLista(); if(playlist.length>0 &&!player.src) tocar(0);});
 function tocar(i){if(!playlist[i]) return; indice=i; player.src=playlist[i].url; player.play(); musicaAtual.innerText='Tocando: '+playlist[i].nome+(aleatorio?' 🔀':''); atualizarLista();}
-function removerMusica(i){playlist.splice(i,1); if(indice>=playlist.length) indice=0; atualizarLista(); if(playlist.length==0){player.pause();player.src='';musicaAtual.innerText='Nenhuma música';}}
+function removerMusica(i){playlist.splice(i,1); if(indice>=playlist.length) indice=0; atualizarLista();}
 function playPause(){if(player.paused) player.play(); else player.pause();}
 function getRandomIndex(){if(playlist.length<=1) return 0; let idx; do{idx=Math.floor(Math.random()*playlist.length);}while(idx===indice); return idx;}
 function proximaMusica(){if(!playlist.length) return; if(aleatorio) indice=getRandomIndex(); else indice=(indice+1)%playlist.length; tocar(indice);}
@@ -202,6 +166,22 @@ function toggleRandom(){aleatorio=!aleatorio; btnRandom.innerText=aleatorio?'�
 function toggleLoop(){loop=!loop; player.loop=loop; btnLoop.innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF'; btnLoop.className=loop?'btn btn-mini btn-random-on':'btn btn-mini btn-random-off';}
 player.addEventListener('ended',()=>{if(!loop) proximaMusica();});
 player.addEventListener('timeupdate',()=>{if(player.duration){progressBar.style.width=(player.currentTime/player.duration*100)+'%';}});
+
+// BOTAO INSTALAR APP
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('btnInstall').style.display='block';
+});
+document.getElementById('btnInstall').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('btnInstall').style.display='none';
+  }
+});
 </script>
 </body>
 </html>
