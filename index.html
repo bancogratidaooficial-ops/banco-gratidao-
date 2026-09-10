@@ -69,7 +69,45 @@ input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none
 </div>
 </div>
 
-<div id="aba-banco" class="hidden">
+<div id="aba-banco" class="hidden"><div id="aba-banco" class="hidden">
+<div class="card">
+<h3 style="color:gold;">💰 Controle - Seu Dinheiro</h3>
+<p style="color:#ccc;font-size:13px;">Controle total do dinheiro, tenha controle total sobre seus gastos</p>
+
+<div style="background:gold;color:#000;padding:12px;border-radius:12px;margin:10px 0;">
+<label style="font-weight:bold;">💵 SALÁRIO RECEBIDO / ENTRADA</label>
+<input id="salario" type="number" placeholder="Ex: 1000" style="background:#fff;color:#000;font-weight:bold;font-size:18px;text-align:center;" oninput="calcular()">
+</div>
+
+<h4 style="color:gold;margin:12px 0;">🛒 GASTOS MENSAIS</h4>
+<div class="grid-gastos">
+<div class="caixa-gasto"><label>🛒 Mercado</label><input id="g_mercado" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+<div class="caixa-gasto"><label>⛽ Combustível</label><input id="g_comb" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+<div class="caixa-gasto"><label>💊 Farmácia</label><input id="g_farm" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+<div class="caixa-gasto"><label>💡 Luz</label><input id="g_luz" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+<div class="caixa-gasto"><label>💧 Água</label><input id="g_agua" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+<div class="caixa-gasto"><label>🌐 Internet</label><input id="g_net" type="number" placeholder="R$ 0" oninput="calcular()"></div>
+</div>
+
+<h4 style="color:gold;margin:14px 0 8px;">➕ OUTROS GASTOS</h4>
+<div style="display:flex;gap:6px;"><input id="outroDesc" placeholder="Ex: Aluguel" style="flex:1;"><input id="outroValor" type="number" placeholder="R$" style="width:90px;"></div>
+<button class="btn-gold" onclick="addOutro()">+ Adicionar Outro Gasto</button>
+<div id="listaOutros" style="margin-top:10px;"></div>
+
+<div style="background:#111;border:2px solid gold;border-radius:12px;padding:12px;margin-top:14px;text-align:center;">
+<div style="display:flex;justify-content:space-between;"><span>Salário:</span><span id="resSalario" style="color:#00ff88;font-weight:bold;">R$ 0,00</span></div>
+<div style="display:flex;justify-content:space-between;"><span>Total Gastos:</span><span id="resGastos" style="color:#ff4444;font-weight:bold;">R$ 0,00</span></div>
+<hr style="margin:8px 0;border-color:#333;">
+<div style="display:flex;justify-content:space-between;font-size:18px;"><b>SALDO:</b><span id="resSaldo" style="font-weight:bold;">R$ 0,00</span></div>
+<div id="msgSaldo" style="margin-top:6px;font-size:13px;"></div>
+</div>
+
+<!-- BOTÃO SALVAR NOVO -->
+<button class="btn-gold" style="background:linear-gradient(90deg,gold,#ffaa00);font-size:16px;padding:16px;margin-top:12px;" onclick="salvarControle()">💾 SALVAR MEU CONTROLE</button>
+<p id="statusSalvo" style="text-align:center;font-size:12px;color:#00ff88;margin-top:6px;"></p>
+
+</div>
+</div>
 <div class="card">
 <h3 style="color:gold;">💰 Controle - Seu Dinheiro</h3>
 <p style="color:#ccc;font-size:13px;">Controle total do dinheiro, tenha controle total sobre seus gastos</p>
