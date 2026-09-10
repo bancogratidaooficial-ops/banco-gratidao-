@@ -3,24 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Gratidão 3.0 - Final Completo</title>
+<title>Banco Gratidão 4.0 - Completo Definitivo</title>
 <style>
-body{background:#000;color:#fff;font-family:Arial;padding:12px;margin:0}
+body{background:#000;color:#fff;font-family:Arial;padding:10px;margin:0}
 .card{background:#0a1628;border:2px solid #00aaff;border-radius:20px;padding:14px;margin:12px 0}
-.card-fin{background:#111;border:1px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
-.card-player{background:linear-gradient(180deg,#111,#000);border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
-.balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:8px 0;text-align:left;font-size:14px}
-.balao-voz{background:#003300;border-color:#00ff88;color:#aaffaa}
-input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:85%;border:1px solid #333}
-.btn{border:none;padding:10px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
-.btn-play{background:#FFD700;color:#000;font-size:18px;padding:14px;width:100%;border-radius:30px}
+.card-fin{background:#111;border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
+.card-player{background:linear-gradient(180deg,#1a1a00,#000);border:2px solid #FFD700;border-radius:20px;padding:14px;margin:12px 0}
+.balao{background:#1e3a5f;border:1px solid #00aaff;border-radius:15px;padding:10px;margin:6px 0;text-align:left;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.balao-ativo{border:2px solid #FFD700;background:#332a00;color:#FFD700}
+input,select{padding:10px;border-radius:10px;border:none;background:#111;color:#fff;margin:4px;width:82%;border:1px solid #333}
+.btn{border:none;padding:9px 13px;border-radius:20px;font-weight:bold;cursor:pointer}
+.btn-play{background:#FFD700;color:#000;font-size:19px;padding:15px;width:100%;border-radius:30px}
 .btn-salvar{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;padding:14px;width:100%;font-size:16px;margin-top:10px;border-radius:20px}
-.btn-mini{background:#333;color:#fff;padding:6px 10px;font-size:11px;margin:3px;border-radius:15px}
+.btn-mini{background:#333;color:#fff;padding:6px 10px;font-size:11px;margin:2px;border-radius:15px}
+.btn-random-on{background:#FFD700;color:#000}
+.btn-random-off{background:#333;color:#aaa}
 table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{border:1px solid #333;padding:8px;font-size:13px}
+th,td{border:1px solid #333;padding:7px;font-size:13px}
 th{background:#FFD700;color:#000}
 .total{background:#003300;color:#00ff88;font-weight:bold}
 .saldo-box{background:#002a00;border:2px solid #00ff88;border-radius:15px;padding:10px;margin:10px 0;text-align:center}
+.progress{width:100%;height:10px;background:#222;border-radius:10px;margin-top:6px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#00ff88,#FFD700);transition:width 0.5s}
 </style>
 </head>
 <body>
@@ -33,29 +37,30 @@ th{background:#FFD700;color:#000}
 
 <div class="card">
 <h3 style="color:#00ff88;margin:0">🤖 IA 2.0 - Voz Humana Clonada</h3>
-<div id="chat"><div class="balao">Olá José! Sou sua IA com voz humana clonada. Já deixei R$500 em cada gasto pra você. Como posso te ajudar?</div></div>
+<div id="chat"><div class="balao" style="display:block">Olá José! Versão 4.0 completa pronta. IA, Player aleatório, Saldo salvo e ideias novas!</div></div>
 <div style="display:flex;gap:6px;margin-top:8px">
 <input id="inputIA" placeholder="Fale com a IA...">
 <button class="btn" style="background:#00aaff;color:#000" onclick="falarIA()">Enviar</button>
 <button class="btn" style="background:#00ff88;color:#000" onclick="ouvir()">🎤</button>
 <button class="btn" style="background:#FFD700;color:#000" onclick="iaFalar()">🗣️</button>
 </div>
-<div style="margin-top:8px">
-<select id="tipoIA"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
-</div>
+<select id="tipoIA" style="margin-top:6px;width:95%"><option value="gratidao">IA Gratidão</option><option value="financeira">IA Financeira</option><option value="motivacional">IA Motivacional</option></select>
 </div>
 
 <div class="card-player">
-<h3 style="color:#FFD700;margin:0">🎧 Player - Minhas Músicas</h3>
-<p id="musicaAtual" style="color:#aaa;font-size:12px">Nenhuma música. Use + Add Música</p>
+<h3 style="color:#FFD700;margin:0">🎧 Player - Minhas Músicas (Aleatório Auto)</h3>
+<p id="musicaAtual" style="color:#aaa;font-size:12px">Nenhuma música ainda</p>
 <audio id="playerPrincipal" controls style="width:100%;margin:8px 0"></audio>
+<div class="progress"><div id="progressBar" class="progress-bar" style="width:0%"></div></div>
 <button class="btn btn-play" onclick="playPause()">▶️ PLAY / ⏸️ PAUSE</button>
-<div style="text-align:center;margin-top:8px">
+<div style="text-align:center;margin-top:8px;display:flex;justify-content:center;flex-wrap:wrap;gap:5px">
 <button class="btn btn-mini" onclick="musicaAnterior()">⏮️ Voltar</button>
 <button class="btn btn-mini" onclick="proximaMusica()">⏭️ Próxima</button>
+<button id="btnRandom" class="btn btn-mini btn-random-on" onclick="toggleRandom()">🔀 Aleatório: ON</button>
+<button id="btnLoop" class="btn btn-mini btn-random-off" onclick="toggleLoop()">🔁 Loop: OFF</button>
 <button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="document.getElementById('fileBanco').click()">+ 🎵 Add Música</button>
 </div>
-<div id="listaMusicas"></div>
+<div id="listaMusicas" style="margin-top:10px"></div>
 <input type="file" id="fileBanco" accept="audio/*" multiple style="display:none">
 </div>
 
@@ -63,70 +68,104 @@ th{background:#FFD700;color:#000}
 <h3 style="color:#FFD700;margin:0">📊 Controle - R$500 em cada</h3>
 <div class="saldo-box">
 <div style="font-size:11px;color:#aaa">SALDO SALVO NO BANCO</div>
-<div id="saldoSalvoDisplay" style="color:#00ff88;font-size:22px;font-weight:bold">R$ 0,00</div>
+<div id="saldoSalvoDisplay" style="color:#00ff88;font-size:24px;font-weight:bold">R$ 0,00</div>
 <div id="dataSalvo" style="font-size:11px;color:#aaa">Clique em SALVAR para guardar</div>
 </div>
-<table>
-<tr><th>Categoria</th><th>Valor R$</th></tr>
-<tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td></tr>
-<tr><td>🛒 Mercado</td><td><input type="number" id="merc" value="500" oninput="calc()"></td></tr>
-<tr><td>💧 Água</td><td><input type="number" id="agua" value="500" oninput="calc()"></td></tr>
-<tr><td>💡 Luz</td><td><input type="number" id="luz" value="500" oninput="calc()"></td></tr>
-<tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td></tr>
-<tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td></tr>
-<tr class="total"><td>TOTAL</td><td id="total">R$ 3000,00</td></tr>
-<tr class="total"><td>SALÁRIO</td><td><input type="number" id="sal" value="5000" oninput="calc()"><div id="sobra" style="margin-top:4px">Sobra R$ 2000,00</div></td></tr>
+
+<table id="tabelaGastos">
+<tr><th>Categoria</th><th>Valor R$</th><th></th></tr>
+<tr><td>⛽ Combustível</td><td><input type="number" id="comb" value="500" oninput="calc()"></td><td></td></tr>
+<tr><td>🛒 Mercado</td><td><input type="number" id="merc" value="500" oninput="calc()"></td><td></td></tr>
+<tr><td>💧 Água</td><td><input type="number" id="agua" value="500" oninput="calc()"></td><td></td></tr>
+<tr><td>💡 Luz</td><td><input type="number" id="luz" value="500" oninput="calc()"></td><td></td></tr>
+<tr><td>🔥 Gás</td><td><input type="number" id="gas" value="500" oninput="calc()"></td><td></td></tr>
+<tr><td>🌐 Internet</td><td><input type="number" id="net" value="500" oninput="calc()"></td><td></td></tr>
+<tr class="total"><td>TOTAL</td><td id="total">R$ 3000,00</td><td></td></tr>
+<tr class="total"><td>SALÁRIO</td><td><input type="number" id="sal" value="5000" oninput="calc()"><div id="sobra" style="margin-top:4px;font-size:12px">Sobra R$ 2000,00</div></td><td></td></tr>
 </table>
-<button class="btn btn-salvar" onclick="salvarSaldo()">💾 SALVAR</button>
-<div id="historico" style="margin-top:8px;font-size:11px;color:#aaa"></div>
+
+<div style="display:flex;gap:6px;margin-top:8px">
+<input id="novaCategoria" placeholder="Nova categoria ex: Remédio" style="flex:1">
+<button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="addCategoria()">➕ Adicionar</button>
+</div>
+
+<button class="btn btn-salvar" onclick="salvarSaldo()">💾 SALVAR - Guardar Saldo</button>
+<button class="btn" style="background:#fff;color:#000;width:100%;margin-top:8px" onclick="compartilharZap()">📤 Compartilhar no WhatsApp</button>
 </div>
 
 <script>
 let playlist=[]; let indice=0; let player=document.getElementById('playerPrincipal');
-let vozHumana=null; function carregarVoz(){let v=speechSynthesis.getVoices();vozHumana=v.find(x=>x.lang.includes('pt-BR'))||v[0];}
+let aleatorio=true, loop=false;
+let vozHumana=null;
+function carregarVoz(){let v=speechSynthesis.getVoices();vozHumana=v.find(x=>x.lang.includes('pt-BR'))||v[0];}
 speechSynthesis.onvoiceschanged=carregarVoz; carregarVoz();
-function iaFalar(){let t=document.getElementById('chat').lastElementChild.innerText; let f=new SpeechSynthesisUtterance(t); f.voice=vozHumana; f.lang='pt-BR'; f.rate=0.95; speechSynthesis.speak(f);}
-function falarIA(){
- let i=document.getElementById('inputIA'); if(!i.value) return;
- let tipo=document.getElementById('tipoIA').value;
- document.getElementById('chat').innerHTML+=`<div class="balao" style="background:#333;text-align:right">Você: ${i.value}</div>`;
- let r=tipo=="gratidao"?`Gratidão por "${i.value}" registrada! Com R$500 em cada, seu total é R$3000.`:`IA ${tipo}: Anotado "${i.value}". Sobra R$${(parseFloat(document.getElementById('sal').value)||0)-3000}.`;
- document.getElementById('chat').innerHTML+=`<div class="balao balao-voz"><b>IA ${tipo}:</b> ${r}</div>`;
- let f=new SpeechSynthesisUtterance(r); f.voice=vozHumana; f.lang='pt-BR'; speechSynthesis.speak(f); i.value="";
-}
-function ouvir(){let rec=new webkitSpeechRecognition(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{document.getElementById('inputIA').value=e.results[0][0].transcript; falarIA();}}
+function iaFalar(){let t=document.getElementById('chat').lastElementChild.innerText; let f=new SpeechSynthesisUtterance(t); f.voice=vozHumana; f.lang='pt-BR'; speechSynthesis.speak(f);}
+function falarIA(){let i=document.getElementById('inputIA'); if(!i.value) return; let tipo=document.getElementById('tipoIA').value; document.getElementById('chat').innerHTML+=`<div class="balao" style="display:block;background:#333;text-align:right">Você: ${i.value}</div><div class="balao" style="display:block;background:#003300"><b>${tipo}:</b> Gratidão por "${i.value}"! Saldo atual R$${(parseFloat(sal.value)||0)-(parseFloat(total.innerText.replace('R$',''))||0)}</div>`; i.value="";}
+function ouvir(){let rec=new (window.webkitSpeechRecognition||window.SpeechRecognition)(); rec.lang='pt-BR'; rec.start(); rec.onresult=e=>{inputIA.value=e.results[0][0].transcript; falarIA();}}
 
 function calc(){
- let vals=['comb','merc','agua','luz','gas','net'].map(id=>parseFloat(document.getElementById(id).value)||0);
- let total=vals.reduce((a,b)=>a+b,0);
- let sal=parseFloat(document.getElementById('sal').value)||0;
- let sobra=sal-total;
+ let inputs=document.querySelectorAll('#tabelaGastos input[type=number]:not(#sal)');
+ let total=0; inputs.forEach(inp=>{total+=parseFloat(inp.value)||0});
+ let salV=parseFloat(document.getElementById('sal').value)||0;
+ let sobra=salV-total;
  document.getElementById('total').innerText='R$ '+total.toFixed(2);
  document.getElementById('sobra').innerText='Sobra R$ '+sobra.toFixed(2);
  let guardado=parseFloat(localStorage.getItem('saldoGuardado')||'0');
- if(guardado>0){ document.getElementById('saldoSalvoDisplay').innerText='Guardado: R$ '+guardado.toFixed(2)+' → Agora: R$ '+sobra.toFixed(2); }
+ if(guardado>0){ saldoSalvoDisplay.innerText='Guardado: R$ '+guardado.toFixed(2)+' → Agora: R$ '+sobra.toFixed(2); }
+ let perc=salV>0? Math.min(100,(total/salV)*100):0;
+ document.getElementById('progressBar').style.width=perc+'%';
  return {total,sobra};
 }
 function salvarSaldo(){
- let d=calc();
+ let d=calc(); let agora=new Date().toLocaleString('pt-BR');
+ let dados={}; document.querySelectorAll('#tabelaGastos input').forEach(i=>{dados[i.id]=i.value});
+ dados.data=agora;
  localStorage.setItem('saldoGuardado', d.sobra);
- let agora=new Date().toLocaleString('pt-BR');
- localStorage.setItem('gastosSalvos', JSON.stringify({comb:comb.value,merc:merc.value,agua:agua.value,luz:luz.value,gas:gas.value,net:net.value,sal:sal.value,data:agora}));
- document.getElementById('saldoSalvoDisplay').innerText='R$ '+d.sobra.toFixed(2);
- document.getElementById('dataSalvo').innerText='Salvo em: '+agora;
- document.getElementById('historico').innerText='✅ Saldo salvo! Quando adicionar novo gasto, ele desconta desse valor.';
- alert('✅ Saldo R$ '+d.sobra.toFixed(2)+' SALVO com sucesso!');
+ localStorage.setItem('gastosSalvos', JSON.stringify(dados));
+ saldoSalvoDisplay.innerText='R$ '+d.sobra.toFixed(2);
+ dataSalvo.innerText='Salvo em: '+agora;
+ alert('✅ Saldo R$ '+d.sobra.toFixed(2)+' SALVO!');
+}
+function compartilharZap(){
+ let d=calc(); let txt=`*BANCO GRATIDÃO* %0A Saldo salvo: R$ ${localStorage.getItem('saldoGuardado')||0} %0A Total gastos: R$ ${d.total.toFixed(2)} %0A Sobra: R$ ${d.sobra.toFixed(2)} %0A https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/`;
+ window.open('https://wa.me/?text='+txt,'_blank');
+}
+function addCategoria(){
+ let nome=document.getElementById('novaCategoria').value; if(!nome) return;
+ let id='cat_'+Date.now();
+ let tr=document.createElement('tr'); tr.innerHTML=`<td>📌 ${nome}</td><td><input type="number" id="${id}" value="500" oninput="calc()"></td><td><button class="btn btn-mini" onclick="this.parentElement.parentElement.remove();calc()">🗑️</button></td>`;
+ document.getElementById('tabelaGastos').insertBefore(tr, document.getElementById('tabelaGastos').rows[document.getElementById('tabelaGastos').rows.length-2]);
+ document.getElementById('novaCategoria').value=''; calc();
 }
 window.onload=()=>{
  let s=JSON.parse(localStorage.getItem('gastosSalvos')||'null');
- if(s){ comb.value=s.comb; merc.value=s.merc; agua.value=s.agua; luz.value=s.luz; gas.value=s.gas; net.value=s.net; sal.value=s.sal; document.getElementById('dataSalvo').innerText='Salvo em: '+s.data; document.getElementById('saldoSalvoDisplay').innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2); }
+ if(s){ for(let k in s){ let el=document.getElementById(k); if(el) el.value=s[k]; } if(s.data) dataSalvo.innerText='Salvo em: '+s.data; saldoSalvoDisplay.innerText='R$ '+(parseFloat(localStorage.getItem('saldoGuardado'))||0).toFixed(2); }
  calc();
 }
-document.getElementById('fileBanco').addEventListener('change',function(){for(let f of this.files){let url=URL.createObjectURL(f); playlist.push({nome:f.name,url:url}); let div=document.createElement('div'); div.className='balao'; div.innerHTML=`🎵 ${f.name} <button class="btn btn-mini" style="float:right;background:#FFD700;color:#000" onclick="tocar(${playlist.length-1})">▶️ Play</button>`; listaMusicas.appendChild(div);} if(playlist.length>0 &&!player.src) tocar(0);});
-function tocar(i){indice=i; player.src=playlist[i].url; player.play(); musicaAtual.innerText='Tocando: '+playlist[i].nome;}
-function playPause(){if(player.paused) player.play(); else player.pause();}
-function proximaMusica(){if(!playlist.length) return; indice=(indice+1)%playlist.length; tocar(indice);}
-function musicaAnterior(){if(!playlist.length) return; indice=(indice-1+playlist.length)%playlist.length; tocar(indice);}
+
+// PLAYER
+function atualizarLista(){
+ let divLista=document.getElementById('listaMusicas'); divLista.innerHTML='';
+ playlist.forEach((m,i)=>{
+  let div=document.createElement('div'); div.className='balao '+(i==indice?'balao-ativo':'');
+  div.innerHTML=`<span>🎵 ${m.nome} ${i==indice?'🔊':''}</span><span><button class="btn btn-mini" style="background:#FFD700;color:#000" onclick="tocar(${i})">▶️</button><button class="btn btn-mini" style="background:#ff4444" onclick="removerMusica(${i})">🗑️</button></span>`;
+  divLista.appendChild(div);
+ });
+}
+document.getElementById('fileBanco').addEventListener('change',function(){
+ for(let f of this.files){ let url=URL.createObjectURL(f); playlist.push({nome:f.name,url:url}); }
+ atualizarLista(); if(playlist.length>0 &&!player.src) tocar(0);
+});
+function tocar(i){ if(!playlist[i]) return; indice=i; player.src=playlist[i].url; player.play(); musicaAtual.innerText='Tocando: '+playlist[i].nome+(aleatorio?' 🔀':'')+(loop?' 🔁':''); atualizarLista();}
+function removerMusica(i){ playlist.splice(i,1); if(indice>=playlist.length) indice=0; atualizarLista(); if(playlist.length==0){player.pause();player.src='';musicaAtual.innerText='Nenhuma música';} }
+function playPause(){ if(player.paused) player.play(); else player.pause(); }
+function getRandomIndex(){ if(playlist.length<=1) return 0; let idx; do{ idx=Math.floor(Math.random()*playlist.length);}while(idx===indice); return idx; }
+function proximaMusica(){ if(!playlist.length) return; if(aleatorio) indice=getRandomIndex(); else indice=(indice+1)%playlist.length; tocar(indice);}
+function musicaAnterior(){ if(!playlist.length) return; if(aleatorio) indice=getRandomIndex(); else indice=(indice-1+playlist.length)%playlist.length; tocar(indice);}
+function toggleRandom(){ aleatorio=!aleatorio; let b=document.getElementById('btnRandom'); b.innerText=aleatorio?'🔀 Aleatório: ON':'🔀 Aleatório: OFF'; b.className=aleatorio?'btn btn-mini btn-random-on':'btn btn-mini btn-random-off'; }
+function toggleLoop(){ loop=!loop; player.loop=loop; let b=document.getElementById('btnLoop'); b.innerText=loop?'🔁 Loop: ON':'🔁 Loop: OFF'; b.className=loop?'btn btn-mini btn-random-on':'btn btn-mini btn-random-off'; }
+player.addEventListener('ended',()=>{ if(!loop) proximaMusica(); });
+player.addEventListener('timeupdate',()=>{ if(player.duration){ let p=(player.currentTime/player.duration)*100; document.getElementById('progressBar').style.width=p+'%'; }});
 </script>
 </body>
 </html>
