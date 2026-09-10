@@ -184,6 +184,14 @@ function carregarVIP(){let user=JSON.parse(localStorage.getItem('banco_gratidao_
 function compartilharZap(){let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let link='https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref='+user.tel;let msg='🔥 BANCO GRATIDÃO 🔥 Sua gratidão vale ouro! App: '+link;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 function confirmarAmigo(){let t=document.getElementById('telAmigo').value.replace(/\D/g,'');if(!t)return;let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'{}');let lista=JSON.parse(localStorage.getItem('convidados_'+user.tel)||'[]');if(lista.includes(t)){alert('Já contou!');return;}lista.push(t);localStorage.setItem('convidados_'+user.tel,JSON.stringify(lista));document.getElementById('telAmigo').value='';carregarVIP();if(lista.length==3)alert('👑 VIP LIBERADO!');}
 window.onload=function(){let logado=localStorage.getItem('banco_gratidao_logado');let user=JSON.parse(localStorage.getItem('banco_gratidao_user')||'null');if(logado=='true'&&user){document.getElementById('telaLogin').style.display='none';finalizarLogin(user);}}
-</script>
+</script>function salvarControle(){
+  calcular(); // garante que calcula antes de salvar
+  localStorage.setItem('banco_gastos_salvo','true');
+  localStorage.setItem('data_ultimo_save', new Date().toLocaleString('pt-BR'));
+  document.getElementById('statusSalvo').innerText = '✅ Salvo em ' + new Date().toLocaleString('pt-BR') + ' - Seu saldo de R$ ' + document.getElementById('resSaldo').innerText + ' ficou gravado!';
+  // vibra e alerta
+  if(navigator.vibrate) navigator.vibrate(100);
+  alert('✅ CONTROLE SALVO!\n\nSalário: ' + document.getElementById('resSalario').innerText + '\nGastos: ' + document.getElementById('resGastos').innerText + '\nSALDO: ' + document.getElementById('resSaldo').innerText + '\n\nVai ficar gravado até você mudar de novo!');
+}
 </body>
 </html>
