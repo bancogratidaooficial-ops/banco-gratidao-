@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Banco Gratidao 10.1 FUSAO DEFINITIVA FIX</title>
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box}body{background:#000;color:#fff;font-family:system-ui;margin:0;padding-bottom:90px}
+.top{position:sticky;top:0;z-index:99;background:#000;display:flex;gap:8px;justify-content:center;padding:10px;flex-wrap:wrap}
+.tab{padding:12px 18px;border-radius:24px;border:2px solid #fff;background:linear-gradient(145deg,#ffdf7a,#ffb300);color:#000;font-weight:900}
+.tab.ativo{background:#1a1a1a;color:#fff;border-color:gold}
+.banner{margin:12px;background:gold;color:#000;padding:14px;border-radius:16px;text-align:center;font-weight:900}
+.card{margin:12px;border:2px solid gold;border-radius:16px;padding:14px;background:#111}
+.btn{padding:14px 18px;border-radius:22px;border:none;font-weight:900;cursor:pointer}
+.btn-y{background:gold;color:#000}.btn-d{background:#222;color:#fff;border:1px solid #444}.btn-b{background:#2196f3;color:#fff}.btn-g{background:#00c853;color:#000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{background:#1a1a00;border:2px solid gold;border-radius:14px;padding:12px;text-align:center;position:relative}
+#installBar{position:fixed;bottom:75px;left:12px;right:12px;background:gold;color:#000;padding:14px;border-radius:14px;font-weight:900;text-align:center;display:none;z-index:9999}
+#backBtn{position:fixed;bottom:12px;left:12px;background:#222;border:1px solid gold;color:gold;padding:12px 18px;border-radius:22px;font-weight:900;z-index:9999}
+</style>
+</head>
+<body>
+<div class="top">
+<button class="tab ativo" onclick="muda('g',this)">✨ Gratidão</button>
+<button class="tab" onclick="muda('s',this)">🎵 Sonora</button>
+<button class="tab" onclick="muda('b',this)">🏦 Banco</button>
+<button class="tab" onclick="muda('w',this)">👋 Bem-vindo</button>
+</div>
+<div class="banner">⏳ 3 dias grátis | VERSÃO 10.1 FUSÃO DEFINITIVA FIX<br>🔓 R$3 PIX 41 99893-6718<br>✅ Add Direto + 📲 Instalar + ↩️ Voltar</div>
+<div id="ag"><div class="card"><div style="background:#003300;color:#00ff88;padding:10px;border-radius:10px;text-align:center">Energia <span id="en">87</span>%</div><div id="iaBox" style="background:#000;border:1px solid #333;padding:10px;border-radius:10px;margin:10px 0">Olá JOSÉ! IA da Gratidão 🤖</div><div style="display:flex;gap:6px"><input id="inIA" placeholder="Escreva gratidão..." style="flex:1;padding:12px;border-radius:12px;background:#111;color:#fff;border:1px solid #333"><button class="btn btn-b" onclick="envIA()">Enviar</button></div></div><div class="card"><button class="btn btn-y" style="width:100%;padding:18px" onclick="addMusica()">+ 🎵 Add Música DIRETO DO CELULAR</button></div></div>
+<div id="as" style="display:none"><h2 style="color:gold;text-align:center">🙏 Gratidão Sonora</h2><div style="display:flex;gap:8px;justify-content:center;margin:10px"><button class="btn btn-d" onclick="tocaA()">▶️ Aleatório</button><button class="btn btn-y" onclick="addMusica()">+ Add Música</button></div><div id="listS"></div><audio id="ply" controls style="width:94%;margin:12px auto;display:block"></audio></div>
