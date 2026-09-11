@@ -7,7 +7,21 @@
 <link rel="manifest" href="manifest.json">
 </head>
 <body style="background:#000;color:#fff">
-<!-- COLE O CONTEÚDO COMPLETO DO ARQUIVO GERADO -->background:#000;color:#fff;font-family:system-ui;margin:0;padding-bottom:90px}
+<function addMusica(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='audio/*,.m4a,.mp3,.mp4,.wav';
+  input.multiple=true;
+  input.onchange=(e)=>{
+    for(let file of e.target.files){
+      let nome=file.name.replace(/\.(mp3|m4a)$/i,'');
+      let url=URL.createObjectURL(file);
+      musicasBlob.push({nome:nome,arquivo:url,toques:0,valor:100});
+    }
+    renderSonora();
+  };
+  input.click(); // ABRE DIRETO: Pessoal / Trabalho / Gravador / Fotos
+}-- COLE O CONTEÚDO COMPLETO DO ARQUIVO GERADO -->background:#000;color:#fff;font-family:system-ui;margin:0;padding-bottom:90px}
 .top{position:sticky;top:0;z-index:99;background:#000;display:flex;gap:8px;justify-content:center;padding:10px;flex-wrap:wrap}
 .tab{padding:12px 18px;border-radius:24px;border:2px solid #fff;background:linear-gradient(145deg,#ffdf7a,#ffb300);color:#000;font-weight:900}
 .tab.ativo{background:#1a1a1a;color:#fff;border-color:gold}
