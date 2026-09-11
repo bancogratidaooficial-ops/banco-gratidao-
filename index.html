@@ -1,48 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Banco Gratidão 9.1 ULTIMATE</title><link rel="manifest" href="manifest.json">
-<style>*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}body{background:#070709;color:#fff;padding:10px}.tab{display:inline-block;background:linear-gradient(145deg,#ffdf7a,#d4a91a);color:#000;padding:10px 16px;border-radius:999px;font-weight:800;margin:4px;cursor:pointer}.tab.ativa{background:#fff}.card{margin:12px 0;border-radius:18px;padding:14px;border:1px solid #333;background:#15151e}.btn{padding:12px 18px;border-radius:999px;border:none;font-weight:800;cursor:pointer}.btn-green{background:#00c853;color:#fff}.btn-gold{background:linear-gradient(145deg,#ffdf7a,#d4a91a);width:100%;padding:16px;font-size:18px;margin-top:10px}</style>
-</head><body>
-<div style="position:fixed;top:0;left:0;width:100%;background:#000;z-index:999;display:flex;gap:8px;padding:10px;flex-wrap:wrap;justify-content:center">
-<button class="tab" onclick="aba('gratidao')">✨ Gratidão</button><button class="tab" onclick="aba('sonora')">🎵 Sonora</button><button class="tab" onclick="aba('banco')">🏦 Banco</button><button class="tab ativa" onclick="aba('bem')">🙌 Bem-vindo</button>
-</div><div style="height:60px"></div>
-<div id="barra-instala" style="display:none;background:linear-gradient(90deg,#ffca28,#ffb300);color:#000;text-align:center;padding:12px;border-radius:12px;font-weight:900;margin:10px">📲 Instalar App na tela inicial?</div>
-
-<div id="aba-gratidao"><div class="card" style="border-color:#00ff88;color:#00ff88;text-align:center">Sua energia de gratidão está em <b id="energia">87</b>% - ótimo momento! 🔋✨</div>
-<div class="card"><h3 style="color:gold">Músicas de Reflexão e Esperança</h3>
-<div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap"><button class="btn" style="background:#222;color:#fff;border:1px solid #444" onclick="tocarAleatorio()">▶️ Tocar Aleatório</button>
-<button class="btn" style="background:#222;color:#ffca28;border:1px dashed #ffca28" onclick="addMusica()">+ 🎵 Add Música</button></div>
-<div style="display:flex;gap:8px"><button class="btn btn-green" onclick="zap()">💬 Convidar Membros</button><button class="btn" style="background:#2196f3;color:#fff" onclick="pix()">💙 Apoiar com PIX</button></div>
-<div id="sonoraLista"></div></div></div>
-
-<div id="aba-banco" style="display:none"><div class="card" style="text-align:center"><p style="color:gold;font-weight:900">SALÁRIO RECEBIDO</p><input id="sal" type="number" placeholder="R$ 0,00" style="background:transparent;border:none;font-size:28px;font-weight:900;color:#000;background:#ffca28;padding:10px;border-radius:10px;width:80%;text-align:center">
-<p style="margin:16px 0 10px;font-size:13px">CONTROLE DE GASTOS</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="g1" placeholder="Mercado"><input id="g2" placeholder="Combustível"><input id="g3" placeholder="Farmácia"><input id="g4" placeholder="Luz"><input id="g5" placeholder="Água"><input id="g6" placeholder="Internet"></div>
-<p style="margin:20px 0 10px">OUTRAS DESPESAS</p><div style="display:flex;gap:8px"><input id="novoGastoNome" placeholder="Ex: Aluguel, Lazer" style="flex:2"><input id="novoGastoVal" type="number" placeholder="R$" style="flex:1"></div><button class="btn" onclick="adicionarOutroGasto()" style="margin-top:8px">+ Outro Gasto</button><div id="listaOutros"></div>
-<div style="margin-top:16px"><p style="font-size:12px">RESUMO DO BALANÇO</p><div>Salário: <b id="rS">R$ 0,00</b></div><div>Total Gastos: <b id="rG" style="color:#900">R$ 0,00</b></div><div style="margin-top:8px"><b>Saldo:</b> <b id="rSaldo">R$ 0,00</b></div><p style="font-weight:700;margin-top:8px">🙏 Sobrando! Gratidão gera abundância!</p></div>
-<button class="btn btn-gold" onclick="salvar()">💾 SALVAR NA MEMÓRIA - GRAVAR TUDO</button>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn" style="background:#222;color:#fff;flex:1" onclick="limparBanco()">🗑️ Limpar</button><button class="btn" style="background:#2196f3;color:#fff;flex:1" onclick="gerarRelatorioIA()">🤖 Relatório com IA</button></div><div id="relatorioIA" style="margin-top:12px"></div></div></div>
-
-<div id="aba-bem" style="display:none"><div class="card" style="text-align:center"><h2 style="color:gold">Bem-vindo, <span id="bN">Guerreiro</span>!</h2><p>Nome: <b id="uN"></b> | Nascimento: <b id="uNa"></b> | Tel: <b id="uT"></b></p><div style="background:linear-gradient(180deg,#1a1600,#0f0d00);border:1px solid gold;border-radius:20px;padding:18px;margin-top:12px"><h3 style="color:gold">CONVIDE 3 AMIGOS E SE TORNE VIP</h3><p style="color:#ccc;margin:8px 0">Convide 3 amigos que se cadastrarem no app e ganhe VIP!</p><div id="progresso" style="background:#222;height:20px;border-radius:10px;overflow:hidden"><div id="barra" style="height:100%;width:0%;background:gold"></div></div><p style="margin:8px 0"><span id="cAmigos" style="color:gold;font-weight:900">0</span>/3 amigos convidados</p><button class="btn" style="background:#00FF88;color:#000" onclick="zap()">💬 CONVIDAR AGORA</button><button class="btn" style="background:#2196f3;color:#fff" onclick="pix()">💙 PIX R$3</button></div></div></div>
-
-<audio id="player" controls style="width:100%;margin:15px 0"></audio>
-<script>
-let musicas = JSON.parse(localStorage.getItem('bg_musicas')||'[]');
-let outros = JSON.parse(localStorage.getItem('bg_outros')||'[]');
-const player=document.getElementById('player');
-function aba(n){document.querySelectorAll('[id^=aba-]').forEach(d=>d.style.display='none');document.getElementById('aba-'+n).style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('ativa'));event.target.classList.add('ativa');}
-function addMusica(){const input=document.createElement('input');input.type='file';input.accept='audio/*,.m4a,.mp3,.mp4,.wav,.ogg';input.multiple=true;input.onchange=(e)=>{for(let file of e.target.files){let nome=file.name.replace(/\.(mp3|m4a|mp4|wav|ogg)$/i,'');let url=URL.createObjectURL(file);musicas.push({nome:nome,arquivo:url,toques:0});}localStorage.setItem('bg_musicas',JSON.stringify(musicas));mostrarMusicas();if(musicas.length>0){player.src=musicas[0].arquivo;player.play();}};input.click();}
-function mostrarMusicas(){const div=document.getElementById('sonoraLista');div.innerHTML='';musicas.forEach((m,i)=>{div.innerHTML+=`<div style="background:#1a1a24;border:1px solid #3a3320;border-radius:14px;padding:12px;margin:8px 0;display:flex;justify-content:space-between"><div><b style="color:#ffdf7a">${i+1}. ${m.nome}</b><br><small>Tocou ${m.toques||0}x</small></div><div><button onclick="tocar(${i})" style="width:40px;height:40px;border-radius:50%;background:#ffca28;border:none">▶️</button> <button onclick="removerMusica(${i})" style="width:40px;height:40px;border-radius:50%;background:#222;color:red;border:none">🗑️</button></div></div>`});}
-function tocar(i){player.src=musicas[i].arquivo;player.play();musicas[i].toques=(musicas[i].toques||0)+1;localStorage.setItem('bg_musicas',JSON.stringify(musicas));mostrarMusicas();}
-function removerMusica(i){if(confirm('Remover?')){musicas.splice(i,1);localStorage.setItem('bg_musicas',JSON.stringify(musicas));mostrarMusicas();}}
-function tocarAleatorio(){if(musicas.length>0){let r=Math.floor(Math.random()*musicas.length);tocar(r);}}
-function zap(){window.open('https://wa.me/?text=Conheça o Banco Gratidão 9.1: https://bancogratidaooficial-ops.github.io/banco-gratidao-/','_blank');}
-function pix(){alert('PIX para liberar: 41 99893-6718 - R$3,00 - Banco Gratidão 9.1 ULTIMATE');}
-function salvar(){let s=document.getElementById('sal').value;localStorage.setItem('bg_sal',s);localStorage.setItem('bg_outros',JSON.stringify(outros));alert('💾 SALVO NA MEMÓRIA!');calc();}
-function calc(){let sal=parseFloat(document.getElementById('sal').value)||0;let g1=parseFloat(document.getElementById('g1').value)||0;let g2=parseFloat(document.getElementById('g2').value)||0;let g3=parseFloat(document.getElementById('g3').value)||0;let g4=parseFloat(document.getElementById('g4').value)||0;let g5=parseFloat(document.getElementById('g5').value)||0;let g6=parseFloat(document.getElementById('g6').value)||0;let totOut=outros.reduce((a,b)=>a+ (parseFloat(b.v)||0),0);let total=g1+g2+g3+g4+g5+g6+totOut;document.getElementById('rS').innerText='R$ '+sal.toFixed(2);document.getElementById('rG').innerText='R$ '+total.toFixed(2);document.getElementById('rSaldo').innerText='R$ '+(sal-total).toFixed(2);}
-function adicionarOutroGasto(){let n=document.getElementById('novoGastoNome').value;let v=document.getElementById('novoGastoVal').value;if(!n||!v) return;outros.push({n:n,v:v});document.getElementById('novoGastoNome').value='';document.getElementById('novoGastoVal').value='';renderOutros();calc();}
-function renderOutros(){let div=document.getElementById('listaOutros');div.innerHTML='';outros.forEach((o,i)=>{div.innerHTML+=`<div style="display:flex;justify-content:space-between;background:#222;padding:8px;margin:4px 0;border-radius:8px"><span>${o.n}: R$ ${o.v}</span><span onclick="outros.splice(${i},1);renderOutros();calc()" style="color:red;cursor:pointer">X</span></div>`});}
-function limparBanco(){if(confirm('Limpar tudo?')){localStorage.clear();location.reload();}}
-function gerarRelatorioIA(){document.getElementById('relatorioIA').innerHTML='<div style="background:#222;padding:12px;border-radius:12px">🤖 IA: Sua gratidão está gerando abundância! Saldo positivo mantém energia em 87%! Continue agradecendo!</div>';}
-mostrarMusicas();renderOutros();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
-</script></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Banco Gratidão 10.1 FUSÃO DEFINITIVA</title>
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system}
+body{background:#000;color:#fff;min-height:100vh;padding-bottom:90px}
+.top{position:sticky;top:0;z-index:100;background:#000;padding:12px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tab{padding:12px 22px;border-radius:999px;font-weight:900;border:2px solid #fff;cursor:pointer;background:linear-gradient(145deg,#ffdf7a,#ffb300);color:#000;box-shadow:0 0 14px rgba(255,215,0,.6);font-size:14px}
+.tab.ativo{background:#1a1a1a;color:#fff;border-color:gold}
+.banner{margin:12px;background:linear-gradient(145deg,#ffdf7a,#ffb300);border-radius:20px;padding:16px;color:#000;text-align:center}
+.banner .liberar{background:#000;color:#ffdf7a;padding:10px 14px;border-radius:999px;font-weight:900;margin-top:10px;display:block;font-size:13px}
+.card{margin:12px;border:2px solid gold;border-radius:22px;padding:14px;background:linear-gradient(180deg,#151500,#0a0a00)}
+.card-blue{border-color:#00d4ff;background:linear-gradient(180deg,#001a1e,#000a0f)}
+.energia{background:linear-gradient(90deg,#003300,#00c853);border-color:#00ff88;color:#00ff88;padding:12px;border-radius:12px;font-weight:800;text-align:center;margin-bottom:10px}
+.ia-box{background:rgba(0,0,0,.4);border:1px solid #333;padding:12px;border-radius:14px;margin:8px 0;color:#ddd;font-size:13px}
+.input-row{display:flex;gap:8px;margin-top:10px}
+.input-row input{flex:1;background:#111;border:1px solid #333;color:#fff;padding:14px;border-radius:14px}
+.btn{padding:14px 18px;border-radius:999px;border:none;font-weight:900;cursor:pointer;font-size:13px}
+.btn-blue{background:linear-gradient(145deg,#2196f3,#1565c0);color:#fff}
+.btn-yellow{background:linear-gradient(145deg,#ffeb3b,#ffb300);color:#000}
+.btn-green{background:linear-gradient(145deg,#00ff88,#00c853);color:#000}
+.btn-dark{background:#222;color:#fff;border:1px solid #444}
+.btn-cyan{background:linear-gradient(145deg,#00e5ff,#00bcd4);color:#000}
+.musica-card{background:linear-gradient(180deg,#1a1a00,#101000);border:2px solid gold;border-radius:18px;padding:14px;margin:12px 0}
+.musica-titulo{color:gold;font-weight:900;text-align:center;font-size:15px;margin-bottom:10px}
+.musica-player{background:#000;border-radius:14px;padding:10px;display:flex;align-items:center;gap:12px}
+.play-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,#ffeb3b,#ffb300);border:none;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer}
+.progress{flex:1;height:8px;background:#222;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#ffeb3b,#ffb300);width:60%}
+.banco-card{background:linear-gradient(180deg,#1a1500,#0a0a00);border:2px solid gold;border-radius:18px;padding:16px;text-align:center;margin:10px;position:relative}
+.banco-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px}
+.install-bar{position:fixed;bottom:80px;left:12px;right:12px;background:linear-gradient(90deg,#ffca28,#ffb300);color:#000;padding:14px;border-radius:14px;font-weight:900;text-align:center;z-index:999;display:none}
+.back-btn{position:fixed;bottom:12px;left:12px;background:#222;border:1px solid gold;color:gold;padding:12px 18px;border-radius:999px;font-weight:900;z-index:1000}
+</style>
+</head>
+<body>
+<div class="top">
+<button class="tab ativo" onclick="aba('gratidao',this)">✨ Gratidão</button>
+<button class="tab" onclick="aba('sonora',this)">🎵 Sonora</button>
+<button class="tab" onclick="aba('banco',this)">🏦 Banco</button>
+<button class="tab" onclick="aba('bem',this)">👋 Bem-vindo</button>
+</div>
+<div class="banner">
+<h2>⏳ 3 dias grátis | VERSÃO 10.1 FUSÃO DEFINITIVA</h2>
+<span class="liberar">🔓 Liberar tudo por R$3,00 via PIX 41 99893-6718</span>
+</div>
+<div id="aba-gratidao">
+<div class="card card-blue">
+<div class="energia">Sua energia de gratidão está em <span id="energia">87</span>% - ótimo momento! 🔋✨</div>
+<div class="ia-box">Olá <b style="color:gold">JOSÉ!</b> Eu sou sua IA da Gratidão 🤖✨<br>Fui treinada com milhares de mensagens. Me diga: pelo que você é grato hoje?</div>
+<div class="input-row">
+<input id="inputIA" placeholder="Escreva pelo que é grato...">
+<button class="btn btn-blue" onclick="enviarIA()">Enviar</button>
+</div>
+<button class="btn btn-yellow" style="width:100%;margin-top:12px" onclick="gerarAfirma()">✨ Gerar Afirmação de Gratidão com IA</button>
+<button class="btn btn-cyan" style="width:60%;margin-top:10px" onclick="analisar()">🔍 Analisar Minha Gratidão</button>
+</div>
+<div class="card">
+<h3 style="color:gold">🎵 Músicas de Refeição e Esperança</h3>
+<button class="btn btn-yellow" style="width:100%;margin-top:12px;padding:18px;font-size:16px" onclick="addMusica()">+ 🎵 Add Música</button>
+</div>
+<div class="card">
+<h3 style="color:gold">💛 Afirmações + Ações</h3>
+<div style="display:flex;gap:10px;margin-top:12px">
+<button class="btn btn-green" style="flex:1" onclick="convidar()">📄 Convidar Membros</button>
+<button class="btn btn-blue" style="flex:1" onclick="pix()">💰 Apoiar com PIX</button>
+</div>
+<button class="btn btn-yellow" style="width:100%;margin-top:10px" onclick="ouvir()">🔊 Ouvir Afirmação de Prosperidade</button>
+</div>
+</div>
