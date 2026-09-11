@@ -157,3 +157,123 @@ body{background:#000;color:#fff;min-height:100vh;padding-bottom:90px}
 </div>
 <p style="text-align:center;color:#555;font-size:11px;margin-top:10px">10.1 FUSÃO DEFINITIVA • PWA Instalável • IA Integrada • 100% offline após instalar<br>Desenvolvido com 💛 para Guerreiros da Gratidão</p>
 </div>
+<div id="installBar" class="install-bar">📲 Instalar App Banco Gratidão 10.1? <button class="btn btn-dark" style="margin-left:10px;padding:8px 14px" onclick="instalarApp()">Instalar</button> <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#000;font-weight:900;margin-left:8px">✕</button></div>
+<button class="back-btn" onclick="voltarPasta()">↩️ Voltar</button>
+<audio id="playerMain" style="display:none"></audio>
+
+<script>
+// ===== V10.1 FUSÃO DEFINITIVA - V6 DIRETO + V9 COMPLETO SEM ERROS =====
+let musicasBlob = [];
+let idxAtual = 0;
+let energia = 87;
+let gastos = JSON.parse(localStorage.getItem('bg_gastos_v101')||'{"mercado":0,"combustivel":0,"farmacia":0,"luz":0,"agua":0,"internet":0,"salario":0}');
+let outros = JSON.parse(localStorage.getItem('bg_outros_v101')||'[]');
+let amigos = parseInt(localStorage.getItem('bg_amigos')||'0');
+let deferredPrompt = null;
+
+function aba(nome,btn){
+ document.getElementById('aba-gratidao').style.display='none';
+ document.getElementById('aba-sonora').style.display='none';
+ document.getElementById('aba-banco').style.display='none';
+ document.getElementById('aba-bem').style.display='none';
+ document.getElementById('aba-'+nome).style.display='block';
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('ativo'));
+ if(btn) btn.classList.add('ativo');
+ if(nome==='sonora') renderSonora();
+ if(nome==='banco') renderBanco();
+ if(nome==='bem'){ document.getElementById('numAmigos').innerText=amigos; document.getElementById('barraConvite').style.width=(amigos/3*100)+'%'; }
+}
+
+function addMusica(){
+ const input=document.createElement('input');
+ input.type='file';
+ input.accept='audio/*,.m4a,.mp3,.mp4,.wav,.ogg,.aac';
+ input.multiple=true;
+ input.onchange=(e)=>{
+  const files=Array.from(e.target.files);
+  if(files.length===0) return;
+  files.forEach(file=>{
+   const nome=file.name.replace(/\.(mp3|m4a|mp4|wav|ogg|aac|wma)$/i,'').replace(/[_-]/g,' ');
+   const finalNome=nome.charAt(0).toUpperCase()+nome.slice(1);
+   const url=URL.createObjectURL(file);
+   musicasBlob.push({nome:finalNome,arquivo:url,fileName:file.name,toques:0,valor:100+Math.floor(Math.random()*100)});
+  });
+  renderSonora();
+  if(musicasBlob.length===files.length) tocar(0);
+  energia=Math.min(100,energia+2);
+  document.getElementById('energia').innerText=energia;
+  alert('✅ '+files.length+' música(s) adicionada(s) direto dos arquivos! Modo V6.0 📁');
+ };
+ input.click();
+}
+
+function renderSonora(){
+ const div=document.getElementById('listaSonora');
+ if(!div) return;
+ div.innerHTML='';
+ if(musicasBlob.length===0){
+  div.innerHTML='<div style="text-align:center;color:#666;padding:20px">Nenhuma música ainda.<br>Clique em + Add Música e escolha direto da galeria!<br>Modo V6.0 direto 📁</div>';
+  return;
+ }
+ musicasBlob.forEach((m,i)=>{
+  const card=document.createElement('div');
+  card.className='musica-card';
+  card.innerHTML=`<div class="musica-titulo">Musica ${i+1} - ${i+1}. ${m.nome} (+R$${m.valor})</div>
+  <div class="musica-player"><button class="play-circle" onclick="tocar(${i})">▶️</button><div class="progress"><div class="progress-bar" style="width:${(m.toques*10)%100}%"></div></div><div style="color:#888;font-size:12px">Tocou ${m.toques}x</div></div>
+  <button class="btn btn-dark" style="width:60%;margin:10px auto;display:block" onclick="tocar(${i})">🔁 Tocar de novo</button>`;
+  div.appendChild(card);
+ });
+}
+function tocar(i){
+ if(musicasBlob.length===0) return;
+ idxAtual=i;
+ const m=musicasBlob[i];
+ const p=document.getElementById('player');
+ const pm=document.getElementById('playerMain');
+ if(p){ p.src=m.arquivo; p.play().catch(()=>{}); }
+ if(pm){ pm.src=m.arquivo; pm.play().catch(()=>{}); }
+ m.toques++;
+ renderSonora();
+}
+function tocarAleatorio(){
+ if(musicasBlob.length===0){ alert('Adicione músicas primeiro! + Add Música'); return; }
+ let r; do{r=Math.floor(Math.random()*musicasBlob.length)}while(r===idxAtual && musicasBlob.length>1);
+ tocar(r);
+}
+function editarSalario(){ let v=prompt('Salário recebido R$:',gastos.salario||''); if(v!==null){ gastos.salario=parseFloat(v)||0; salvarBanco(); renderBanco(); } }
+function editarGasto(tipo){ let v=prompt('Valor para '+tipo+' R$:',gastos[tipo]||''); if(v!==null){ gastos[tipo]=parseFloat(v)||0; salvarBanco(); renderBanco(); } }
+function renderBanco(){
+ document.getElementById('salDisplay').innerText='R$ '+(gastos.salario||0).toFixed(2);
+ ['mercado','combustivel','farmacia','luz','agua','internet'].forEach(k=>{ let el=document.getElementById('v-'+k); if(el) el.innerText='R$ '+(gastos[k]||0).toFixed(2); });
+ let totOutros=outros.reduce((a,b)=>a+b.v,0);
+ let total= (gastos.mercado||0)+(gastos.combustivel||0)+(gastos.farmacia||0)+(gastos.luz||0)+(gastos.agua||0)+(gastos.internet||0)+totOutros;
+ document.getElementById('rSal').innerText='R$ '+(gastos.salario||0).toFixed(2);
+ document.getElementById('rTot').innerText='R$ '+total.toFixed(2);
+ document.getElementById('rSaldo').innerText='R$ '+((gastos.salario||0)-total).toFixed(2);
+ let div=document.getElementById('outrosGastos'); div.innerHTML=''; outros.forEach((o,i)=>{ div.innerHTML+=`<div class="banco-card" style="display:flex;justify-content:space-between"><span>${o.n}: R$ ${o.v.toFixed(2)}</span><span onclick="outros.splice(${i},1);salvarBanco();renderBanco()" style="color:red;cursor:pointer">✕</span></div>`; });
+}
+function addOutro(){ let n=document.getElementById('outroNome').value.trim(); let v=parseFloat(document.getElementById('outroVal').value)||0; if(!n||!v) return; outros.push({n:n,v:v}); document.getElementById('outroNome').value='';document.getElementById('outroVal').value=''; salvarBanco(); renderBanco(); }
+function salvarBanco(){ localStorage.setItem('bg_gastos_v101',JSON.stringify(gastos)); localStorage.setItem('bg_outros_v101',JSON.stringify(outros)); alert('💾 Salvo na memória! V10.1'); }
+function limparBanco(){ if(confirm('Limpar banco?')){ gastos={mercado:0,combustivel:0,farmacia:0,luz:0,agua:0,internet:0,salario:0}; outros=[]; salvarBanco(); renderBanco(); } }
+function relatorioIA(){ document.getElementById('relIA').innerHTML='<div class="card" style="border-color:#00d4ff"><b>🤖 IA 10.1:</b> Saldo '+document.getElementById('rSaldo').innerText+'. Energia '+energia+'%. Fusão V6+V9 estável. Gratidão gera abundância! 🙏</div>'; }
+function convidar(){ window.open('https://wa.me/?text=Conheça o Banco Gratidão 10.1 FUSÃO: https://bancogratidaooficial-ops.github.io/BANCO-GRATIDAO/?ref='+Date.now(),'_blank'); }
+function pix(){ alert('PIX: 41 99893-6718 - José - R$3,00 - Libera VIP Vitalício!'); window.open('https://wa.me/5541998936718?text=PIX%20R$3%20Banco%20Gratidão','_blank'); }
+function copiarPix(){ navigator.clipboard.writeText('41998936718').then(()=>alert('PIX copiado: 41998936718')); }
+function confirmarAmigo(){ let tel=document.getElementById('telAmigo').value; if(!tel) return alert('Digite o telefone'); amigos=Math.min(3,amigos+1); localStorage.setItem('bg_amigos',amigos); document.getElementById('numAmigos').innerText=amigos; document.getElementById('barraConvite').style.width=(amigos/3*100)+'%'; alert('Amigo confirmado! '+amigos+'/3'); }
+function gerarConviteIA(){ document.getElementById('conviteIA').innerHTML='✨ Mensagem IA: "Oi! Descobri o Banco Gratidão 10.1, um app que me ajuda a agradecer e organizar as finanças com gratidão. Usa meu link e ganhe 3 dias grátis! 🙏 '+document.getElementById('linkConvite').innerText+'"'; }
+function exportar(){ let dados={gastos:outros,energia,musicas:musicasBlob.map(m=>m.nome)}; let blob=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='banco-gratidao-10.1.json'; a.click(); }
+function sair(){ if(confirm('Sair do app?')){ localStorage.clear(); location.reload(); } }
+window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBar').style.display='block'; });
+function instalarApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ document.getElementById('installBar').style.display='none'; deferredPrompt=null; }); } else { alert('Para instalar: No Chrome clique nos 3 pontinhos ⋮ > Instalar app ou Adicionar à tela inicial 📲'); } }
+function voltarPasta(){ if(window.history.length>1){ window.history.back(); } else { window.location.href='../'; } }
+function enviarIA(){ let txt=document.getElementById('inputIA').value; if(!txt) return; document.querySelector('.ia-box').innerHTML='Você: '+txt+'<br><br>🤖 IA 10.1: Gratidão registrada! "'+txt+'" gerou +R$150 de abundância! Energia +3% ✨'; document.getElementById('inputIA').value=''; energia=Math.min(100,energia+3); document.getElementById('energia').innerText=energia; }
+function gerarAfirma(){ document.querySelector('.ia-box').innerHTML='✨ Afirmação IA: "Eu sou grato por tudo que tenho. A abundância flui para mim com facilidade. Hoje eu escolho agradecer! 🙏💛"'; }
+function analisar(){ document.querySelector('.ia-box').innerHTML='🔍 Análise IA: Sua gratidão está em '+energia+'%! Você tem '+musicasBlob.length+' músicas e organizou seus gastos. Continue no modo gratidão!'; }
+function ouvir(){ let u=new SpeechSynthesisUtterance('Eu sou grato, eu sou próspero, a abundância vem até mim. Gratidão gera abundância!'); u.lang='pt-BR'; speechSynthesis.speak(u); }
+renderBanco();
+renderSonora();
+document.getElementById('bNasc').innerText=new Date().toLocaleDateString('pt-BR');
+document.getElementById('bCad').innerText=new Date().toLocaleDateString('pt-BR');
+</script>
+</body>
+</html>
