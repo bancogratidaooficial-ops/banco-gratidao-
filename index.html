@@ -1,17 +1,86 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Banco Gratidão 10.2 LIMPO</title><style>*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}body{background:#1a0a2e;color:#fff;padding-bottom:90px}.top{position:sticky;top:0;z-index:99;background:#1a0a2e;padding:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}.tab{padding:10px 14px;border-radius:20px;border:2px solid #fff;font-weight:900;background:#333;color:#fff}.tab.ativo{background:gold;color:#000}.banner{margin:10px;background:gold;color:#000;padding:12px;border-radius:12px;text-align:center;font-weight:900}.card{margin:10px;border:2px solid gold;border-radius:14px;padding:12px;background:#2a1a4a}.btn{padding:12px 16px;border-radius:20px;border:none;font-weight:900}.btn-y{background:gold;color:#000;width:100%;padding:16px;margin-top:8px}.btn-d{background:#222;color:#fff;border:1px solid #444}.musica{border:2px solid gold;border-radius:14px;padding:12px;margin:10px;background:#1a1a00}#back{position:fixed;bottom:12px;left:12px;background:#222;border:1px solid gold;color:gold;padding:10px 18px;border-radius:20px;font-weight:900;z-index:99}</style></head><body>
-<div class="top"><button class="tab ativo" onclick="aba('g',this)">✨ Gratidão</button><button class="tab" onclick="aba('s',this)">🎵 Sonora</button><button class="tab" onclick="aba('b',this)">🏦 Banco</button></div>
-<div class="banner">10.2 LIMPO - BOTÃO TOCA DE VERDADE<br>Se aparecer música com código, clique LIMPAR</div>
-<div id="ag"><div class="card"><button class="btn btn-y" onclick="addMusica()">+ 🎵 Add Música DO CELULAR - ABRE DIRETO</button><button class="btn" style="width:100%;margin-top:6px;background:#ff4444;color:#fff;padding:12px;border-radius:20px" onclick="limparTudo()">🗑️ LIMPAR MÚSICAS COM ERRO (código amarelo)</button></div><div id="lg"></div><audio id="player" controls style="width:94%;margin:12px auto;display:block"></audio></div>
-<div id="as" style="display:none"><h2 style="color:gold;text-align:center">Sonora</h2><div id="ls"></div></div>
-<div id="ab" style="display:none"><div class="card">Banco ok</div></div>
-<button id="back" onclick="history.back()">↩️ Voltar</button>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Central Banco Gratidão - V2 com Lixeirinha</title>
+<style>
+body{background:#000;color:#fff;font-family:system-ui;padding:10px;padding-bottom:90px}
+h1{color:gold;text-align:center;font-size:26px;margin-top:10px}
+.card{border:3px solid gold;border-radius:18px;padding:14px;margin:12px 0;background:#111;position:relative}
+.btn{display:block;background:gold;color:#000;text-align:center;padding:14px;border-radius:30px;font-weight:900;text-decoration:none;margin-top:10px;font-size:16px}
+.btn2{background:#111;color:gold;border:2px solid gold;border-radius:30px;padding:12px;font-weight:900;width:100%;margin-top:6px}
+.in{width:100%;background:#000;border:2px solid #333;border-radius:12px;padding:12px;color:#fff;margin:5px 0}
+.trash{position:absolute;top:8px;right:8px;background:#f44;color:#fff;border:none;padding:8px 12px;border-radius:10px;font-size:18px;font-weight:900}
+.top-add{border:3px dashed gold;border-radius:18px;padding:14px;margin:12px 0;background:#000}
+</style>
+</head>
+<body>
+<h1>📚 CENTRAL BANCO GRATIDÃO V2</h1>
+<p style="text-align:center;color:gold">Com lixeirinha 🗑️ pra excluir quando quiser!</p>
+
+<div class="top-add">
+<h3 style="color:gold">➕ ADICIONAR NOVA VERSÃO NO CENTRAL</h3>
+<input id="newNome" class="in" placeholder="Ex: V15.0 ULTRA DEFINITIVA">
+<input id="newLink" class="in" placeholder="Ex: https://bancogratidaooficial-ops.github.io/banco-v15/">
+<input id="newDesc" class="in" placeholder="Descrição curta (opcional)">
+<button class="btn" onclick="addVersao()">+ ADICIONAR NO CENTRAL</button>
+</div>
+
+<div id="listaCentral"></div>
+
+<div class="card" style="text-align:center">
+<p>💾 Todas as versões vinculadas aqui!</p>
+<p style="color:gold;font-size:12px">Salva esse link nos favoritos: essa é sua Central com lixeirinha!</p>
+<button class="btn2" onclick="if(confirm('Apagar TUDO da Central?')){localStorage.removeItem('centralV2');location.reload();}">🗑️ LIMPAR TUDO DA CENTRAL</button>
+</div>
+
 <script>
-let musicas=[];let idx=0;
-function aba(t,b){document.getElementById('ag').style.display='none';document.getElementById('as').style.display='none';document.getElementById('ab').style.display='none';document.getElementById('a'+t).style.display='block';document.querySelectorAll('.tab').forEach(x=>x.classList.remove('ativo'));b.classList.add('ativo');}
-function limparTudo(){if(!confirm('Limpar TODAS com erro?'))return;localStorage.clear();musicas=[];render();alert('Limpou! Add de novo suas 2 músicas .m4a');}
-function addMusica(){const inp=document.createElement('input');inp.type='file';inp.accept='audio/*,.m4a,.mp3,.wav,.ogg';inp.multiple=true;inp.onchange=e=>{[...e.target.files].forEach(f=>{if(f.name.includes('function')||f.name.length>80)return;const nome=f.name.replace(/\.(mp3|m4a|wav|ogg|mp4)$/i,'');if(nome.length>60)return;musicas.push({nome:nome,url:URL.createObjectURL(f),toques:0});});render();if(musicas.length)toca(0);};inp.click();}
-function toca(i){if(!musicas[i])return;idx=i;const m=musicas[i];const p=document.getElementById('player');p.src=m.url;p.load();p.play().then(()=>{m.toques++;render();}).catch(()=>{});}
-function remover(i){if(!confirm('Deletar '+musicas[i].nome+'?'))return;try{URL.revokeObjectURL(musicas[i].url);}catch(e){}musicas.splice(i,1);render();}
-function render(){musicas=musicas.filter(m=>{if(!m.nome)return false;if(m.nome.includes('function')||m.nome.includes('document')||m.nome.includes('input.type'))return false;if(m.nome.length>70)return false;return true;});const html=musicas.length?musicas.map((m,i)=>`<div class="musica"><div style="display:flex;justify-content:space-between;align-items:center"><span style="color:gold;font-weight:900">${i+1}. ${m.nome} - ${m.toques}x</span><button onclick="remover(${i})" style="background:#ff2222;color:#fff;border:none;width:40px;height:40px;border-radius:50%">🗑️</button></div><div style="display:flex;gap:8px;margin-top:10px;justify-content:center"><button onclick="toca(${i})" style="background:gold;color:#000;border:none;padding:10px 20px;border-radius:20px;font-weight:900">▶️ Tocar</button><button onclick="toca(${i})" style="background:#333;color:#fff;border:1px solid #555;padding:10px 14px;border-radius:20px">🔁 De novo</button></div></div>`).join(''):'<div style="text-align:center;color:#888;padding:20px">Nenhuma música. Clique + Add</div>';document.getElementById('lg').innerHTML=html;const ls=document.getElementById('ls');if(ls)ls.innerHTML=html;}
-(function(){try{let s=localStorage.getItem('musicasQtd');if(s&&s.includes('function'))localStorage.clear();}catch(e){localStorage.clear();}render();})();
-</script></body></html>
+let versoes = JSON.parse(localStorage.getItem('centralV2') || `[
+{"nome":"⭐ V14.7 ULTRA - COM BOTÃO INSTALAR","link":"https://bancogratidaooficial-ops.github.io/bancogratidao-/","desc":"Versão perfeita com instalar piscando - A da sua foto"},
+{"nome":"📖 V13.0 - VERSÃO ANTERIOR SALVA","link":"https://bancogratidaooficial-ops.github.io/Banco-gratid-o-vers-o-13.0/","desc":"A que você mostrou na foto com 3 arquivos"},
+{"nome":"💎 V14.6 ULTRA 19 BOTÕES","link":"https://bancogratidaooficial-ops.github.io/banco-gratidao-vers-o-14.0/","desc":"Versão com lixeirinha e adicionar do celular"}
+]`);
+
+function save(){localStorage.setItem('centralV2', JSON.stringify(versoes)); render();}
+
+function addVersao(){
+let n=document.getElementById('newNome').value.trim();
+let l=document.getElementById('newLink').value.trim();
+let d=document.getElementById('newDesc').value.trim();
+if(!n||!l){alert('Coloca nome e link!');return;}
+versoes.unshift({nome:n,link:l,desc:d||'Nova versão adicionada'});
+document.getElementById('newNome').value='';
+document.getElementById('newLink').value='';
+document.getElementById('newDesc').value='';
+save();
+alert('✅ Adicionado na Central!');
+}
+
+function delVersao(i){
+if(!confirm('Tirar essa versão do Central? (Não apaga o repositório, só tira da lista)'))return;
+versoes.splice(i,1);
+save();
+}
+
+function render(){
+let h='';
+versoes.forEach((v,i)=>{
+h+=`<div class="card">
+<button class="trash" onclick="delVersao(${i})">🗑️</button>
+<h3 style="color:gold;padding-right:50px">${v.nome}</h3>
+<small style="color:#aaa">${v.desc}</small><br>
+<small style="color:#666;font-size:10px">${v.link}</small>
+<a class="btn" href="${v.link}" target="_blank">📲 ABRIR ${v.nome.split(' ')[0]} ${v.nome.split(' ')[1]||''}</a>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+<a class="btn2" style="text-align:center;font-size:12px" href="${v.link}" target="_blank">🔗 Abrir</a>
+<button class="btn2" style="font-size:12px;background:#300;color:#f88;border-color:#f44" onclick="delVersao(${i})">🗑️ Tirar do Central</button>
+</div>
+</div>`;
+});
+document.getElementById('listaCentral').innerHTML=h;
+}
+render();
+</script>
+</body>
+</html>
